@@ -403,7 +403,7 @@ function mod:Initialize()
 	if E.private.install_complete and E.db[MyPluginName].install_version == nil then
 		E:GetModule("PluginInstaller"):Queue(InstallerData)
 	end
-	
+	RUI:RegisterMedia()
 	--Insert our options table when ElvUI config is loaded
 	EP:RegisterPlugin(addon, InsertOptions)
 end
