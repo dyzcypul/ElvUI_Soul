@@ -248,6 +248,11 @@ local function SetupDetails()
 	PluginInstallStepComplete:Show()
 end
 
+local function SetupBigWigs()
+	RUI:BigWigsSettings()
+	BigWigs.db:SetProfile("RedtuzkUI")
+end
+
 --This function is executed when you press "Skip Process" or "Finished" in the installer.
 local function InstallComplete()
 	if GetCVarBool("Sound_EnableMusic") then
@@ -311,6 +316,18 @@ local InstallerData = {
 			PluginInstallFrame.Option2:SetText("Cyrillics")
 		end,
 		[5] = function()
+			PluginInstallFrame.SubTitle:SetText("BigWigs")
+			if IsAddOnLoaded("BigWigs") then --Make sure the User has BigWigs installed.
+				PluginInstallFrame.Desc1:SetText("Import Redtuzk's BigWigs profile. A new profile called RedtuzkUI will be crated. If you already have the Redtuzk profile it will be updated.")
+				PluginInstallFrame.Option1:Show()
+				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupBigWigs() end)
+				PluginInstallFrame.Option1:SetText("Setup BigWigs")
+			else
+				PluginInstallFrame.Desc1:SetText("|cffB33A3AOops, it looks like you don't have BigWigs installed!|r")
+				PluginInstallFrame.Desc2:SetText("BigWigs is recomended for use with RedtuzkUI")
+			end
+		end,
+		[6] = function()
 			PluginInstallFrame.SubTitle:SetText("Details")
 			if IsAddOnLoaded("Details") then --Make sure the User has Details installed.
 				PluginInstallFrame.Desc1:SetText("Import Redtuzk's Details profile. A new profile called RedtuzkUI will be crated. If you already have the Redtuzk profile it will be updated.")
@@ -322,7 +339,7 @@ local InstallerData = {
 				PluginInstallFrame.Desc2:SetText("Details is recomended for use with RedtuzkUI")
 			end
 		end,
-		[6] = function()
+		[7] = function()
 			PluginInstallFrame.SubTitle:SetText("Installation Complete")
 			PluginInstallFrame.Desc1:SetText("You have completed the installation process.")
 			PluginInstallFrame.Desc2:SetText("Please click the button below in order to finalize the process and automatically reload your UI.")
@@ -336,8 +353,9 @@ local InstallerData = {
 		[2] = "Profile Setup",
 		[3] = "Layouts",
 		[4] = "Font",
-		[5] = "Details Setup",
-		[6] = "Installation Complete",
+		[5] = "BigWigs Setup",
+		[6] = "Details Setup",
+		[7] = "Installation Complete",
 	},
 	StepTitlesColor = {1, 1, 1},
 	StepTitlesColorSelected = {0, 179/255, 1},
