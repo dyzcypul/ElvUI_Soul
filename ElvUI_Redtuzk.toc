@@ -1,0 +1,11 @@
+## Interface: 70300
+## Author: Blazeflack
+## Version: 1.20
+## Title: |cff1784d1ElvUI|r |cffc41f3bRedtuzk|r
+## Notes: Contains layouts from Redtuzk
+## RequiredDeps: ElvUI
+## DefaultState: enabled
+
+Core.lua
+ElvUI_Settings.lua
+Details_Settings.lua
