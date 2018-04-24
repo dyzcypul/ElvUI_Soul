@@ -9,3 +9,4 @@
 Core.lua
 ElvUI_Settings.lua
 Details_Settings.lua
+Media.lua
