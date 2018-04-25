@@ -27,6 +27,9 @@ local E, L, V, P, G = unpack(ElvUI)
 --Create reference to LibElvUIPlugin
 local EP = LibStub("LibElvUIPlugin-1.0")
 
+--Create reference to BigWigs3BD
+local BigWigs = LibStub("AceDB-3.0"):New(BigWigs3DB)
+
 --Create a new ElvUI module so ElvUI can handle initialization when ready
 local mod = E:NewModule(MyPluginName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0");
 
@@ -47,24 +50,25 @@ local function NewProfile(new)
 		OnAccept = function(self, data, data2)
 		  local text = self.editBox:GetText()
 		  ElvUI[1].data:SetProfile(text) --ElvUI function for changing profiles, creates a new profile if name doesn't exist
+		  PluginInstallStepComplete.message = "Profile Created"
+		  PluginInstallStepComplete:Show()
 		end
 	  };
 	  StaticPopup_Show("CreateProfileNameNew", "test"); --tell our dialog box to show
-	  PluginInstallStepComplete.message = "Profile Created"
-		PluginInstallStepComplete:Show()
 	elseif(new == false) then -- the user clicked "Use Current" create a dialog pop up
 		StaticPopupDialogs["ProfileOverrideConfirm"] = {
 			text = "Are you sure you want to override the current profile?",
 			button1 = "Yes",
 			button2 = "No",
-			OnAccept = function() end,
+			OnAccept = function()
+			    PluginInstallStepComplete.message = "Profile Selected"
+		        PluginInstallStepComplete:Show()
+			end,
 			timeout = 0,
 			whileDead = true,
 			hideOnEscape = true,
 		}
 		StaticPopup_Show("ProfileOverrideConfirm", "test")--tell our dialog box to show
-		PluginInstallStepComplete.message = "Profile Selected"
-		PluginInstallStepComplete:Show()
 	end
 end
 
@@ -250,7 +254,7 @@ end
 
 local function SetupBigWigs()
 	RUI:BigWigsSettings()
-	BigWigs.db:SetProfile("RedtuzkUI")
+	BigWigs:SetProfile("RedtuzkUI")
 end
 
 --This function is executed when you press "Skip Process" or "Finished" in the installer.
@@ -319,6 +323,7 @@ local InstallerData = {
 			PluginInstallFrame.SubTitle:SetText("BigWigs")
 			if IsAddOnLoaded("BigWigs") then --Make sure the User has BigWigs installed.
 				PluginInstallFrame.Desc1:SetText("Import Redtuzk's BigWigs profile. A new profile called RedtuzkUI will be crated. If you already have the Redtuzk profile it will be updated.")
+				PluginInstallFrame.Desc2:SetText("Requires a UI reload for profile switch to take affect")
 				PluginInstallFrame.Option1:Show()
 				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupBigWigs() end)
 				PluginInstallFrame.Option1:SetText("Setup BigWigs")
