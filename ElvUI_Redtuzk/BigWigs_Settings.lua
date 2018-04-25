@@ -1,6 +1,8 @@
 local RUI = select(2, ...):unpack()
 
 function RUI:BigWigsSettings()
+	--Its important that all of these follow the format BigWigs3DB["namespaces"][*BigWigs Plugin Name*]["profiles"][*Profile Name*] = {}
+	--If not it will probably wipe out all other BigWigs profiles
     BigWigs3DB["namespaces"]["BigWigs_Plugins_Alt Power"]["profiles"]["RedtuzkUI"] = {
 		["posx"] = 306.489091622834,
 		["fontSize"] = 12,
@@ -97,5 +99,6 @@ function RUI:BigWigsSettings()
     BigWigs3DB["namespaces"]["BigWigs_Plugins_Pull"]["profiles"]["RedtuzkUI"] = {
 		["combatLog"] = true,
 	}
+	--This is the only settings that BigWigs actually stores under the profile, shouldn't ever need to be changed
     BigWigs3DB["profiles"]["RedtuzkUI"]["fakeDBMVersion"] = true
 end
