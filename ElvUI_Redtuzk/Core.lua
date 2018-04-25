@@ -363,7 +363,7 @@ local InstallerData = {
 		[7] = "Installation Complete",
 	},
 	StepTitlesColor = {1, 1, 1},
-	StepTitlesColorSelected = {0, 179/255, 1},
+	StepTitlesColorSelected = {0.769, 0.122, 0.231},
 	StepTitleWidth = 200,
 	StepTitleButtonWidth = 180,
 	StepTitleTextJustification = "RIGHT",
