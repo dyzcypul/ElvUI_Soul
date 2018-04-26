@@ -1,6 +1,14 @@
 local RUI = select(2, ...):unpack()
 
 function RUI:BigWigsSettings()
+	--Name sure all of the BigWigs module profiles exist, only need for first time users of BigWigs
+	BigWigs3DB["namespaces"]["BigWigs_Plugins_InfoBox"]["profiles"] = BigWigs3DB["namespaces"]["BigWigs_Plugins_InfoBox"]["profiles"] or {}
+	BigWigs3DB["namespaces"]["BigWigs_Plugins_Colors"]["profiles"] = BigWigs3DB["namespaces"]["BigWigs_Plugins_Colors"]["profiles"] or {}
+	BigWigs3DB["namespaces"]["BigWigs_Plugins_Pull"]["profiles"] = BigWigs3DB["namespaces"]["BigWigs_Plugins_Pull"]["profiles"] or {}
+	--Create the RedtuzkUI profile
+	BigWigs3DB["profiles"]["RedtuzkUI"] = BigWigs3DB["profiles"]["RedtuzkUI"] or {}
+
+
 	--Its important that all of these follow the format BigWigs3DB["namespaces"][*BigWigs Plugin Name*]["profiles"][*Profile Name*] = {}
 	--If not it will probably wipe out all other BigWigs profiles
     BigWigs3DB["namespaces"]["BigWigs_Plugins_Alt Power"]["profiles"]["RedtuzkUI"] = {
