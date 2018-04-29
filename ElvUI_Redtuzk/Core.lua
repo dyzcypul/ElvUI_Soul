@@ -183,7 +183,7 @@ local function SetupLayout(layout)
 	--LAYOUT GOES HERE
 	RUI:ElvUISettings()
 
-
+	E.db["chat"]["keywords"] = "ElvUI"
 
 	--[[
 		--If you want to modify the base layout according to
