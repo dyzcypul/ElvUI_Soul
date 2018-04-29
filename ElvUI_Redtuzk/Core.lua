@@ -390,8 +390,8 @@ local InstallerData = {
 			PluginInstallFrame.SubTitle:SetText("Layouts")
 			PluginInstallFrame.Desc1:SetText("These are the layouts that are available. Please click a button below to apply the layout of your choosing.")
 			PluginInstallFrame.Desc2:SetText("Importance: |cff07D400High|r")
-if  not IsAddOnLoaded("ElvUI_SLE") then
-				PluginInstallFrame.Desc3:SetText("|cffff0000Caution!|r |cff9482c9Shadow and Light|r |cffff0000isn't installed/loaded and some settings might not be loaded!|r")
+            if  not IsAddOnLoaded("ElvUI_SLE") then
+				PluginInstallFrame.Desc3:SetText("|cffff0000Caution! Some features won't work until you install/load|r |cff9482c9Shadow and Light|r")
 				DummySLE()			
 			end
 			PluginInstallFrame.Option1:Show()
