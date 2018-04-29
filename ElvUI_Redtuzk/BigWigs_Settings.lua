@@ -1,7 +1,7 @@
 local RUI = select(2, ...):unpack()
 
 function RUI:BigWigsSettings()
-	--Name sure all of the BigWigs module profiles exist, only need for first time users of BigWigs
+	-- Make sure all of the BigWigs module profiles exist, only need for first time users of BigWigs
 	BigWigs3DB["namespaces"]["BigWigs_Plugins_InfoBox"]["profiles"] = BigWigs3DB["namespaces"]["BigWigs_Plugins_InfoBox"]["profiles"] or {}
 	BigWigs3DB["namespaces"]["BigWigs_Plugins_Colors"]["profiles"] = BigWigs3DB["namespaces"]["BigWigs_Plugins_Colors"]["profiles"] or {}
 	BigWigs3DB["namespaces"]["BigWigs_Plugins_Pull"]["profiles"] = BigWigs3DB["namespaces"]["BigWigs_Plugins_Pull"]["profiles"] or {}
