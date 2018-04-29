@@ -262,7 +262,7 @@ end
 local function SetupDetails()
 	RUI:DetailsSettings()
 	_detalhes:ApplyProfile ("RedtuzkUI", false, false)
-	PluginInstallStepComplete.message = "Details Profile Set"
+	PluginInstallStepComplete.message = "Details Profile Applied"
 	PluginInstallStepComplete:Show()
 end
 
@@ -274,6 +274,8 @@ local function SetupBigWigs()
 	local BigWigs = LibStub("AceDB-3.0"):New(BigWigs3DB)
 	RUI:BigWigsSettings()
 	BigWigs:SetProfile("RedtuzkUI")
+	PluginInstallStepComplete.message = "BigWigs Profile Applied"
+	PluginInstallStepComplete:Show()
 end
 
 --This function is executed when you press "Skip Process" or "Finished" in the installer.
