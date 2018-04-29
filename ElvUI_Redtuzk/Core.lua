@@ -144,6 +144,9 @@ local function CreatingMissingSettings()
 	E.db["sle"]["backgrounds"]["action"] = E.db["sle"]["backgrounds"]["action"] or {}
 	E.db["sle"]["backgrounds"]["right"] = E.db["sle"]["backgrounds"]["right"] or {}
 	E.db["sle"]["backgrounds"]["left"] = E.db["sle"]["backgrounds"]["left"] or {}
+	E.db["sle"]["unitframes"]["unit"]["player"] = E.db["sle"]["unitframes"]["unit"]["player"] or {}
+	E.db["sle"]["unitframes"]["unit"]["player"]["rested"] = E.db["sle"]["unitframes"]["unit"]["player"]["rested"] or {}
+	E.db["sle"]["unitframes"]["unit"]["player"]["combatico"] = E.db["sle"]["unitframes"]["unit"]["player"]["combatico"] or {}
 	E.db["raidcooldown"] = E.db["raidcooldown"] or {}
 	E.db["raidcooldown"]["cooldown"] = E.db["raidcooldown"]["cooldown"] or {}
 	E.db["unitframe"]["units"]["targettarget"]["buffs"]["useWhitelist"] = E.db["unitframe"]["units"]["targettarget"]["buffs"]["useWhitelist"] or {}
@@ -169,6 +172,74 @@ local function EnableCustomTweaks()
 		["AuraIconSpacing"] = true,
 		["CastbarText"] = true,
 	}
+end
+
+local function DummySLE()
+	E.db["sle"] = E.db["sle"] or {}
+	E.db["sle"]["backgrounds"] = E.db["sle"]["backgrounds"] or {}
+	E.db["sle"]["raidmarkers"] = E.db["sle"]["raidmarkers"] or {}
+	E.db["sle"]["media"] = E.db["sle"]["media"] or {}
+	E.db["sle"]["media"]["fonts"] = E.db["sle"]["media"]["fonts"] or {}
+	E.db["sle"]["media"]["fonts"]["gossip"] = E.db["sle"]["media"]["fonts"]["gossip"] or {}
+	E.db["sle"]["media"]["fonts"]["zone"] = E.db["sle"]["media"]["fonts"]["zone"] or {}
+	E.db["sle"]["media"]["fonts"]["subzone"] = E.db["sle"]["media"]["fonts"]["subzone"] or {}
+	E.db["sle"]["media"]["fonts"]["questFontSuperHuge"] = E.db["sle"]["media"]["fonts"]["questFontSuperHuge"] or {}
+	E.db["sle"]["media"]["fonts"]["questFontSuperHuge"] = E.db["sle"]["media"]["fonts"]["questFontSuperHuge"] or {}
+	E.db["sle"]["media"]["fonts"]["objectiveHeader"] = E.db["sle"]["media"]["fonts"]["objectiveHeader"] or {}
+	E.db["sle"]["media"]["fonts"]["mail"] = E.db["sle"]["media"]["fonts"]["mail"] or {}
+	E.db["sle"]["media"]["fonts"]["objective"] = E.db["sle"]["media"]["fonts"]["objective"] or {}
+	E.db["sle"]["media"]["fonts"]["editbox"] = E.db["sle"]["media"]["fonts"]["editbox"] or {}
+	E.db["sle"]["media"]["fonts"]["pvp"] = E.db["sle"]["media"]["fonts"]["pvp"] or {}
+	E.db["sle"]["Armory"] = E.db["sle"]["Armory"] or {}
+	E.db["sle"]["Armory"]["Character"] = E.db["sle"]["Armory"]["Character"] or {}
+	E.db["sle"]["Armory"]["Character"]["Artifact"] = E.db["sle"]["Armory"]["Character"]["Artifact"] or {}
+	E.db["sle"]["Armory"]["Character"]["Stats"] = E.db["sle"]["Armory"]["Character"]["Stats"] or {}
+	E.db["sle"]["Armory"]["Character"]["Stats"]["ItemLevel"] = E.db["sle"]["Armory"]["Character"]["Stats"]["ItemLevel"] or {}
+	E.db["sle"]["Armory"]["Character"]["Stats"]["List"] =  E.db["sle"]["Armory"]["Character"]["Stats"]["List"] or {}
+	E.db["sle"]["Armory"]["Character"]["Stats"]["AverageColor"] = E.db["sle"]["Armory"]["Character"]["Stats"]["AverageColor"] or {}
+	E.db["sle"]["Armory"]["Character"]["Backdrop"] = E.db["sle"]["Armory"]["Character"]["Backdrop"] or {}
+	E.db["sle"]["Armory"]["Character"]["Gem"] = E.db["sle"]["Armory"]["Character"]["Gem"] or {}
+	E.db["sle"]["Armory"]["Character"]["Durability"] = E.db["sle"]["Armory"]["Character"]["Durability"] or {}
+	E.db["sle"]["Armory"]["Character"]["Level"] = E.db["sle"]["Armory"]["Character"]["Level"] or {}
+	E.db["sle"]["Armory"]["Character"]["Gradation"] =  E.db["sle"]["Armory"]["Character"]["Gradation"] or {}
+	E.db["sle"]["Armory"]["Character"]["Gradation"]["Color"] = E.db["sle"]["Armory"]["Character"]["Gradation"]["Color"] or {}
+	E.db["sle"]["Armory"]["Character"]["Enchant"] = E.db["sle"]["Armory"]["Character"]["Enchant"] or {}
+	E.db["sle"]["Armory"]["Inspect"] = E.db["sle"]["Armory"]["Inspect"] or {}
+	E.db["sle"]["minimap"] = E.db["sle"]["minimap"] or {}
+	E.db["sle"]["minimap"]["instance"] = E.db["sle"]["minimap"]["instance"] or {}
+	E.db["sle"]["loot"] =  E.db["sle"]["loot"] or {}
+	E.db["sle"]["loot"]["autoroll"] = E.db["sle"]["loot"]["autoroll"] or {}
+	E.db["sle"]["loot"]["looticons"] = E.db["sle"]["loot"]["looticons"] or {}
+	E.db["sle"]["loot"]["looticons"]["channels"] = E.db["sle"]["loot"]["looticons"]["channels"] or {}
+	E.db["sle"]["skins"] = E.db["sle"]["skins"] or {}
+	E.db["sle"]["skins"]["objectiveTracker"] = E.db["sle"]["skins"]["objectiveTracker"] or {}
+	E.db["sle"]["skins"]["objectiveTracker"]["underlineColor"] = E.db["sle"]["skins"]["objectiveTracker"]["underlineColor"] or {}
+	E.db["sle"]["skins"]["objectiveTracker"]["colorHeader"] = E.db["sle"]["skins"]["objectiveTracker"]["colorHeader"] or {}
+	E.db["sle"]["skins"]["merchant"] = E.db["sle"]["skins"]["merchant"] or {}
+	E.db["sle"]["skins"]["merchant"]["list"] = E.db["sle"]["skins"]["merchant"]["list"] or {}
+	E.db["sle"]["bags"] = E.db["sle"]["bags"] or {}
+	E.db["sle"]["bags"]["artifactPower"] = E.db["sle"]["bags"]["artifactPower"] or {}
+	E.db["sle"]["bags"]["artifactPower"]["fonts"] = E.db["sle"]["bags"]["artifactPower"]["fonts"] or {}
+	E.db["sle"]["shadows"] = E.db["sle"]["shadows"] or {}
+	E.db["sle"]["tooltip"] = E.db["sle"]["tooltip"] or {}
+	E.db["sle"]["tooltip"]["RaidProg"] = E.db["sle"]["tooltip"]["RaidProg"] or {}
+	E.db["sle"]["tooltip"]["RaidProg"]["raids"] = E.db["sle"]["tooltip"]["RaidProg"]["raids"] or {}
+	E.db["sle"]["chat"] = E.db["sle"]["chat"] or {}
+	E.db["sle"]["chat"]["tab"] = E.db["sle"]["chat"]["tab"] or {}
+	E.db["sle"]["chat"]["tab"]["color"] = 	E.db["sle"]["chat"]["tab"]["color"] or {}
+	E.db["sle"]["backgrounds"]["bg1"] = E.db["sle"]["backgrounds"]["bg1"] or {}
+	E.db["sle"]["backgrounds"]["bg2"] = E.db["sle"]["backgrounds"]["bg2"] or {}
+	E.db["sle"]["datatexts"] = E.db["sle"]["datatexts"] or {}
+	E.db["sle"]["datatexts"]["panel2"] = E.db["sle"]["datatexts"]["panel2"] or {}
+	E.db["sle"]["datatexts"]["panel1"] = E.db["sle"]["datatexts"]["panel1"] or {}
+	E.db["sle"]["unitframes"] = E.db["sle"]["unitframes"] or {}
+	E.db["sle"]["unitframes"]["unit"] =  E.db["sle"]["unitframes"]["unit"] or {}
+	E.db["sle"]["dt"] = E.db["sle"]["dt"] or {}
+	E.db["sle"]["dt"]["friends"] = E.db["sle"]["dt"]["friends"] or {}
+	E.db["sle"]["raidmanager"] = E.db["sle"]["raidmanager"] or {}
+	E.db["sle"]["uibuttons"] = E.db["sle"]["uibuttons"] or {}
+	E.db["datatexts"]["panels"]["SLE_DataPanel_1"] = E.db["datatexts"]["panels"]["SLE_DataPanel_1"] or {}
+	E.db["datatexts"]["panels"]["SLE_DataPanel_2"] = E.db["datatexts"]["panels"]["SLE_DataPanel_2"] or {}
 end
 
 --This function will hold your layout settings
@@ -319,6 +390,10 @@ local InstallerData = {
 			PluginInstallFrame.SubTitle:SetText("Layouts")
 			PluginInstallFrame.Desc1:SetText("These are the layouts that are available. Please click a button below to apply the layout of your choosing.")
 			PluginInstallFrame.Desc2:SetText("Importance: |cff07D400High|r")
+if  not IsAddOnLoaded("ElvUI_SLE") then
+				PluginInstallFrame.Desc3:SetText("|cffff0000Caution!|r |cff9482c9Shadow and Light|r |cffff0000isn't installed/loaded and some settings might not be loaded!|r")
+				DummySLE()			
+			end
 			PluginInstallFrame.Option1:Show()
 			PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayout("tank") end)
 			PluginInstallFrame.Option1:SetText("Tank")
