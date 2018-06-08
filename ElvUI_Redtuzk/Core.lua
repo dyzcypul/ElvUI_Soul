@@ -381,12 +381,21 @@ local InstallerData = {
 	tutorialImage = "Interface\\AddOns\\ElvUI_Redtuzk\\logo.tga", --If you have a logo you want to use, otherwise it uses the one from ElvUI
 	Pages = {
 		[1] = function()
-			PluginInstallFrame.SubTitle:SetFormattedText("Welcome to the installation for %s.", MyPluginName)
-			PluginInstallFrame.Desc1:SetText("This installation process will guide you through a few steps and apply settings to your current ElvUI profile. If you want to be able to go back to your original settings then create a new profile before going through this installation process.")
-			PluginInstallFrame.Desc2:SetText("Please press the continue button if you wish to go through the installation process, otherwise click the 'Skip Process' button.")
-			PluginInstallFrame.Option1:Show()
-			PluginInstallFrame.Option1:SetScript("OnClick", InstallComplete)
-			PluginInstallFrame.Option1:SetText("Skip Process")
+			if E.db[MyPluginName].install_version == nil then
+				PluginInstallFrame.SubTitle:SetFormattedText("Welcome to the installation for %s.", MyPluginName)
+				PluginInstallFrame.Desc1:SetText("This installation process will guide you through a few steps and apply settings to your current ElvUI profile. If you want to be able to go back to your original settings then create a new profile before going through this installation process.")
+				PluginInstallFrame.Desc2:SetText("Please press the continue button if you wish to go through the installation process, otherwise click the 'Skip Process' button.")
+				PluginInstallFrame.Option1:Show()
+				PluginInstallFrame.Option1:SetScript("OnClick", InstallComplete)
+				PluginInstallFrame.Option1:SetText("Skip Process")
+			else
+				PluginInstallFrame.SubTitle:SetFormattedText("There is a new update for %s.", MyPluginName)
+				PluginInstallFrame.Desc1:SetText("Pelase go through the installtion process again to apply the new updates to your profile. Any changes that you've made from the default RedtuzkUI profile will be removed.")
+				PluginInstallFrame.Desc2:SetText("Please press the continue button if you wish to go through the update and installation process. If you do not want to update click the 'Skip Process' button.")
+				PluginInstallFrame.Option1:Show()
+				PluginInstallFrame.Option1:SetScript("OnClick", InstallComplete)
+				PluginInstallFrame.Option1:SetText("Skip Process")
+			end
 		end,
 		[2] = function()
 			PluginInstallFrame.SubTitle:SetText("Profiles")
