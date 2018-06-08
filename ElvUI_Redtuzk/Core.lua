@@ -338,15 +338,27 @@ local function SetupDetails()
 end
 
 local function SetupBigWigs()
-	--Force BigWigs to build its database so we can write to it
-	slashCommand("/bigwigs")
-	slashCommand("/bigwigs")
-	--Create reference to BigWigs3BD
-	local BigWigs = LibStub("AceDB-3.0"):New(BigWigs3DB)
-	RUI:BigWigsSettings()
-	BigWigs:SetProfile("RedtuzkUI")
-	PluginInstallStepComplete.message = "BigWigs Profile Applied"
-	PluginInstallStepComplete:Show()
+	--Check to make sure the BigWigs database exists
+	if(BigWigs3DB) then	
+		--If it does add RedtuzkUI to the profiles and apply it
+		RUI:BigWigsSettings()
+		local BigWigs = LibStub("AceDB-3.0"):New(BigWigs3DB)
+		BigWigs:SetProfile("RedtuzkUI")
+		PluginInstallStepComplete.message = "BigWigs Profile Applied"
+		PluginInstallStepComplete:Show()
+	else
+		--If it doesn't prompt our user to open the BigWigs options so that it's created
+		StaticPopupDialogs["BigWigsSettingsWarning"] = {
+			text = "|cffff0000Warning!|r It looks like you're setting up BigWigs for the first time. Please open the BigWigs options menu at least once before continuing. \n The BigWigs options can be opened with \"/bw\"",
+			button1 = "Okay",
+			timeout = 0,
+			whileDead = true,
+			hideOnEscape = true,
+		}
+		StaticPopup_Show("BigWigsSettingsWarning", "test")--tell our dialog box to show
+		PluginInstallStepComplete.message = "BigWigs Profile Not Yet Applied!!"
+		PluginInstallStepComplete:Show()
+	end
 end
 
 --This function is executed when you press "Skip Process" or "Finished" in the installer.
