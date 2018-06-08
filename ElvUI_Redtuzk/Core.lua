@@ -284,7 +284,7 @@ local function SetupFont(style)
 	if (style == "default") then
 		font = "Century Gothic Bold"
 	elseif (style == "cyrillics") then
-		font = "Big Noodle"
+		font = "PT Sans Narrow"
 	end
 	
 	--Font settings
@@ -419,7 +419,7 @@ local InstallerData = {
 		[4] = function()
 			PluginInstallFrame.SubTitle:SetText("Font")
 			PluginInstallFrame.Desc1:SetText("Select one of two fonts.")
-			PluginInstallFrame.Desc2:SetText("The default font is the one choosen by Redtuzk but does not support cyrillics, the other does.")
+			PluginInstallFrame.Desc2:SetText("The default font is the one chosen by Redtuzk but does not support cyrillics, the other does. \nRequires a reload for font change to take affect")
 			PluginInstallFrame.Option1:Show()
 			PluginInstallFrame.Option1:SetScript("OnClick", function() SetupFont("default") end)
 			PluginInstallFrame.Option1:SetText("Default")
