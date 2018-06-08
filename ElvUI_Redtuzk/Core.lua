@@ -332,7 +332,7 @@ end
 
 local function SetupDetails()
 	RUI:DetailsSettings()
-	_detalhes:ApplyProfile ("RedtuzkUI", false, false)
+	_detalhes:ApplyProfile("RedtuzkUI", false, false)
 	PluginInstallStepComplete.message = "Details Profile Applied"
 	PluginInstallStepComplete:Show()
 end
@@ -374,7 +374,7 @@ local function InstallComplete()
 end
 
 --This is the data we pass on to the ElvUI Plugin Installer.
---The Plugin Installer is reponsible for displaying the install guide for this layout.
+--The Plugin Installer is responsible for displaying the install guide for this layout.
 local InstallerData = {
 	Title = format("|cffc41f3b%s %s|r", MyPluginName, "Installation"),
 	Name = MyPluginName,
@@ -390,7 +390,7 @@ local InstallerData = {
 				PluginInstallFrame.Option1:SetText("Skip Process")
 			else
 				PluginInstallFrame.SubTitle:SetFormattedText("There is a new update for %s.", MyPluginName)
-				PluginInstallFrame.Desc1:SetText("Pelase go through the installtion process again to apply the new updates to your profile. Any changes that you've made from the default RedtuzkUI profile will be removed.")
+				PluginInstallFrame.Desc1:SetText("Please go through the installation process again to apply the new updates to your profile. Any changes that you've made from the default RedtuzkUI profile will be removed.")
 				PluginInstallFrame.Desc2:SetText("Please press the continue button if you wish to go through the update and installation process. If you do not want to update click the 'Skip Process' button.")
 				PluginInstallFrame.Option1:Show()
 				PluginInstallFrame.Option1:SetScript("OnClick", InstallComplete)
@@ -446,7 +446,7 @@ local InstallerData = {
 				PluginInstallFrame.Option1:SetText("Setup BigWigs")
 			else
 				PluginInstallFrame.Desc1:SetText("|cffB33A3AOops, it looks like you don't have BigWigs installed!|r")
-				PluginInstallFrame.Desc2:SetText("BigWigs is recomended for use with RedtuzkUI")
+				PluginInstallFrame.Desc2:SetText("BigWigs is recommended for use with RedtuzkUI")
 			end
 		end,
 		[6] = function()
@@ -457,8 +457,8 @@ local InstallerData = {
 				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupDetails() end)
 				PluginInstallFrame.Option1:SetText("Setup Details")
 			else
-				PluginInstallFrame.Desc1:SetText("|cffB33A3AOops, it looks like you don't have Detials installed!|r")
-				PluginInstallFrame.Desc2:SetText("Details is recomended for use with RedtuzkUI")
+				PluginInstallFrame.Desc1:SetText("|cffB33A3AOops, it looks like you don't have Details installed!|r")
+				PluginInstallFrame.Desc2:SetText("Details is recommended for use with RedtuzkUI")
 			end
 		end,
 		[7] = function()
