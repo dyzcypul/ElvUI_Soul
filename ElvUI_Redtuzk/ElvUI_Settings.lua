@@ -22,9 +22,6 @@ function RUI:ElvUISettings()
 	E.db["general"]["totems"]["growthDirection"] = "HORIZONTAL"
 	E.db["general"]["topPanel"] = false
 	E.db["general"]["taintLog"] = true
-	E.db["general"]["altpower"]["height"] = 35
-	E.db["general"]["altpower"]["color"] = "POWER"
-	E.db["general"]["altpower"]["width"] = 250
 	E.db["general"]["afk"] = false
 	E.db["general"]["minimap"]["locationFont"] = "Century Gothic Bold"
 	E.db["general"]["minimap"]["locationFontSize"] = 13
