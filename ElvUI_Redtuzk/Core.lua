@@ -226,6 +226,102 @@ local function DummySLE()
 	E.db["datatexts"]["panels"]["SLE_DataPanel_2"] = E.db["datatexts"]["panels"]["SLE_DataPanel_2"] or {}
 end
 
+local function AddCustomTags()
+	--The following is borrowed from the CustomTags addon credit: Blazeflack-------------------
+	local textFormatStyles = {
+	["CURRENT"] = "%s",
+	["PERCENT"] = "%.1f%%",
+	}
+	local textFormatStylesNoDecimal = {
+	["CURRENT"] = "%s",
+	["PERCENT"] = "%.0f%%",
+	}
+	local function ShortValue(number, noDecimal)
+		shortValueFormat = (noDecimal and "%.0f%s" or "%.1f%s")
+		if E.db.general.numberPrefixStyle == "METRIC" then
+			if abs(number) >= 1e9 then
+				return format("%.1f%s", number / 1e9, "G")
+			elseif abs(number) >= 1e6 then
+				return format("%.1f%s", number / 1e6, "M")
+			elseif abs(number) >= 1e3 then
+				return format(shortValueFormat, number / 1e3, "k")
+			else
+				return format("%d", number)
+			end
+		elseif E.db.general.numberPrefixStyle == "CHINESE" then
+			if abs(number) >= 1e8 then
+				return format("%.1f%s", number / 1e8, "Y")
+			elseif abs(number) >= 1e4 then
+				return format("%.1f%s", number / 1e4, "W")
+			else
+				return format("%d", number)
+			end
+		else
+			if abs(number) >= 1e9 then
+				return format("%.1f%s", number / 1e9, "B")
+			elseif abs(number) >= 1e6 then
+				return format("%.1f%s", number / 1e6, "M")
+			elseif abs(number) >= 1e3 then
+				return format(shortValueFormat, number / 1e3, "K")
+			else
+				return format("%d", number)
+			end
+		end
+	end
+	local function GetFormattedText(min, max, style, noDecimal)
+		assert(textFormatStyles[style] or textFormatStylesNoDecimal[style], "CustomTags Invalid format style: "..style)
+		assert(min, "CustomTags - You need to provide a current value. Usage: GetFormattedText(min, max, style, noDecimal)")
+		assert(max, "CustomTags - You need to provide a maximum value. Usage: GetFormattedText(min, max, style, noDecimal)")
+
+		if max == 0 then max = 1 end
+
+		local chosenFormat
+		if noDecimal then
+			chosenFormat = textFormatStylesNoDecimal[style]
+		else
+			chosenFormat = textFormatStyles[style]
+		end
+
+		if style == "PERCENT" then
+			return format(chosenFormat, min / max * 100)
+		elseif style == "CURRENT" or ((style == "CURRENT_MAX" or style == "CURRENT_MAX_PERCENT" or style == "CURRENT_PERCENT") and min == max) then
+			if noDecimal then
+				return format(textFormatStylesNoDecimal["CURRENT"], ShortValue(min, noDecimal))
+			else
+				return format(textFormatStyles["CURRENT"], ShortValue(min, noDecimal))
+			end
+		end
+	end
+	-------------------------------------CustomTags----------------------------------------------------
+	---------------------------------------------------------------------------------------------------
+	ElvUF.Tags.Events["power:percentreal"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
+	ElvUF.Tags.Methods["power:percentreal"] = function(unit)
+		local pType = UnitPowerType(unit)
+		local min, max = UnitPower(unit, pType), UnitPowerMax(unit, pType)
+		local deficit = max - min
+		local String
+
+		if (max >= 0) then
+			String = GetFormattedText(min, max, "PERCENT", true)
+		end
+
+		return String
+	end
+	ElvUF.Tags.Events["power:currentreal"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
+	ElvUF.Tags.Methods["power:currentreal"] = function(unit)
+		local pType = UnitPowerType(unit)
+		local min, max = UnitPower(unit, pType), UnitPowerMax(unit, pType)
+		local deficit = max - min
+		local String
+
+		if (max >= 0) then
+			String = GetFormattedText(min, max, "CURRENT", true)
+		end
+
+		return String
+	end
+end
+
 --This function will hold your layout settings
 local function SetupLayout(layout)
 	--[[
@@ -528,6 +624,9 @@ function mod:Initialize()
 		E:GetModule("PluginInstaller"):Queue(InstallerData)
 	end
 	RUI:RegisterMedia()
+	if IsAddOnLoaded("ElvUI_CustomTags") then
+		AddCustomTags() --Add in the custom tags if the CustomTags addon is loaded
+	end
 	--Insert our options table when ElvUI config is loaded
 	EP:RegisterPlugin(addon, InsertOptions)
 end
