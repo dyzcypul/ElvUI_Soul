@@ -30,22 +30,6 @@ local EP = LibStub("LibElvUIPlugin-1.0")
 --Create a new ElvUI module so ElvUI can handle initialization when ready
 local mod = E:NewModule(MyPluginName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0");
 
---Function that allows sending slash commands to other addons format *slashCommand("/Details config")*
-local function slashCommand(command,args)
-    for key,func in pairs(SlashCmdList) do
-        local i = 1
-        local c = _G[("SLASH_%s1"):format(key)]
-        while c do
-            if c == command then
-                func(args)
-                return
-            end
-            i=i+1
-            c = _G[("SLASH_%s%d"):format(key,i)]
-        end
-    end
-end
-
 --Runs for the step questioning the user if they want a new ElvUI profile
 local function NewProfile(new)
 	if (new) then -- the user clicked "Create New" create a dialog pop up
