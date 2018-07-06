@@ -74,6 +74,7 @@ local function CreateCustomTexts()
 	E.db["unitframe"]["units"]["player"]["customTexts"]["Health2"] = {}
 	E.db["unitframe"]["units"]["player"]["customTexts"]["!Percent"] = {}
 	E.db["unitframe"]["units"]["player"]["customTexts"]["!Name"] = {}
+	E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"] = {}
 
 	E.db["unitframe"]["units"]["party"]["customTexts"] = E.db["unitframe"]["units"]["party"]["customTexts"] or {}
 	E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"] = {}
@@ -359,6 +360,17 @@ local function AddCustomTags()
 	end
 end
 
+local function powerBarSetup()
+	if IsAddOnLoaded("WeakAuras") then
+		RUI:ImportAuras()
+		E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"]["enable"] = false
+		E.db["unitframe"]["units"]["player"]["power"]["enable"] = false
+	else
+		E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"]["enable"] = true
+		E.db["unitframe"]["units"]["player"]["power"]["enable"] = true
+	end
+end
+
 --This function will hold your layout settings
 local function SetupLayout(layout)
 	--[[
@@ -370,6 +382,7 @@ local function SetupLayout(layout)
 
 	--LAYOUT GOES HERE
 	RUI:ElvUISettings()
+	powerBarSetup()
 
 	E.db["chat"]["keywords"] = "ElvUI"
 
