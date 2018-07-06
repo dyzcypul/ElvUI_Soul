@@ -11,3 +11,4 @@ ElvUI_Settings.lua
 Details_Settings.lua
 BigWigs_Settings.lua
 Media.lua
+RedtuzkAuras.lua
