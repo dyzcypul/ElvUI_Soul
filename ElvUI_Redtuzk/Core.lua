@@ -137,6 +137,43 @@ local function CreatingMissingSettings()
 	E.db["unitframe"]["units"]["party"]["GPSArrow"] = E.db["unitframe"]["units"]["party"]["GPSArrow"] or {}
 	E.db["unitframe"]["units"]["raid40"]["GPSArrow"] = E.db["unitframe"]["units"]["raid40"]["GPSArrow"] or {}
 	E.db["unitframe"]["units"]["target"]["combobar"] = E.db["unitframe"]["units"]["target"]["combobar"] or {}
+		E.db["CustomTweaks"] = E.db["CustomTweaks"] or {}
+	E.db["CustomTweaks"]["PowerBarTexture"] = E.db["CustomTweaks"]["PowerBarTexture"] or {}
+	E.db["CustomTweaks"]["AuraIconSpacing"] = E.db["CustomTweaks"]["AuraIconSpacing"] or {}
+	E.db["CustomTweaks"]["CastbarText"] = E.db["CustomTweaks"]["CastbarText"] or {
+		["Boss"] = {
+			["text"] = {
+				["color"] = {}
+			},
+			["duration"] = {
+				["color"] = {}
+			},
+		},
+		["Focus"] = {
+			["text"] = {
+				["color"] = {}
+			},
+			["duration"] = {
+				["color"] = {}
+			},
+		},
+		["Target"] = {
+			["text"] = {
+				["color"] = {}
+			},
+			["duration"] = {
+				["color"] = {}
+			},
+		},
+		["Player"] = {
+			["text"] = {
+				["color"] = {}
+			},
+			["duration"] = {
+				["color"] = {}
+			},
+		},	
+	}
 	E.db["CustomTweaks"]["CastbarTextAndBackdrop"] = E.db["CustomTweaks"]["CastbarTextAndBackdrop"] or {}
 	E.db["CustomTweaks"]["CastbarTextAndBackdrop"]["backdropColor"] = E.db["CustomTweaks"]["CastbarTextAndBackdrop"]["backdropColor"] or {}
 	E.db["CustomTweaks"]["CastbarTextAndBackdrop"]["hideText"] = E.db["CustomTweaks"]["CastbarTextAndBackdrop"]["hideText"] or {}
@@ -408,6 +445,7 @@ local function SetupFont(style)
 	
 	PluginInstallStepComplete.message = "Font Set"
 	PluginInstallStepComplete:Show()
+	E:UpdateAll(true)
 end
 
 local function SetupDetails()
@@ -508,7 +546,7 @@ local InstallerData = {
 		[4] = function()
 			PluginInstallFrame.SubTitle:SetText("Font")
 			PluginInstallFrame.Desc1:SetText("Select one of two fonts.")
-			PluginInstallFrame.Desc2:SetText("The default font is the one chosen by Redtuzk but does not support cyrillics, the other does. \nRequires a reload for font change to take affect")
+			PluginInstallFrame.Desc2:SetText("The default font is the one chosen by Redtuzk but does not support cyrillics (Russian characters) the other does.")
 			PluginInstallFrame.Option1:Show()
 			PluginInstallFrame.Option1:SetScript("OnClick", function() SetupFont("default") end)
 			PluginInstallFrame.Option1:SetText("Default")
