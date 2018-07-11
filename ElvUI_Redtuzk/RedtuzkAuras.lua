@@ -394,131 +394,131 @@ function RUI:ImportAuras()
 				},
 				["disjunctive"] = "all",
 			}
-		WeakAurasSaved["displays"]["Power Bar Text"] = {
-			["outline"] = "OUTLINE",
-			["disjunctive"] = "all",
-			["displayText"] = "%c",
-			["customText"] = "function()\n    local power = UnitPower(\"player\")\n    local vehiclePower = UnitPower(\"vehicle\")\n    local max = UnitPowerMax(\"player\")\n    local vehicle = select(2, UnitPowerType(\"vehicle\"))\n    local powerType, powerToken, altR, altG, altB = UnitPowerType(\"player\");\n    if (vehicle) then\n        power = vehiclePower\n    end\n    if powerToken ~= \"MANA\" then\n        return power\n    else\n        power = power/max*100\n        local ending = \"%%\"\n        --set number of decimal places to show\n        local decimal = 1\n        if power == 100 then\n            --don't show deciamls if at max power\n        else\n            power = math.floor( (power * 10^decimal) + 0.5) / (10^decimal)\n        end\n        return power..ending\n    end\nend\n\n\n-- Made by Aldarana and Redtuzk, Kazzak EU\n-- RedtuzkUI Discord: http://www.redtuzk.com",
-			["untrigger"] = {
-			},
-			["anchorPoint"] = "CENTER",
-			["activeTriggerMode"] = -10,
-			["customTextUpdate"] = "update",
-			["automaticWidth"] = "Auto",
-			["actions"] = {
-				["start"] = {
-				},
-				["init"] = {
-				},
-				["finish"] = {
-				},
-			},
-			["internalVersion"] = 3,
-			["selfPoint"] = "BOTTOM",
-			["trigger"] = {
-				["type"] = "status",
-				["unevent"] = "auto",
-				["event"] = "Power",
-				["use_unit"] = true,
-				["debuffType"] = "HELPFUL",
-				["spellIds"] = {
-				},
-				["names"] = {
-				},
-				["subeventPrefix"] = "SPELL",
-				["subeventSuffix"] = "_CAST_START",
-				["unit"] = "player",
-				["custom_hide"] = "timed",
-			},
-			["font"] = "Century Gothic Bold",
-			["height"] = 18.0000038146973,
-			["load"] = {
-				["ingroup"] = {
-					["multi"] = {
-					},
-				},
-				["use_never"] = false,
-				["talent"] = {
-					["multi"] = {
-					},
-				},
-				["class"] = {
-					["single"] = "MONK",
-					["multi"] = {
-						["MONK"] = true,
-					},
-				},
-				["difficulty"] = {
-					["multi"] = {
-					},
-				},
-				["role"] = {
-					["multi"] = {
-					},
-				},
-				["race"] = {
-					["multi"] = {
-					},
-				},
-				["pvptalent"] = {
-					["multi"] = {
-					},
-				},
-				["spec"] = {
-					["multi"] = {
-					},
-				},
-				["faction"] = {
-					["multi"] = {
-					},
-				},
-				["talent2"] = {
-					["multi"] = {
-					},
-				},
-				["size"] = {
-					["multi"] = {
-					},
-				},
-			},
-			["fontSize"] = 18,
-			["regionType"] = "text",
-			["init_completed"] = 1,
-			["parent"] = "RedtuzkUI Power Bar Group",
-			["animation"] = {
-				["start"] = {
-					["duration_type"] = "seconds",
-					["type"] = "none",
-				},
-				["main"] = {
-					["duration_type"] = "seconds",
-					["type"] = "none",
-				},
-				["finish"] = {
-					["duration_type"] = "seconds",
-					["type"] = "none",
-				},
-			},
-			["justify"] = "CENTER",
-			["conditions"] = {
-			},
-			["additional_triggers"] = {
-			},
-			["wordWrap"] = "WordWrap",
-			["frameStrata"] = 9,
-			["width"] = 41.0000419616699,
-			["xOffset"] = 73.9996948242188,
-			["yOffset"] = -94.0000610351563,
-			["numTriggers"] = 1,
-			["anchorFrameType"] = "SCREEN",
-			["init_started"] = 1,
-			["fixedWidth"] = 200,
-			["id"] = "Power Bar Text",
-			["color"] = {
-				1, -- [1]
-				1, -- [2]
-				1, -- [3]
-				1, -- [4]
-			},
-		}
+	WeakAurasSaved["displays"]["Power Bar Text"] = {
+        ["outline"] = "OUTLINE",
+        ["disjunctive"] = "all",
+        ["displayText"] = "%c",
+        ["customText"] = "function()\n    local power = UnitPower(\"player\")\n    local vehiclePower = UnitPower(\"vehicle\")\n    local max = UnitPowerMax(\"player\")\n    local vehicle = select(2, UnitPowerType(\"vehicle\"))\n    local powerType, powerToken, altR, altG, altB = UnitPowerType(\"player\");\n    if (vehicle) then\n        power = vehiclePower\n    end\n    if powerToken ~= \"MANA\" then\n        return power\n    else\n        power = power/max*100\n        local ending = \"%\"\n        --set number of decimal places to show\n        local decimal = 1\n        if power == 100 then\n            --don't show deciamls if at max power\n        else\n            power = math.floor( (power * 10^decimal) + 0.5) / (10^decimal)\n        end\n        return power..ending\n    end\nend\n\n\n-- Made by Aldarana and Redtuzk, Kazzak EU\n-- RedtuzkUI Discord: http://www.redtuzk.com",
+        ["untrigger"] = {
+        },
+        ["anchorPoint"] = "CENTER",
+        ["activeTriggerMode"] = -10,
+        ["customTextUpdate"] = "update",
+        ["automaticWidth"] = "Auto",
+        ["actions"] = {
+            ["start"] = {
+            },
+            ["init"] = {
+            },
+            ["finish"] = {
+            },
+        },
+        ["internalVersion"] = 3,
+        ["selfPoint"] = "BOTTOM",
+        ["trigger"] = {
+            ["type"] = "status",
+            ["unevent"] = "auto",
+            ["event"] = "Power",
+            ["use_unit"] = true,
+            ["debuffType"] = "HELPFUL",
+            ["spellIds"] = {
+            },
+            ["names"] = {
+            },
+            ["subeventPrefix"] = "SPELL",
+            ["subeventSuffix"] = "_CAST_START",
+            ["unit"] = "player",
+            ["custom_hide"] = "timed",
+        },
+        ["font"] = "Century Gothic Bold",
+        ["height"] = 18.000003814697,
+        ["load"] = {
+            ["ingroup"] = {
+                ["multi"] = {
+                },
+            },
+            ["use_never"] = false,
+            ["talent"] = {
+                ["multi"] = {
+                },
+            },
+            ["class"] = {
+                ["single"] = "MONK",
+                ["multi"] = {
+                    ["MONK"] = true,
+                },
+            },
+            ["difficulty"] = {
+                ["multi"] = {
+                },
+            },
+            ["role"] = {
+                ["multi"] = {
+                },
+            },
+            ["race"] = {
+                ["multi"] = {
+                },
+            },
+            ["pvptalent"] = {
+                ["multi"] = {
+                },
+            },
+            ["spec"] = {
+                ["multi"] = {
+                },
+            },
+            ["faction"] = {
+                ["multi"] = {
+                },
+            },
+            ["talent2"] = {
+                ["multi"] = {
+                },
+            },
+            ["size"] = {
+                ["multi"] = {
+                },
+            },
+        },
+        ["fontSize"] = 18,
+        ["regionType"] = "text",
+        ["init_completed"] = 1,
+        ["parent"] = "RedtuzkUI Power Bar Group",
+        ["animation"] = {
+            ["start"] = {
+                ["duration_type"] = "seconds",
+                ["type"] = "none",
+            },
+            ["main"] = {
+                ["duration_type"] = "seconds",
+                ["type"] = "none",
+            },
+            ["finish"] = {
+                ["duration_type"] = "seconds",
+                ["type"] = "none",
+            },
+        },
+        ["justify"] = "CENTER",
+        ["conditions"] = {
+        },
+        ["additional_triggers"] = {
+        },
+        ["wordWrap"] = "WordWrap",
+        ["frameStrata"] = 4,
+        ["width"] = 41.00004196167,
+        ["xOffset"] = 73.999694824219,
+        ["yOffset"] = -94.000061035156,
+        ["numTriggers"] = 1,
+        ["anchorFrameType"] = "SCREEN",
+        ["init_started"] = 1,
+        ["fixedWidth"] = 200,
+        ["id"] = "Power Bar Text",
+        ["color"] = {
+            [1] = 1,
+            [2] = 1,
+            [3] = 1,
+            [4] = 1,
+        },
+    }
 end
