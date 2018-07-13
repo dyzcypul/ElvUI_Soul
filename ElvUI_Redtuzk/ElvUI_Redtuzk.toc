@@ -6,8 +6,11 @@
 ## RequiredDeps: ElvUI
 ## DefaultState: enabled
 
+media\load_media.xml
 Core.lua
 ElvUI_Settings.lua
 Details_Settings.lua
 BigWigs_Settings.lua
-Media.lua
+RedtuzkAuras.lua
+media\FPS.lua
+media\Ping.lua
