@@ -30,22 +30,6 @@ local EP = LibStub("LibElvUIPlugin-1.0")
 --Create a new ElvUI module so ElvUI can handle initialization when ready
 local mod = E:NewModule(MyPluginName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0");
 
---Function that allows sending slash commands to other addons format *slashCommand("/Details config")*
-local function slashCommand(command,args)
-    for key,func in pairs(SlashCmdList) do
-        local i = 1
-        local c = _G[("SLASH_%s1"):format(key)]
-        while c do
-            if c == command then
-                func(args)
-                return
-            end
-            i=i+1
-            c = _G[("SLASH_%s%d"):format(key,i)]
-        end
-    end
-end
-
 --Runs for the step questioning the user if they want a new ElvUI profile
 local function NewProfile(new)
 	if (new) then -- the user clicked "Create New" create a dialog pop up
@@ -90,6 +74,7 @@ local function CreateCustomTexts()
 	E.db["unitframe"]["units"]["player"]["customTexts"]["Health2"] = {}
 	E.db["unitframe"]["units"]["player"]["customTexts"]["!Percent"] = {}
 	E.db["unitframe"]["units"]["player"]["customTexts"]["!Name"] = {}
+	E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"] = {}
 
 	E.db["unitframe"]["units"]["party"]["customTexts"] = E.db["unitframe"]["units"]["party"]["customTexts"] or {}
 	E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"] = {}
@@ -153,6 +138,43 @@ local function CreatingMissingSettings()
 	E.db["unitframe"]["units"]["party"]["GPSArrow"] = E.db["unitframe"]["units"]["party"]["GPSArrow"] or {}
 	E.db["unitframe"]["units"]["raid40"]["GPSArrow"] = E.db["unitframe"]["units"]["raid40"]["GPSArrow"] or {}
 	E.db["unitframe"]["units"]["target"]["combobar"] = E.db["unitframe"]["units"]["target"]["combobar"] or {}
+		E.db["CustomTweaks"] = E.db["CustomTweaks"] or {}
+	E.db["CustomTweaks"]["PowerBarTexture"] = E.db["CustomTweaks"]["PowerBarTexture"] or {}
+	E.db["CustomTweaks"]["AuraIconSpacing"] = E.db["CustomTweaks"]["AuraIconSpacing"] or {}
+	E.db["CustomTweaks"]["CastbarText"] = E.db["CustomTweaks"]["CastbarText"] or {
+		["Boss"] = {
+			["text"] = {
+				["color"] = {}
+			},
+			["duration"] = {
+				["color"] = {}
+			},
+		},
+		["Focus"] = {
+			["text"] = {
+				["color"] = {}
+			},
+			["duration"] = {
+				["color"] = {}
+			},
+		},
+		["Target"] = {
+			["text"] = {
+				["color"] = {}
+			},
+			["duration"] = {
+				["color"] = {}
+			},
+		},
+		["Player"] = {
+			["text"] = {
+				["color"] = {}
+			},
+			["duration"] = {
+				["color"] = {}
+			},
+		},	
+	}
 	E.db["CustomTweaks"]["CastbarTextAndBackdrop"] = E.db["CustomTweaks"]["CastbarTextAndBackdrop"] or {}
 	E.db["CustomTweaks"]["CastbarTextAndBackdrop"]["backdropColor"] = E.db["CustomTweaks"]["CastbarTextAndBackdrop"]["backdropColor"] or {}
 	E.db["CustomTweaks"]["CastbarTextAndBackdrop"]["hideText"] = E.db["CustomTweaks"]["CastbarTextAndBackdrop"]["hideText"] or {}
@@ -242,6 +264,113 @@ local function DummySLE()
 	E.db["datatexts"]["panels"]["SLE_DataPanel_2"] = E.db["datatexts"]["panels"]["SLE_DataPanel_2"] or {}
 end
 
+local function AddCustomTags()
+	--The following is borrowed from the CustomTags addon credit: Blazeflack-------------------
+	local textFormatStyles = {
+	["CURRENT"] = "%s",
+	["PERCENT"] = "%.1f%%",
+	}
+	local textFormatStylesNoDecimal = {
+	["CURRENT"] = "%s",
+	["PERCENT"] = "%.0f%%",
+	}
+	local function ShortValue(number, noDecimal)
+		shortValueFormat = (noDecimal and "%.0f%s" or "%.1f%s")
+		if E.db.general.numberPrefixStyle == "METRIC" then
+			if abs(number) >= 1e9 then
+				return format("%.1f%s", number / 1e9, "G")
+			elseif abs(number) >= 1e6 then
+				return format("%.1f%s", number / 1e6, "M")
+			elseif abs(number) >= 1e3 then
+				return format(shortValueFormat, number / 1e3, "k")
+			else
+				return format("%d", number)
+			end
+		elseif E.db.general.numberPrefixStyle == "CHINESE" then
+			if abs(number) >= 1e8 then
+				return format("%.1f%s", number / 1e8, "Y")
+			elseif abs(number) >= 1e4 then
+				return format("%.1f%s", number / 1e4, "W")
+			else
+				return format("%d", number)
+			end
+		else
+			if abs(number) >= 1e9 then
+				return format("%.1f%s", number / 1e9, "B")
+			elseif abs(number) >= 1e6 then
+				return format("%.1f%s", number / 1e6, "M")
+			elseif abs(number) >= 1e3 then
+				return format(shortValueFormat, number / 1e3, "K")
+			else
+				return format("%d", number)
+			end
+		end
+	end
+	local function GetFormattedText(min, max, style, noDecimal)
+		assert(textFormatStyles[style] or textFormatStylesNoDecimal[style], "CustomTags Invalid format style: "..style)
+		assert(min, "CustomTags - You need to provide a current value. Usage: GetFormattedText(min, max, style, noDecimal)")
+		assert(max, "CustomTags - You need to provide a maximum value. Usage: GetFormattedText(min, max, style, noDecimal)")
+
+		if max == 0 then max = 1 end
+
+		local chosenFormat
+		if noDecimal then
+			chosenFormat = textFormatStylesNoDecimal[style]
+		else
+			chosenFormat = textFormatStyles[style]
+		end
+
+		if style == "PERCENT" then
+			return format(chosenFormat, min / max * 100)
+		elseif style == "CURRENT" or ((style == "CURRENT_MAX" or style == "CURRENT_MAX_PERCENT" or style == "CURRENT_PERCENT") and min == max) then
+			if noDecimal then
+				return format(textFormatStylesNoDecimal["CURRENT"], ShortValue(min, noDecimal))
+			else
+				return format(textFormatStyles["CURRENT"], ShortValue(min, noDecimal))
+			end
+		end
+	end
+	-------------------------------------CustomTags----------------------------------------------------
+	---------------------------------------------------------------------------------------------------
+	ElvUF.Tags.Events["power:percentreal"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
+	ElvUF.Tags.Methods["power:percentreal"] = function(unit)
+		local pType = UnitPowerType(unit)
+		local min, max = UnitPower(unit, pType), UnitPowerMax(unit, pType)
+		local deficit = max - min
+		local String
+
+		if (max >= 0) then
+			String = GetFormattedText(min, max, "PERCENT", true)
+		end
+
+		return String
+	end
+	ElvUF.Tags.Events["power:currentreal"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
+	ElvUF.Tags.Methods["power:currentreal"] = function(unit)
+		local pType = UnitPowerType(unit)
+		local min, max = UnitPower(unit, pType), UnitPowerMax(unit, pType)
+		local deficit = max - min
+		local String
+
+		if (max >= 0) then
+			String = GetFormattedText(min, max, "CURRENT", true)
+		end
+
+		return String
+	end
+end
+
+local function powerBarSetup()
+	if IsAddOnLoaded("WeakAuras") then
+		RUI:ImportAuras()
+		E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"]["enable"] = false
+		E.db["unitframe"]["units"]["player"]["power"]["enable"] = false
+	else
+		E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"]["enable"] = true
+		E.db["unitframe"]["units"]["player"]["power"]["enable"] = true
+	end
+end
+
 --This function will hold your layout settings
 local function SetupLayout(layout)
 	--[[
@@ -253,6 +382,7 @@ local function SetupLayout(layout)
 
 	--LAYOUT GOES HERE
 	RUI:ElvUISettings()
+	powerBarSetup()
 
 	E.db["chat"]["keywords"] = "ElvUI"
 
@@ -328,6 +458,7 @@ local function SetupFont(style)
 	
 	PluginInstallStepComplete.message = "Font Set"
 	PluginInstallStepComplete:Show()
+	E:UpdateAll(true)
 end
 
 local function SetupDetails()
@@ -428,7 +559,7 @@ local InstallerData = {
 		[4] = function()
 			PluginInstallFrame.SubTitle:SetText("Font")
 			PluginInstallFrame.Desc1:SetText("Select one of two fonts.")
-			PluginInstallFrame.Desc2:SetText("The default font is the one chosen by Redtuzk but does not support cyrillics, the other does. \nRequires a reload for font change to take affect")
+			PluginInstallFrame.Desc2:SetText("The default font is the one chosen by Redtuzk but does not support cyrillics (Russian characters) the other does.")
 			PluginInstallFrame.Option1:Show()
 			PluginInstallFrame.Option1:SetScript("OnClick", function() SetupFont("default") end)
 			PluginInstallFrame.Option1:SetText("Default")
@@ -440,7 +571,7 @@ local InstallerData = {
 			PluginInstallFrame.SubTitle:SetText("BigWigs")
 			if IsAddOnLoaded("BigWigs") then --Make sure the User has BigWigs installed.
 				PluginInstallFrame.Desc1:SetText("Import Redtuzk's BigWigs profile. A new profile called RedtuzkUI will be crated. If you already have the Redtuzk profile it will be updated.")
-				PluginInstallFrame.Desc2:SetText("Requires a UI reload for profile switch to take affect")
+				PluginInstallFrame.Desc2:SetText("Requires a UI reload for profile switch to take effect")
 				PluginInstallFrame.Option1:Show()
 				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupBigWigs() end)
 				PluginInstallFrame.Option1:SetText("Setup BigWigs")
@@ -452,7 +583,7 @@ local InstallerData = {
 		[6] = function()
 			PluginInstallFrame.SubTitle:SetText("Details")
 			if IsAddOnLoaded("Details") then --Make sure the User has Details installed.
-				PluginInstallFrame.Desc1:SetText("Import Redtuzk's Details profile. A new profile called RedtuzkUI will be crated. If you already have the Redtuzk profile it will be updated.")
+				PluginInstallFrame.Desc1:SetText("Import Redtuzk's Details profile. A new profile called RedtuzkUI will be created. If you already have the Redtuzk profile it will be updated.")
 				PluginInstallFrame.Option1:Show()
 				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupDetails() end)
 				PluginInstallFrame.Option1:SetText("Setup Details")
@@ -543,8 +674,12 @@ function mod:Initialize()
 	if E.private.install_complete and (E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version ~= Version) then
 		E:GetModule("PluginInstaller"):Queue(InstallerData)
 	end
-	RUI:RegisterMedia()
+	if IsAddOnLoaded("ElvUI_CustomTags") then
+		AddCustomTags() --Add in the custom tags if the CustomTags addon is loaded
+	end
 	--Insert our options table when ElvUI config is loaded
+	RUI:FPS()
+	RUI:Ping()
 	EP:RegisterPlugin(addon, InsertOptions)
 end
 
