@@ -2,7 +2,7 @@ local RUI = select(2, ...):unpack()
 local E, L, V, P, G = unpack(ElvUI)
 
 function RUI:ElvUISettings()
-	E.db["databars"]["artifact"]["orientation"] = "HORIZONTAL"
+    E.db["databars"]["artifact"]["orientation"] = "HORIZONTAL"
     E.db["databars"]["artifact"]["height"] = 8
     E.db["databars"]["artifact"]["width"] = 181
     E.db["databars"]["experience"]["font"] = "Century Gothic Bold"
