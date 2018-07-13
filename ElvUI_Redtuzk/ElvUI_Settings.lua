@@ -2,8 +2,8 @@ local RUI = select(2, ...):unpack()
 local E, L, V, P, G = unpack(ElvUI)
 
 function RUI:ElvUISettings()
-	E.db["databars"]["artifact"]["orientation"] = "HORIZONTAL"
 	E.db["databars"]["artifact"]["height"] = 8
+	E.db["databars"]["artifact"]["orientation"] = "HORIZONTAL"
 	E.db["databars"]["artifact"]["width"] = 181
 	E.db["databars"]["experience"]["font"] = "Expressway"
 	E.db["databars"]["experience"]["textFormat"] = "PERCENT"
@@ -43,17 +43,17 @@ function RUI:ElvUISettings()
 	E.db["sle"]["datatext"]["dp3"]["transparent"] = true
 	E.db["sle"]["datatext"]["dp3"]["width"] = 300
 	E.db["sle"]["datatext"]["chatright"]["width"] = 679
-	E.db["sle"]["datatext"]["bottom"]["width"] = 104
-	E.db["sle"]["datatext"]["dp2"]["enabled"] = true
-	E.db["sle"]["datatext"]["dp2"]["transparent"] = true
-	E.db["sle"]["datatext"]["dp2"]["width"] = 399
+	E.db["sle"]["datatext"]["dp1"]["transparent"] = true
+	E.db["sle"]["datatext"]["dp1"]["width"] = 399
+	E.db["sle"]["datatext"]["top"]["width"] = 104
 	E.db["sle"]["datatext"]["chatleft"]["width"] = 398
 	E.db["sle"]["datatext"]["dp6"]["enabled"] = true
 	E.db["sle"]["datatext"]["dp6"]["transparent"] = true
 	E.db["sle"]["datatext"]["dp6"]["width"] = 399
-	E.db["sle"]["datatext"]["dp1"]["transparent"] = true
-	E.db["sle"]["datatext"]["dp1"]["width"] = 399
-	E.db["sle"]["datatext"]["top"]["width"] = 104
+	E.db["sle"]["datatext"]["bottom"]["width"] = 104
+	E.db["sle"]["datatext"]["dp2"]["enabled"] = true
+	E.db["sle"]["datatext"]["dp2"]["transparent"] = true
+	E.db["sle"]["datatext"]["dp2"]["width"] = 399
 	E.db["sle"]["datatext"]["dashboard"]["width"] = 148
 	E.db["sle"]["unitframes"]["unit"]["player"]["combatico"]["size"] = 28
 	E.db["sle"]["unitframes"]["unit"]["player"]["portraitAlpha"] = 0.54
@@ -757,7 +757,7 @@ function RUI:ElvUISettings()
 	E.db["unitframe"]["units"]["raid40"]["customTexts"]["Health Text"]["enable"] = true
 	E.db["unitframe"]["units"]["raid40"]["customTexts"]["Health Text"]["text_format"] = ""
 	E.db["unitframe"]["units"]["raid40"]["customTexts"]["Health Text"]["yOffset"] = 0
-	E.db["unitframe"]["units"]["raid40"]["customTexts"]["Health Text"]["font"] = "Expressway"
+	E.db["unitframe"]["units"]["raid40"]["customTexts"]["Health Text"]["font"] = "Century Gothic Bold"
 	E.db["unitframe"]["units"]["raid40"]["customTexts"]["Health Text"]["justifyH"] = "CENTER"
 	E.db["unitframe"]["units"]["raid40"]["customTexts"]["Health Text"]["fontOutline"] = "OUTLINE"
 	E.db["unitframe"]["units"]["raid40"]["customTexts"]["Health Text"]["xOffset"] = 37
