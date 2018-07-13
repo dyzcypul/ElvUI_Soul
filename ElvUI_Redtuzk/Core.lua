@@ -571,7 +571,7 @@ local InstallerData = {
 			PluginInstallFrame.SubTitle:SetText("BigWigs")
 			if IsAddOnLoaded("BigWigs") then --Make sure the User has BigWigs installed.
 				PluginInstallFrame.Desc1:SetText("Import Redtuzk's BigWigs profile. A new profile called RedtuzkUI will be crated. If you already have the Redtuzk profile it will be updated.")
-				PluginInstallFrame.Desc2:SetText("Requires a UI reload for profile switch to take affect")
+				PluginInstallFrame.Desc2:SetText("Requires a UI reload for profile switch to take effect")
 				PluginInstallFrame.Option1:Show()
 				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupBigWigs() end)
 				PluginInstallFrame.Option1:SetText("Setup BigWigs")
@@ -583,7 +583,7 @@ local InstallerData = {
 		[6] = function()
 			PluginInstallFrame.SubTitle:SetText("Details")
 			if IsAddOnLoaded("Details") then --Make sure the User has Details installed.
-				PluginInstallFrame.Desc1:SetText("Import Redtuzk's Details profile. A new profile called RedtuzkUI will be crated. If you already have the Redtuzk profile it will be updated.")
+				PluginInstallFrame.Desc1:SetText("Import Redtuzk's Details profile. A new profile called RedtuzkUI will be created. If you already have the Redtuzk profile it will be updated.")
 				PluginInstallFrame.Option1:Show()
 				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupDetails() end)
 				PluginInstallFrame.Option1:SetText("Setup Details")
@@ -674,11 +674,12 @@ function mod:Initialize()
 	if E.private.install_complete and (E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version ~= Version) then
 		E:GetModule("PluginInstaller"):Queue(InstallerData)
 	end
-	RUI:RegisterMedia()
 	if IsAddOnLoaded("ElvUI_CustomTags") then
 		AddCustomTags() --Add in the custom tags if the CustomTags addon is loaded
 	end
 	--Insert our options table when ElvUI config is loaded
+	RUI:FPS()
+	RUI:Ping()
 	EP:RegisterPlugin(addon, InsertOptions)
 end
 
