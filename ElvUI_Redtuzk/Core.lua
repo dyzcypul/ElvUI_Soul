@@ -373,35 +373,14 @@ end
 
 --This function will hold your layout settings
 local function SetupLayout(layout)
-	--[[
-	--	PUT YOUR EXPORTED PROFILE/SETTINGS BELOW HERE
-	--]]
 	CreateCustomTexts()
 	CreatingMissingSettings()
 	EnableCustomTweaks()
-
-	--LAYOUT GOES HERE
+	
 	RUI:ElvUISettings()
 	powerBarSetup()
 
 	E.db["chat"]["keywords"] = "ElvUI"
-
-	--[[
-		--If you want to modify the base layout according to
-		-- certain conditions then this is how you could do it
-		if layout == "tank" then
-			--Make some changes to the layout posted above
-		elseif layout == "dps" then
-			--Make some other changes
-		elseif layout == "healer" then
-			--Make some different changes
-		end
-	--]]
-
-
-	--[[
-	--	This section at the bottom is just to update ElvUI and display a message
-	--]]
 	--Update ElvUI
 	E:UpdateAll(true)
 	--Show message about layout being set
