@@ -391,7 +391,9 @@ local function SetupLayoutBar(layout)
 		E.db["movers"]["ElvUF_PlayerCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,235"
 		E.db["unitframe"]["units"]["player"]["power"]["detachedWidth"] = 222
 		E.db["unitframe"]["units"]["player"]["classbar"]["detachedWidth"] = 222
-		WeakAurasSaved["displays"]["RedtuzkUI Power Bar"]["width"] = 222.00022888184
+		if IsAddOnLoaded("WeakAuras") then
+			WeakAurasSaved["displays"]["RedtuzkUI Power Bar"]["width"] = 222.00022888184
+		end
 	elseif layout == "8x2" then
 		E.db["actionbar"]["bar2"]["buttons"] = 8
 		E.db["actionbar"]["bar2"]["buttonsize"] = 36
@@ -403,7 +405,9 @@ local function SetupLayoutBar(layout)
 		E.db["movers"]["ElvUF_PlayerCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,235"
 		E.db["unitframe"]["units"]["player"]["power"]["detachedWidth"] = 296
 		E.db["unitframe"]["units"]["player"]["classbar"]["detachedWidth"] = 296
-		WeakAurasSaved["displays"]["RedtuzkUI Power Bar"]["width"] = 296.00022888184
+		if IsAddOnLoaded("WeakAuras") then
+			WeakAurasSaved["displays"]["RedtuzkUI Power Bar"]["width"] = 296.00022888184
+		end
 	end
 
 	E.db["chat"]["keywords"] = "ElvUI"
