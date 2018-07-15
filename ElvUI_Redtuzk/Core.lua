@@ -480,7 +480,7 @@ end
 local InstallerData = {
 	Title = format("|cffc41f3b%s %s|r", MyPluginName, "Installation"),
 	Name = MyPluginName,
-	tutorialImage = "Interface\\AddOns\\ElvUI_Redtuzk\\logo.tga", --If you have a logo you want to use, otherwise it uses the one from ElvUI
+	tutorialImage = "Interface\\AddOns\\ElvUI_Redtuzk\\Media\\logo.tga", --If you have a logo you want to use, otherwise it uses the one from ElvUI
 	Pages = {
 		[1] = function()
 			if E.db[MyPluginName].install_version == nil then
