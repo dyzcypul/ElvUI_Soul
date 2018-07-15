@@ -11,7 +11,7 @@ function RUI:BigWigsSettings()
 
 	--Its important that all of these follow the format BigWigs3DB["namespaces"][*BigWigs Plugin Name*]["profiles"][*Profile Name*] = {}
 	--If not it will probably wipe out all other BigWigs profiles
-    BigWigs3DB["namespaces"]["BigWigs_Plugins_Alt Power"]["profiles"]["RedtuzkUI"] = ["RedtuzkUI"] = {
+    BigWigs3DB["namespaces"]["BigWigs_Plugins_Alt Power"]["profiles"]["RedtuzkUI"] = {
 		["posx"] = 345.600268785165,
 		["fontSize"] = 12,
 		["fontOutline"] = "OUTLINE",
@@ -95,7 +95,7 @@ function RUI:BigWigsSettings()
 		["fontSize"] = 36,
 		["font"] = "Century Gothic Bold",
 	}
-    BigWigs3DB["namespaces"]["BigWigs_Plugins_Proximity"]["profiles"]["RedtuzkUI"] = ["RedtuzkUI"] = {
+    BigWigs3DB["namespaces"]["BigWigs_Plugins_Proximity"]["profiles"]["RedtuzkUI"] =  {
 		["posx"] = 2.13330727550655,
 		["fontSize"] = 20,
 		["soundName"] = "None",
