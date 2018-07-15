@@ -414,58 +414,6 @@ local function SetupLayoutBar(layout)
 	PluginInstallStepComplete:Show()
 end
 
-local function SetupFont(style)
-	local font
-	if (style == "default") then
-		font = "Century Gothic Bold"
-	elseif (style == "cyrillics") then
-		font = "PT Sans Narrow"
-	end
-	
-	--Font settings
-	E.db["sle"]["Armory"]["Character"]["Stats"]["ItemLevel"]["font"] = font
-	E.db["sle"]["Armory"]["Character"]["Enchant"]["Font"] = font
-	E.db["sle"]["Armory"]["Character"]["Durability"]["Font"] = font
-	E.db["sle"]["Armory"]["Character"]["Level"]["Font"] = font
-	E.db["sle"]["Armory"]["Character"]["Artifact"]["Font"] = font
-	E.db["sle"]["minimap"]["instance"]["font"] = font
-	E.db["sle"]["bags"]["artifactPower"]["fonts"]["font"] = font
-	E.db["auras"]["font"] = font
-	E.db["auras"]["consolidatedBuffs"]["font"] = font
-	E.db["unitframe"]["units"]["player"]["customTexts"]["Health2"]["font"] = font
-	E.db["unitframe"]["units"]["player"]["customTexts"]["!Percent"]["font"] = font
-	E.db["unitframe"]["units"]["player"]["customTexts"]["!Name"]["font"] = font
-	E.db["unitframe"]["units"]["party"]["rdebuffs"]["font"] = font
-	E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["font"] = font
-	E.db["unitframe"]["units"]["raid40"]["rdebuffs"]["font"] = font
-	E.db["unitframe"]["units"]["raid40"]["customTexts"]["Health Text"]["font"] = font
-	E.db["unitframe"]["units"]["raid"]["rdebuffs"]["font"] = font
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["Health2"]["font"] = font
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["AltPowerText"]["font"] = font
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["!Health"]["font"] = font
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["BossPower"]["font"] = font
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["!Name"]["font"] = font
-	E.db["unitframe"]["units"]["target"]["customTexts"]["Health2"]["font"] = font
-	E.db["unitframe"]["units"]["target"]["customTexts"]["!Name"]["font"] = font
-	E.db["unitframe"]["units"]["target"]["customTexts"]["PowerText"]["font"] = font
-	E.db["unitframe"]["units"]["target"]["customTexts"]["!Percent"]["font"] = font
-	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["!Name"]["font"] = font
-	E.db["unitframe"]["units"]["focus"]["customTexts"]["!Amount"]["font"] = font
-	E.db["unitframe"]["units"]["focus"]["customTexts"]["!Percent"]["font"] = font
-	E.db["unitframe"]["font"] = font
-	E.db["tooltip"]["font"] = font
-	E.db["tooltip"]["healthBar"]["font"] = font
-	E.db["general"]["font"] = font
-	E.db["datatexts"]["font"] = font
-	E.db["actionbar"]["font"] = font
-	E.db["nameplates"]["font"] = font
-	E.db["chat"]["font"] = font
-	
-	PluginInstallStepComplete.message = "Font Set"
-	PluginInstallStepComplete:Show()
-	E:UpdateAll(true)
-end
-
 local function SetupDetails()
 	RUI:DetailsSettings()
 	_detalhes:ApplyProfile("RedtuzkUI", false, false)
@@ -584,17 +532,6 @@ local InstallerData = {
 			PluginInstallFrame.Option3:SetText("8x2")
 		end,
 		[4] = function()
-			PluginInstallFrame.SubTitle:SetText("Font")
-			PluginInstallFrame.Desc1:SetText("Select one of two fonts.")
-			PluginInstallFrame.Desc2:SetText("The default font is the one chosen by Redtuzk but does not support cyrillics (Russian characters) the other does.")
-			PluginInstallFrame.Option1:Show()
-			PluginInstallFrame.Option1:SetScript("OnClick", function() SetupFont("default") end)
-			PluginInstallFrame.Option1:SetText("Default")
-			PluginInstallFrame.Option2:Show()
-			PluginInstallFrame.Option2:SetScript("OnClick", function() SetupFont("cyrillics") end)
-			PluginInstallFrame.Option2:SetText("Cyrillics")
-		end,
-		[5] = function()
 			PluginInstallFrame.SubTitle:SetText("BigWigs")
 			if IsAddOnLoaded("BigWigs") then --Make sure the User has BigWigs installed.
 				PluginInstallFrame.Desc1:SetText("Import Redtuzk's BigWigs profile. A new profile called RedtuzkUI will be crated. If you already have the Redtuzk profile it will be updated.")
@@ -607,7 +544,7 @@ local InstallerData = {
 				PluginInstallFrame.Desc2:SetText("BigWigs is recommended for use with RedtuzkUI")
 			end
 		end,
-		[6] = function()
+		[5] = function()
 			PluginInstallFrame.SubTitle:SetText("Details")
 			if IsAddOnLoaded("Details") then --Make sure the User has Details installed.
 				PluginInstallFrame.Desc1:SetText("Import Redtuzk's Details profile. A new profile called RedtuzkUI will be created. If you already have the Redtuzk profile it will be updated.")
@@ -619,7 +556,7 @@ local InstallerData = {
 				PluginInstallFrame.Desc2:SetText("Details is recommended for use with RedtuzkUI")
 			end
 		end,
-		[7] = function()
+		[6] = function()
 			PluginInstallFrame.SubTitle:SetText("Installation Complete")
 			PluginInstallFrame.Desc1:SetText("You have completed the installation process.")
 			PluginInstallFrame.Desc2:SetText("Please click the button below in order to finalize the process and automatically reload your UI.")
@@ -635,10 +572,9 @@ local InstallerData = {
 		[1] = "Welcome",
 		[2] = "Profile Setup",
 		[3] = "Action Bar Layouts",
-		[4] = "Font",
-		[5] = "BigWigs Setup",
-		[6] = "Details Setup",
-		[7] = "Installation Complete",
+		[4] = "BigWigs Setup",
+		[5] = "Details Setup",
+		[6] = "Installation Complete",
 	},
 	StepTitlesColor = {1, 1, 1},
 	StepTitlesColorSelected = {0.769, 0.122, 0.231},
