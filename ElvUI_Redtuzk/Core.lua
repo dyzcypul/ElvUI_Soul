@@ -492,7 +492,6 @@ local InstallerData = {
 				PluginInstallFrame.Option1:SetText("Skip Process")
 				if  not IsAddOnLoaded("ElvUI_SLE") then
 					PluginInstallFrame.Desc3:SetText("|cffff0000Caution! Some features won't work until you install/load|r |cff9482c9Shadow and Light|r")
-					DummySLE()	
 				end
 			else
 				PluginInstallFrame.SubTitle:SetFormattedText("|cff00ff00There is a new update for|r |cffc41f3b%s|r.", MyPluginName)
@@ -503,7 +502,6 @@ local InstallerData = {
 				PluginInstallFrame.Option1:SetText("Skip Process")
 				if  not IsAddOnLoaded("ElvUI_SLE") then
 					PluginInstallFrame.Desc3:SetText("|cffff0000Caution! Some features won't work until you install/load|r |cff9482c9Shadow and Light|r")
-					DummySLE()	
 				end
 			end
 		end,
@@ -518,6 +516,9 @@ local InstallerData = {
 			PluginInstallFrame.Option2:SetText("Create New")
 		end,
 		[3] = function()
+		    if  not IsAddOnLoaded("ElvUI_SLE") then
+				DummySLE()
+			end
 			PluginInstallFrame.SubTitle:SetText("Action Bar Layouts")
 			PluginInstallFrame.Desc1:SetText("These are the layouts that are available. Please click a button below to apply the layout of your choosing.")
 			PluginInstallFrame.Desc2:SetText("Importance: |cff07D400High|r")
