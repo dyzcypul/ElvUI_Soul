@@ -372,13 +372,39 @@ local function powerBarSetup()
 end
 
 --This function will hold your layout settings
-local function SetupLayout(layout)
+local function SetupLayoutBar(layout)
 	CreateCustomTexts()
 	CreatingMissingSettings()
 	EnableCustomTweaks()
-	
 	RUI:ElvUISettings()
 	powerBarSetup()
+	
+	if layout == "5x2" then
+	elseif layout == "6x2" then
+		E.db["actionbar"]["bar2"]["buttons"] = 6
+		E.db["actionbar"]["bar2"]["buttonsize"] = 36
+		E.db["actionbar"]["bar1"]["buttons"] = 6
+		E.db["actionbar"]["bar1"]["buttonsize"] = 36
+		E.db["movers"]["ElvAB_1"] = "BOTTOM,ElvUIParent,BOTTOM,0,293"
+		E.db["movers"]["ElvAB_2"] = "BOTTOM,ElvUIParent,BOTTOM,0,256"
+		E.db["unitframe"]["units"]["player"]["castbar"]["width"] = 222
+		E.db["movers"]["ElvUF_PlayerCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,235"
+		E.db["unitframe"]["units"]["player"]["power"]["detachedWidth"] = 222
+		E.db["unitframe"]["units"]["player"]["classbar"]["detachedWidth"] = 222
+		WeakAurasSaved["displays"]["RedtuzkUI Power Bar"]["width"] = 222.00022888184
+	elseif layout == "8x2" then
+		E.db["actionbar"]["bar2"]["buttons"] = 8
+		E.db["actionbar"]["bar2"]["buttonsize"] = 36
+		E.db["actionbar"]["bar1"]["buttons"] = 8
+		E.db["actionbar"]["bar1"]["buttonsize"] = 36
+		E.db["movers"]["ElvAB_1"] = "BOTTOM,ElvUIParent,BOTTOM,0,293"
+		E.db["movers"]["ElvAB_2"] = "BOTTOM,ElvUIParent,BOTTOM,0,256"
+		E.db["unitframe"]["units"]["player"]["castbar"]["width"] = 296
+		E.db["movers"]["ElvUF_PlayerCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,235"
+		E.db["unitframe"]["units"]["player"]["power"]["detachedWidth"] = 296
+		E.db["unitframe"]["units"]["player"]["classbar"]["detachedWidth"] = 296
+		WeakAurasSaved["displays"]["RedtuzkUI Power Bar"]["width"] = 296.00022888184
+	end
 
 	E.db["chat"]["keywords"] = "ElvUI"
 	--Update ElvUI
@@ -471,6 +497,24 @@ local function SetupBigWigs()
 	end
 end
 
+local function createLink()
+	StaticPopupDialogs["DiscordLinkDisplay"] = {
+	text = L["Use the following link to join us on Discord"],
+	button1 = L["Close"],
+	hasEditBox = 1,
+	whileDead = 1,
+	hideOnEscape = 1,
+	timeout = 0,
+	OnShow = function(self, data)
+		self.editBox:SetAutoFocus(false)
+		self.editBox:SetWidth(150)
+		self.editBox:SetText("redtuzk.com/discord"); --default text in the editbox
+		self.editBox:HighlightText()
+	end,
+	};
+	StaticPopup_Show("DiscordLinkDisplay", "test"); --tell our dialog box to show
+end
+
 --This function is executed when you press "Skip Process" or "Finished" in the installer.
 local function InstallComplete()
 	if GetCVarBool("Sound_EnableMusic") then
@@ -498,13 +542,21 @@ local InstallerData = {
 				PluginInstallFrame.Option1:Show()
 				PluginInstallFrame.Option1:SetScript("OnClick", InstallComplete)
 				PluginInstallFrame.Option1:SetText("Skip Process")
+				if  not IsAddOnLoaded("ElvUI_SLE") then
+					PluginInstallFrame.Desc3:SetText("|cffff0000Caution! Some features won't work until you install/load|r |cff9482c9Shadow and Light|r")
+					DummySLE()	
+				end
 			else
-				PluginInstallFrame.SubTitle:SetFormattedText("There is a new update for %s.", MyPluginName)
+				PluginInstallFrame.SubTitle:SetFormattedText("|cff00ff00There is a new update for|r |cffc41f3b%s|r.", MyPluginName)
 				PluginInstallFrame.Desc1:SetText("Please go through the installation process again to apply the new updates to your profile. Any changes that you've made from the default RedtuzkUI profile will be removed.")
 				PluginInstallFrame.Desc2:SetText("Please press the continue button if you wish to go through the update and installation process. If you do not want to update click the 'Skip Process' button.")
 				PluginInstallFrame.Option1:Show()
 				PluginInstallFrame.Option1:SetScript("OnClick", InstallComplete)
 				PluginInstallFrame.Option1:SetText("Skip Process")
+				if  not IsAddOnLoaded("ElvUI_SLE") then
+					PluginInstallFrame.Desc3:SetText("|cffff0000Caution! Some features won't work until you install/load|r |cff9482c9Shadow and Light|r")
+					DummySLE()	
+				end
 			end
 		end,
 		[2] = function()
@@ -518,22 +570,18 @@ local InstallerData = {
 			PluginInstallFrame.Option2:SetText("Create New")
 		end,
 		[3] = function()
-			PluginInstallFrame.SubTitle:SetText("Layouts")
+			PluginInstallFrame.SubTitle:SetText("Action Bar Layouts")
 			PluginInstallFrame.Desc1:SetText("These are the layouts that are available. Please click a button below to apply the layout of your choosing.")
 			PluginInstallFrame.Desc2:SetText("Importance: |cff07D400High|r")
-            if  not IsAddOnLoaded("ElvUI_SLE") then
-				PluginInstallFrame.Desc3:SetText("|cffff0000Caution! Some features won't work until you install/load|r |cff9482c9Shadow and Light|r")
-				DummySLE()			
-			end
 			PluginInstallFrame.Option1:Show()
-			PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayout("tank") end)
-			PluginInstallFrame.Option1:SetText("Tank")
+			PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayoutBar("5x2") end)
+			PluginInstallFrame.Option1:SetText("5x2 (Default)")
 			PluginInstallFrame.Option2:Show()
-			PluginInstallFrame.Option2:SetScript("OnClick", function() SetupLayout("healer") end)
-			PluginInstallFrame.Option2:SetText("Healer")
+			PluginInstallFrame.Option2:SetScript("OnClick", function() SetupLayoutBar("6x2") end)
+			PluginInstallFrame.Option2:SetText("6x2")
 			PluginInstallFrame.Option3:Show()
-			PluginInstallFrame.Option3:SetScript("OnClick", function() SetupLayout("dps") end)
-			PluginInstallFrame.Option3:SetText("DPS")
+			PluginInstallFrame.Option3:SetScript("OnClick", function() SetupLayoutBar("8x2") end)
+			PluginInstallFrame.Option3:SetText("8x2")
 		end,
 		[4] = function()
 			PluginInstallFrame.SubTitle:SetText("Font")
@@ -578,12 +626,15 @@ local InstallerData = {
 			PluginInstallFrame.Option1:Show()
 			PluginInstallFrame.Option1:SetScript("OnClick", InstallComplete)
 			PluginInstallFrame.Option1:SetText("Finished")
+			PluginInstallFrame.Option2:Show()
+			PluginInstallFrame.Option2:SetScript("OnClick", createLink)
+			PluginInstallFrame.Option2:SetText("Join us on Discord!")
 		end,
 	},
 	StepTitles = {
 		[1] = "Welcome",
 		[2] = "Profile Setup",
-		[3] = "Layouts",
+		[3] = "Action Bar Layouts",
 		[4] = "Font",
 		[5] = "BigWigs Setup",
 		[6] = "Details Setup",
@@ -613,28 +664,41 @@ local function InsertOptions()
 				type = "description",
 				name = format("%s is a layout for ElvUI.", MyPluginName),
 			},
+			discordlink = {
+				order = 3, type = 'input', width = 'full', name = L["Join us on Discord!"],
+				get = function(info) return 'www.redtuzk.com/discord' end,
+			},
+			discordicon = {
+				order = 4,
+				type = "description",
+				name = "",
+				image = "Interface\\AddOns\\ElvUI_Redtuzk\\Media\\discord.tga",
+				imageWidth = 256,
+				imageHeight = 128,
+				imageCoords = {0,1,0,1},
+			},
 			spacer1 = {
-				order = 3,
+				order = 5,
 				type = "description",
 				name = "\n\n\n",
 			},
 			header2 = {
-				order = 4,
+				order = 6,
 				type = "header",
 				name = "Installation",
 			},
 			description2 = {
-				order = 5,
+				order = 7,
 				type = "description",
 				name = "The installation guide should pop up automatically after you have completed the ElvUI installation. If you wish to re-run the installation process for this layout then please click the button below.",
 			},
 			spacer2 = {
-				order = 6,
+				order = 8,
 				type = "description",
 				name = "",
 			},
 			install = {
-				order = 7,
+				order = 9,
 				type = "execute",
 				name = "Install",
 				desc = "Run the installation process.",
@@ -643,7 +707,6 @@ local function InsertOptions()
 		},
 	}
 end
-
 --Create a unique table for our plugin
 P[MyPluginName] = {}
 
