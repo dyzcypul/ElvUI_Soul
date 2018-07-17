@@ -1022,8 +1022,6 @@ function RUI:ElvUISettings()
     E.db["sle"]["Armory"]["Character"]["Level"]["FontSize"] = 12
     E.db["sle"]["Armory"]["Character"]["Durability"]["FontSize"] = 12
     E.db["sle"]["Armory"]["Character"]["Durability"]["Font"] = "Century Gothic Bold"
-    E.db["sle"]["Armory"]["Character"]["Artifact"]["FontSize"] = 11
-    E.db["sle"]["Armory"]["Character"]["Artifact"]["Font"] = "Century Gothic Bold"
     E.db["sle"]["datatext"]["dp3"]["transparent"] = true
     E.db["sle"]["datatext"]["dp3"]["width"] = 300
     E.db["sle"]["datatext"]["chatright"]["width"] = 679
@@ -1091,7 +1089,6 @@ function RUI:ElvUISettings()
     E.db["sle"]["unitframes"]["unit"]["player"]["portraitAlpha"] = 0.54
     E.db["sle"]["unitframes"]["unit"]["player"]["rested"]["texture"] = "CUSTOM"
     E.db["sle"]["unitframes"]["roleicons"] = "MiirGui"
-    E.db["sle"]["bags"]["artifactPower"]["fonts"]["font"] = "Century Gothic Bold"
     E.db["sle"]["minimap"]["instance"]["fontSize"] = 14
     E.db["sle"]["minimap"]["instance"]["xoffset"] = 2
     E.db["sle"]["minimap"]["instance"]["font"] = "Century Gothic Bold"
