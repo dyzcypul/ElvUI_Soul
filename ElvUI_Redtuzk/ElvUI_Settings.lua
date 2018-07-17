@@ -169,8 +169,6 @@ function RUI:ElvUISettings()
     E.db["sle"]["Armory"]["Character"]["Durability"]["Font"] = "Century Gothic Bold"
     E.db["sle"]["Armory"]["Character"]["Level"]["FontSize"] = 12
     E.db["sle"]["Armory"]["Character"]["Level"]["Font"] = "Century Gothic Bold"
-    E.db["sle"]["Armory"]["Character"]["Artifact"]["Font"] = "Century Gothic Bold"
-    E.db["sle"]["Armory"]["Character"]["Artifact"]["FontSize"] = 11
     E.db["sle"]["Armory"]["Character"]["Enchant"]["FontSize"] = 11
     E.db["sle"]["Armory"]["Character"]["Enchant"]["Font"] = "Century Gothic Bold"
     E.db["sle"]["datatext"]["dp3"]["width"] = 300
@@ -267,7 +265,6 @@ function RUI:ElvUISettings()
     E.db["sle"]["datatexts"]["panel1"]["enabled"] = true
     E.db["sle"]["datatexts"]["panel1"]["width"] = 197
     E.db["sle"]["datatexts"]["panel1"]["transparent"] = true
-    E.db["sle"]["bags"]["artifactPower"]["fonts"]["font"] = "Century Gothic Bold"
     E.db["sle"]["minimap"]["instance"]["fontSize"] = 14
     E.db["sle"]["minimap"]["instance"]["xoffset"] = 2
     E.db["sle"]["minimap"]["instance"]["font"] = "Century Gothic Bold"
