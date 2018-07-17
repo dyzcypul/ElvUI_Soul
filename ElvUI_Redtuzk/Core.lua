@@ -101,6 +101,7 @@ local function CreateCustomTexts()
 	E.db["unitframe"]["units"]["focus"]["customTexts"] = E.db["unitframe"]["units"]["focus"]["customTexts"] or {}
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["!Amount"] = {}
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["!Percent"] = {}
+	E.db["unitframe"]["units"]["focus"]["customTexts"]["!Name"] = {}
 end
 
 local function CreatingMissingSettings()
