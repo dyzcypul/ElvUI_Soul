@@ -1127,9 +1127,4 @@ function RUI:ElvUISettings()
 	E.db["databars"]["honor"]["height"] = 179
 	E.db["databars"]["honor"]["width"] = 6
 	E.db["bossAuraFiltersConverted"] = true
-	
-		--ElvUI Private Settings--
-	E.private.general.chatBubbles = 'nobackdrop'
-	E.private.general.namefont = "Century Gothic Bold"
-	E.private.general.dmgfont = "Century Gothic Bold"
 end
