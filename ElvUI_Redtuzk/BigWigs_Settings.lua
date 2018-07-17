@@ -111,3 +111,56 @@ function RUI:BigWigsSettings()
 	--This is the only settings that BigWigs actually stores under the profile, shouldn't ever need to be changed
     BigWigs3DB["profiles"]["RedtuzkUI"]["fakeDBMVersion"] = true
 end
+
+function RUI:BigWigsFresh()
+	BigWigs3DB = {
+		["namespaces"] = {
+			["BigWigs_Plugins_Alt Power"] = {
+				["profiles"] = {
+					["RedtuzkUI"] = {},
+				},
+			},
+			["BigWigs_Plugins_Messages"] = {
+				["profiles"] = {
+					["RedtuzkUI"] = {},
+				},
+			},
+			["BigWigs_Plugins_Sounds"] = {
+				["profiles"] = {
+					["RedtuzkUI"] = {},
+				},
+			},
+			["BigWigs_Plugins_Colors"] = {
+				["profiles"] = {
+					["RedtuzkUI"] = {},
+				},
+			},
+			["BigWigs_Plugins_Proximity"] = {
+				["profiles"] = {
+					["RedtuzkUI"] = {},
+				},
+			},
+			["BigWigs_Plugins_InfoBox"] = {
+				["profiles"] = {
+					["RedtuzkUI"] = {},
+				},
+			},
+			["BigWigs_Plugins_Bars"] = {
+				["profiles"] = {
+					["RedtuzkUI"] = {},
+				},
+			},
+			["BigWigs_Plugins_Super Emphasize"] = {
+				["profiles"] = {
+					["RedtuzkUI"] = {},
+				},
+			},
+			["BigWigs_Plugins_Pull"] = {
+				["profiles"] = {
+					["RedtuzkUI"] = {},
+				},
+			},
+		},
+	}
+	BigWigs3DB["profiles"] = {}
+end
