@@ -570,7 +570,7 @@ local InstallerData = {
 			PluginInstallFrame.Option1:SetText("Finished")
 			PluginInstallFrame.Option2:Show()
 			PluginInstallFrame.Option2:SetScript("OnClick", createLink)
-			PluginInstallFrame.Option2:SetText("Join us on Discord!")
+			PluginInstallFrame.Option2:SetText("Join Discord")
 		end,
 	},
 	StepTitles = {
