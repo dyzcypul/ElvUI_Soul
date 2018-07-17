@@ -473,6 +473,8 @@ local function InstallComplete()
 		StopMusic()
 	end
 
+    local SLEv = GetAddOnMetadata("ElvUI_SLE", "Version")
+    E.private.sle.install_complete = SLEv
 	--Set a variable tracking the version of the addon when layout was installed
 	E.db[MyPluginName].install_version = Version
 
@@ -654,6 +656,7 @@ P[MyPluginName] = {}
 --This function will handle initialization of the addon
 function mod:Initialize()
 	--Initiate installation process if ElvUI install is complete and our plugin install has not yet been run or its a newer version
+	E.private.install_complete = E.version
 	if E.private.install_complete and (E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version ~= Version) then
 		E:GetModule("PluginInstaller"):Queue(InstallerData)
 	end
