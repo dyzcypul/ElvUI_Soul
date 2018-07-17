@@ -1164,4 +1164,9 @@ function RUI:ElvUISettings()
     E.db["chat"]["tapFontSize"] = 12
     E.db["chat"]["panelWidth"] = 400
 
+	--ElvUI Private Settings--
+	E.private.general.chatBubbles = 'nobackdrop'
+	E.private.general.namefont = "Century Gothic Bold"
+	E.private.general.dmgfont = "Century Gothic Bold"
+
 end
