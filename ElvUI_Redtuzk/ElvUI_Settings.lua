@@ -2,7 +2,7 @@ local RUI = select(2, ...):unpack()
 local E, L, V, P, G = unpack(ElvUI)
 
 function RUI:ElvUISettings()
-    E.db["ESC"]["fontSize"] = 20
+   E.db["ESC"]["fontSize"] = 20
     E.db["ESC"]["mmSSthreshold"] = 300
     E.db["ESC"]["textOffsetY"] = 0
     E.db["ESC"]["textOffsetX"] = 0
@@ -10,6 +10,7 @@ function RUI:ElvUISettings()
     E.db["ESC"]["mmSScolor"]["b"] = 0
     E.db["ESC"]["font"] = "Expressway"
     E.db["currentTutorial"] = 1
+    E.db["general"]["totems"]["enable"] = false
     E.db["general"]["totems"]["size"] = 36
     E.db["general"]["interruptAnnounce"] = "SAY"
     E.db["general"]["afk"] = false
