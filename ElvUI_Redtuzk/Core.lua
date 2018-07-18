@@ -193,6 +193,7 @@ local function CreatingMissingSettings()
 	E.db["ESC"] = E.db["ESC"] or {}
 	E.db["ESC"]["mmSScolor"] = E.db["ESC"]["mmSScolor"] or {}
 	E.db["auras"]["consolidatedBuffs"] = E.db["auras"]["consolidatedBuffs"] or {}
+	E.db["nameplates"]["cooldown"]["fonts"] = E.db["nameplates"]["cooldown"]["fonts"]or {}
 end
 
 local function EnableCustomTweaks()
