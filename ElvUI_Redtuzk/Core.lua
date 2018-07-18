@@ -20,6 +20,7 @@ local StopMusic = StopMusic
 
 --Change this line and use a unique name for your plugin.
 local MyPluginName = "RedtuzkUI"
+local RUIlayout = "5x2"
 
 --Create references to ElvUI internals
 local E, L, V, P, G = unpack(ElvUI)
@@ -365,14 +366,23 @@ local function AddCustomTags()
 	end
 end
 
-local function powerBarSetup()
-	if IsAddOnLoaded("WeakAuras") then
-		RUI:ImportAuras()
+local function WASetup(aura)
+	if aura == "powerbar" then
+		print(RUIlayout)
+		RUI:ImportPowerBar()
 		E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"]["enable"] = false
 		E.db["unitframe"]["units"]["player"]["power"]["enable"] = false
-	else
-		E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"]["enable"] = true
-		E.db["unitframe"]["units"]["player"]["power"]["enable"] = true
+		if RUIlayout == "6x2" then
+			WeakAurasSaved["displays"]["RedtuzkUI Power Bar"]["width"] = 222.00022888184
+		elseif RUIlayout == "8x2" then
+			WeakAurasSaved["displays"]["RedtuzkUI Power Bar"]["width"] = 296.00022888184
+		end
+		PluginInstallStepComplete.message = "PowerBar Aura Imported"
+		PluginInstallStepComplete:Show()
+	elseif aura == "templates" then
+		RUI:ImportTemplates()
+		PluginInstallStepComplete.message = "RUI Icon Templates Imported"
+		PluginInstallStepComplete:Show()
 	end
 end
 
@@ -382,7 +392,7 @@ local function SetupLayoutBar(layout)
 	CreatingMissingSettings()
 	EnableCustomTweaks()
 	RUI:ElvUISettings()
-	powerBarSetup()
+	RUIlayout = layout
 	
 	if layout == "5x2" then
 	elseif layout == "6x2" then
@@ -396,9 +406,6 @@ local function SetupLayoutBar(layout)
 		E.db["movers"]["ElvUF_PlayerCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,235"
 		E.db["unitframe"]["units"]["player"]["power"]["detachedWidth"] = 222
 		E.db["unitframe"]["units"]["player"]["classbar"]["detachedWidth"] = 222
-		if IsAddOnLoaded("WeakAuras") then
-			WeakAurasSaved["displays"]["RedtuzkUI Power Bar"]["width"] = 222.00022888184
-		end
 	elseif layout == "8x2" then
 		E.db["actionbar"]["bar2"]["buttons"] = 8
 		E.db["actionbar"]["bar2"]["buttonsize"] = 36
@@ -410,10 +417,11 @@ local function SetupLayoutBar(layout)
 		E.db["movers"]["ElvUF_PlayerCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,235"
 		E.db["unitframe"]["units"]["player"]["power"]["detachedWidth"] = 296
 		E.db["unitframe"]["units"]["player"]["classbar"]["detachedWidth"] = 296
-		if IsAddOnLoaded("WeakAuras") then
-			WeakAurasSaved["displays"]["RedtuzkUI Power Bar"]["width"] = 296.00022888184
-		end
 	end
+
+	--Enable ElvUI PowerBar by default
+	E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"]["enable"] = true
+	E.db["unitframe"]["units"]["player"]["power"]["enable"] = true
 
 	E.db["chat"]["keywords"] = "ElvUI"
 	--Update ElvUI
@@ -536,6 +544,22 @@ local InstallerData = {
 			PluginInstallFrame.Option3:SetText("8x2")
 		end,
 		[4] = function()
+			PluginInstallFrame.SubTitle:SetText("Weak Auras")
+			if IsAddOnLoaded("WeakAuras") then --Make sure the User has Weak Auras installed.
+				PluginInstallFrame.Desc1:SetText("Import some of Redtuzk's Weak Auras.\n Clicking the \"Power Bar\" options will added the WeakAuras power bar instead of the ElvUI one. \n\nThe \"Template\" option will add in a set of WeakAuras templates for you to use for buff tracking")
+				PluginInstallFrame.Desc2:SetText("Requires a UI reload for Aura imports to take effect")
+				PluginInstallFrame.Option1:Show()
+				PluginInstallFrame.Option1:SetScript("OnClick", function() WASetup("powerbar") end)
+				PluginInstallFrame.Option1:SetText("Power Bar")
+				PluginInstallFrame.Option2:Show()
+				PluginInstallFrame.Option2:SetScript("OnClick", function() WASetup("templates") end)
+				PluginInstallFrame.Option2:SetText("Templates")
+			else
+				PluginInstallFrame.Desc1:SetText("|cffB33A3AOops, it looks like you don't have Weak Auras installed!|r")
+				PluginInstallFrame.Desc2:SetText("Weak Auras is recommended for use with RedtuzkUI")
+			end
+		end,
+		[5] = function()
 			PluginInstallFrame.SubTitle:SetText("BigWigs")
 			if IsAddOnLoaded("BigWigs") then --Make sure the User has BigWigs installed.
 				PluginInstallFrame.Desc1:SetText("Import Redtuzk's BigWigs profile. A new profile called RedtuzkUI will be crated. If you already have the Redtuzk profile it will be updated.")
@@ -548,7 +572,7 @@ local InstallerData = {
 				PluginInstallFrame.Desc2:SetText("BigWigs is recommended for use with RedtuzkUI")
 			end
 		end,
-		[5] = function()
+		[6] = function()
 			PluginInstallFrame.SubTitle:SetText("Details")
 			if IsAddOnLoaded("Details") then --Make sure the User has Details installed.
 				PluginInstallFrame.Desc1:SetText("Import Redtuzk's Details profile. A new profile called RedtuzkUI will be created. If you already have the Redtuzk profile it will be updated.")
@@ -560,7 +584,7 @@ local InstallerData = {
 				PluginInstallFrame.Desc2:SetText("Details is recommended for use with RedtuzkUI")
 			end
 		end,
-		[6] = function()
+		[7] = function()
 			PluginInstallFrame.SubTitle:SetText("Installation Complete")
 			PluginInstallFrame.Desc1:SetText("You have completed the installation process.")
 			PluginInstallFrame.Desc2:SetText("Please click the button below in order to finalize the process and automatically reload your UI.")
@@ -576,9 +600,10 @@ local InstallerData = {
 		[1] = "Welcome",
 		[2] = "Profile Setup",
 		[3] = "Action Bar Layouts",
-		[4] = "BigWigs Setup",
-		[5] = "Details Setup",
-		[6] = "Installation Complete",
+		[4] = "Weak Auras",
+		[5] = "BigWigs Setup",
+		[6] = "Details Setup",
+		[7] = "Installation Complete",
 	},
 	StepTitlesColor = {1, 1, 1},
 	StepTitlesColorSelected = {0.769, 0.122, 0.231},
