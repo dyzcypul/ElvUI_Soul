@@ -30,18 +30,6 @@ function RUI:BigWigsSettings()
 		["BWMessageAnchor_y"] = 583.822149553562,
 		["fontSize"] = 22,
 	}
-    BigWigs3DB["namespaces"]["BigWigs_Plugins_Sounds"]["profiles"]["RedtuzkUI"] = {
-		["Long"] = {
-		},
-		["Warning"] = {
-		},
-		["Info"] = {
-		},
-		["Alarm"] = {
-		},
-		["Alert"] = {
-		},
-	}
     BigWigs3DB["namespaces"]["BigWigs_Plugins_Colors"]["profiles"]["RedtuzkUI"] = {
 		["barBackground"] = {
 			["BigWigs_Plugins_Colors"] = {
