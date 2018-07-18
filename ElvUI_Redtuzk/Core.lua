@@ -682,9 +682,7 @@ function mod:Initialize()
 	if E.private.install_complete and (E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version ~= Version) then
 		E:GetModule("PluginInstaller"):Queue(InstallerData)
 	end
-	if IsAddOnLoaded("ElvUI_CustomTags") then
-		AddCustomTags() --Add in the custom tags if the CustomTags addon is loaded
-	end
+	AddCustomTags()
 	--Insert our options table when ElvUI config is loaded
 	RUI:FPS()
 	RUI:Ping()
