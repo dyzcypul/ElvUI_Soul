@@ -1,4 +1,4 @@
-## Interface: 70300
+## Interface: 80000
 ## Author: Aldarana, Blazeflack
 ## Version: 1.0
 ## Title: |cff1784d1ElvUI|r |cffc41f3bRedtuzk|r
