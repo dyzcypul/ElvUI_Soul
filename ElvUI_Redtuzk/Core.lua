@@ -368,7 +368,6 @@ end
 
 local function WASetup(aura)
 	if aura == "powerbar" then
-		print(RUIlayout)
 		RUI:ImportPowerBar()
 		E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"]["enable"] = false
 		E.db["unitframe"]["units"]["player"]["power"]["enable"] = false
@@ -441,17 +440,18 @@ end
 local function SetupBigWigs()
 	--Check see if the BigWigs database exists
 	if(BigWigs3DB) then	
-		--If it does add RedtuzkUI to the profiles and apply it
+		--If it does add RedtuzkUI to the profiles
         RUI:BigWigsSettings()
 	else
 		--If it doesn't create the BigWigs database then add RedtuzkUI to the profiles
 		RUI:BigWigsFresh()
 		RUI:BigWigsSettings()
+	end
+	--Apply the RedtuzkUI profile
 	local BigWigs = LibStub("AceDB-3.0"):New(BigWigs3DB)
 	BigWigs:SetProfile("RedtuzkUI")
 	PluginInstallStepComplete.message = "BigWigs Profile Applied"
 	PluginInstallStepComplete:Show()
-	end
 end
 
 local function createLink()
