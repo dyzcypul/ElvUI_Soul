@@ -1218,7 +1218,7 @@ function RUI:ElvUISettings()
 
 
     --ElvUI Private Settings--
-	E.private.general.chatBubbles = 'nobackdrop'
+	E.private.general.chatBubbles = 'backdrop'
 	E.private.general.namefont = "Century Gothic Bold"
 	E.private.general.dmgfont = "Century Gothic Bold"
 
