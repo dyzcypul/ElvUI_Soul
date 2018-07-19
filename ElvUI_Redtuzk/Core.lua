@@ -748,7 +748,7 @@ P[MyPluginName] = {}
 --This function will handle initialization of the addon
 function mod:Initialize()
     if E.db[MyPluginName].install_version == "1.0" then
-        E.db[MyPluginName].install_version == nil
+        E.db[MyPluginName].install_version = nil
     end
 	--Initiate installation process if ElvUI install is complete and our plugin install has not yet been run or its a newer version
 	E.private.install_complete = E.version
