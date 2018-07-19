@@ -31,6 +31,9 @@ local EP = LibStub("LibElvUIPlugin-1.0")
 --Create a new ElvUI module so ElvUI can handle initialization when ready
 local mod = E:NewModule(MyPluginName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0");
 
+--Store the Discord link
+discordLink = "http://discord.gg/JEa5yXc"
+
 --Runs for the step questioning the user if they want a new ElvUI profile
 local function NewProfile(new)
 	if (new) then -- the user clicked "Create New" create a dialog pop up
@@ -369,12 +372,13 @@ end
 
 local function WASetup(aura)
 	if aura == "powerbar" then
+		E.db[MyPluginName].WABar = true
 		RUI:ImportPowerBar()
 		E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"]["enable"] = false
 		E.db["unitframe"]["units"]["player"]["power"]["enable"] = false
-		if RUIlayout == "6x2" then
+		if E.db[MyPluginName].layout == "6x2" then
 			WeakAurasSaved["displays"]["RedtuzkUI Power Bar"]["width"] = 222.00022888184
-		elseif RUIlayout == "8x2" then
+		elseif E.db[MyPluginName].layout == "8x2" then
 			WeakAurasSaved["displays"]["RedtuzkUI Power Bar"]["width"] = 296.00022888184
 		end
 		PluginInstallStepComplete.message = "PowerBar Aura Imported"
@@ -392,7 +396,7 @@ local function SetupLayoutBar(layout)
 	CreatingMissingSettings()
 	EnableCustomTweaks()
 	RUI:ElvUISettings()
-	RUIlayout = layout
+	E.db[MyPluginName].layout = layout
 	
 	if layout == "5x2" then
 	elseif layout == "6x2" then
@@ -428,8 +432,13 @@ local function SetupLayoutBar(layout)
 	end
 
 	--Enable ElvUI PowerBar by default
-	E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"]["enable"] = true
-	E.db["unitframe"]["units"]["player"]["power"]["enable"] = true
+	if not E.db[MyPluginName].WABar then
+		E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"]["enable"] = true
+		E.db["unitframe"]["units"]["player"]["power"]["enable"] = true
+	else
+		E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"]["enable"] = false
+		E.db["unitframe"]["units"]["player"]["power"]["enable"] = false
+	end
 
 	E.db["chat"]["keywords"] = "ElvUI"
 	--Update ElvUI
@@ -474,7 +483,7 @@ local function createLink()
 	OnShow = function(self, data)
 		self.editBox:SetAutoFocus(false)
 		self.editBox:SetWidth(150)
-		self.editBox:SetText("redtuzk.com/discord"); --default text in the editbox
+		self.editBox:SetText(discordLink); --default text in the editbox
 		self.editBox:HighlightText()
 	end,
 	};
@@ -503,7 +512,7 @@ local InstallerData = {
 	tutorialImage = "Interface\\AddOns\\ElvUI_Redtuzk\\Media\\logo.tga", --If you have a logo you want to use, otherwise it uses the one from ElvUI
 	Pages = {
 		[1] = function()
-			if E.db[MyPluginName].install_version == nil then
+			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == E.db[MyPluginName].install_version then
 				PluginInstallFrame.SubTitle:SetFormattedText("Welcome to the installation for %s.", MyPluginName)
 				PluginInstallFrame.Desc1:SetText("This installation process will guide you through a few steps and apply settings to your current ElvUI profile. If you want to be able to go back to your original settings then create a new profile before going through this installation process.")
 				PluginInstallFrame.Desc2:SetText("Please press the continue button if you wish to go through the installation process, otherwise click the 'Skip Process' button.")
@@ -514,55 +523,86 @@ local InstallerData = {
 					PluginInstallFrame.Desc3:SetText("|cffff0000Caution! Some features won't work until you install/load|r |cff9482c9Shadow and Light|r")
 				end
 			else
-				PluginInstallFrame.SubTitle:SetFormattedText("|cff00ff00There is a new update for|r |cffc41f3b%s|r.", MyPluginName)
-				PluginInstallFrame.Desc1:SetText("Please go through the installation process again to apply the new updates to your profile. Any changes that you've made from the default RedtuzkUI profile will be removed.")
-				PluginInstallFrame.Desc2:SetText("Please press the continue button if you wish to go through the update and installation process. If you do not want to update click the 'Skip Process' button.")
+				PluginInstallFrame.SubTitle:SetFormattedText("|cff00ff00Looks like you've downloaded and update for|r |cffc41f3b%s|r!", MyPluginName)
+				PluginInstallFrame.Desc1:SetText("Please go through the installer again to update parts of the UI you'd like updated.\n\n\nAny changes that you've made from the default RedtuzkUI profile will be removed.")
 				PluginInstallFrame.Option1:Show()
 				PluginInstallFrame.Option1:SetScript("OnClick", InstallComplete)
 				PluginInstallFrame.Option1:SetText("Skip Process")
 				if  not IsAddOnLoaded("ElvUI_SLE") then
-					PluginInstallFrame.Desc3:SetText("|cffff0000Caution! Some features won't work until you install/load|r |cff9482c9Shadow and Light|r")
+					PluginInstallFrame.Desc2:SetText("|cffff0000Caution! Some features won't work until you install/load|r |cff9482c9Shadow & Light|r")
+				end
+				if not IsAddOnLoaded("AddonSkins") then
+					PluginInstallFrame.Desc2:SetText(PluginInstallFrame.Desc2:GetText().." |cffff0000and|r |cff1784d1AddonSkins|r")
 				end
 			end
 		end,
 		[2] = function()
-			PluginInstallFrame.SubTitle:SetText("Profiles")
-			PluginInstallFrame.Desc1:SetText("You can either create a new profile to install RedtuzkUI onto or you can apply RedtuzkUI settings to your current profile")
-			PluginInstallFrame.Option1:Show()
-			PluginInstallFrame.Option1:SetScript("OnClick", function() NewProfile(false) end)
-			PluginInstallFrame.Option1:SetText("Use Current")
-			PluginInstallFrame.Option2:Show()
-			PluginInstallFrame.Option2:SetScript("OnClick", function() NewProfile(true) end)
-			PluginInstallFrame.Option2:SetText("Create New")
+			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == E.db[MyPluginName].install_version then
+				PluginInstallFrame.SubTitle:SetText("Profiles")
+				PluginInstallFrame.Desc1:SetText("You can either create a new profile to install RedtuzkUI onto or you can apply RedtuzkUI settings to your current profile")
+				PluginInstallFrame.Option1:Show()
+				PluginInstallFrame.Option1:SetScript("OnClick", function() NewProfile(false) end)
+				PluginInstallFrame.Option1:SetText("Use Current")
+				PluginInstallFrame.Option2:Show()
+				PluginInstallFrame.Option2:SetScript("OnClick", function() NewProfile(true, "RedtuzkUI") end)
+				PluginInstallFrame.Option2:SetText("Create New")
+			else
+				PluginInstallFrame.SubTitle:SetText("Profiles")
+				PluginInstallFrame.Desc1:SetText("Press \"Update Current\" to update your current profile with the new RedtuzkUI changes.")
+				PluginInstallFrame.Desc2:SetText("If you'd like to check out what the changes are, without overwriting your current settings, you can press \"Create New\"")
+				PluginInstallFrame.Option1:Show()
+				PluginInstallFrame.Option1:SetScript("OnClick", function() NewProfile(false) end)
+				PluginInstallFrame.Option1:SetText("Update Current")
+				PluginInstallFrame.Option2:Show()
+				PluginInstallFrame.Option2:SetScript("OnClick", function() NewProfile(true, "RedtuzkUI-Update") end)
+				PluginInstallFrame.Option2:SetText("Create New")
+			end
 		end,
 		[3] = function()
 		    if  not IsAddOnLoaded("ElvUI_SLE") then
 				DummySLE()
 			end
-			PluginInstallFrame.SubTitle:SetText("Action Bar Layouts")
-			PluginInstallFrame.Desc1:SetText("These are the layouts that are available. Please click a button below to apply the layout of your choosing.")
-			PluginInstallFrame.Desc2:SetText("Importance: |cff07D400High|r")
-			PluginInstallFrame.Option1:Show()
-			PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayoutBar("5x2") end)
-			PluginInstallFrame.Option1:SetText("5x2 (Default)")
-			PluginInstallFrame.Option2:Show()
-			PluginInstallFrame.Option2:SetScript("OnClick", function() SetupLayoutBar("6x2") end)
-			PluginInstallFrame.Option2:SetText("6x2")
-			PluginInstallFrame.Option3:Show()
-			PluginInstallFrame.Option3:SetScript("OnClick", function() SetupLayoutBar("8x2") end)
-			PluginInstallFrame.Option3:SetText("8x2")
+			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == E.db[MyPluginName].install_version then
+				PluginInstallFrame.SubTitle:SetText("Action Bar Layouts")
+				PluginInstallFrame.Desc1:SetText("These are the layouts that are available. Please click a button below to apply the layout of your choosing.")
+				PluginInstallFrame.Desc2:SetText("Importance: |cff07D400High|r")
+				PluginInstallFrame.Option1:Show()
+				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayoutBar("5x2") end)
+				PluginInstallFrame.Option1:SetText("5x2 (Default)")
+				PluginInstallFrame.Option2:Show()
+				PluginInstallFrame.Option2:SetScript("OnClick", function() SetupLayoutBar("6x2") end)
+				PluginInstallFrame.Option2:SetText("6x2")
+				PluginInstallFrame.Option3:Show()
+				PluginInstallFrame.Option3:SetScript("OnClick", function() SetupLayoutBar("8x2") end)
+				PluginInstallFrame.Option3:SetText("8x2")
+			else
+				PluginInstallFrame.SubTitle:SetText("Action Bar Layout")
+				PluginInstallFrame.Desc1:SetText("Press \"Update Layout\" to update your ElvUI profile.")
+				PluginInstallFrame.Desc2:SetText("Importance: |cff07D400High|r")
+				PluginInstallFrame.Option1:Show()
+				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayoutBar(E.db[MyPluginName].layout) end)
+				PluginInstallFrame.Option1:SetText("Update Layout")
+			end
 		end,
 		[4] = function()
 			PluginInstallFrame.SubTitle:SetText("Weak Auras")
 			if IsAddOnLoaded("WeakAuras") then --Make sure the User has Weak Auras installed.
-				PluginInstallFrame.Desc1:SetText("Import some of Redtuzk's Weak Auras.\n Clicking the \"Power Bar\" options will added the WeakAuras power bar instead of the ElvUI one. \n\nThe \"Template\" option will add in a set of WeakAuras templates for you to use for buff tracking")
-				PluginInstallFrame.Desc2:SetText("Requires a UI reload for Aura imports to take effect")
-				PluginInstallFrame.Option1:Show()
-				PluginInstallFrame.Option1:SetScript("OnClick", function() WASetup("powerbar") end)
-				PluginInstallFrame.Option1:SetText("Power Bar")
-				PluginInstallFrame.Option2:Show()
-				PluginInstallFrame.Option2:SetScript("OnClick", function() WASetup("templates") end)
-				PluginInstallFrame.Option2:SetText("Templates")
+				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == E.db[MyPluginName].install_version then
+					PluginInstallFrame.Desc1:SetText("Import some of Redtuzk's Weak Auras.\n Clicking the \"PowerBar\" options will add the WeakAuras power bar instead of the ElvUI one. \n\nThe \"Template\" option will add in a set of WeakAuras templates for you to use for buff tracking")
+					PluginInstallFrame.Desc2:SetText("Requires a UI reload for Aura imports to take effect")
+					PluginInstallFrame.Option1:Show()
+					PluginInstallFrame.Option1:SetScript("OnClick", function() WASetup("powerbar") end)
+					PluginInstallFrame.Option1:SetText("PowerBar")
+					PluginInstallFrame.Option2:Show()
+					PluginInstallFrame.Option2:SetScript("OnClick", function() WASetup("templates") end)
+					PluginInstallFrame.Option2:SetText("Templates")
+				else
+					PluginInstallFrame.Desc1:SetText("Click \"Update PowerBar\" to update the RedtuzkUI PowerBar.\n\nAny custom changes to the power bar will be overwritten.")
+					PluginInstallFrame.Desc2:SetText("Requires a UI reload for Aura imports to take effect")
+					PluginInstallFrame.Option1:Show()
+					PluginInstallFrame.Option1:SetScript("OnClick", function() WASetup("powerbar") end)
+					PluginInstallFrame.Option1:SetText("Update PowerBar")
+				end
 			else
 				PluginInstallFrame.Desc1:SetText("|cffB33A3AOops, it looks like you don't have Weak Auras installed!|r")
 				PluginInstallFrame.Desc2:SetText("Weak Auras is recommended for use with RedtuzkUI")
@@ -571,11 +611,19 @@ local InstallerData = {
 		[5] = function()
 			PluginInstallFrame.SubTitle:SetText("BigWigs")
 			if IsAddOnLoaded("BigWigs") then --Make sure the User has BigWigs installed.
-				PluginInstallFrame.Desc1:SetText("Import Redtuzk's BigWigs profile. A new profile called RedtuzkUI will be crated. If you already have the Redtuzk profile it will be updated.")
-				PluginInstallFrame.Desc2:SetText("Requires a UI reload for profile switch to take effect")
-				PluginInstallFrame.Option1:Show()
-				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupBigWigs() end)
-				PluginInstallFrame.Option1:SetText("Setup BigWigs")
+				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == E.db[MyPluginName].install_version then
+					PluginInstallFrame.Desc1:SetText("Import Redtuzk's BigWigs profile. A new profile called RedtuzkUI will be crated. If you already have the Redtuzk profile it will be updated.")
+					PluginInstallFrame.Desc2:SetText("Requires a UI reload for profile switch to take effect")
+					PluginInstallFrame.Option1:Show()
+					PluginInstallFrame.Option1:SetScript("OnClick", function() SetupBigWigs() end)
+					PluginInstallFrame.Option1:SetText("Setup BigWigs")
+				else
+					PluginInstallFrame.Desc1:SetText("Click \"Update BigWigs\" to update the RedtuzkUI BigWigs profile.\n\nCustom Settings for bosses will |cff07D400NOT|r be altered.")
+					PluginInstallFrame.Desc2:SetText("Requires a UI reload for profile changes to take effect")
+					PluginInstallFrame.Option1:Show()
+					PluginInstallFrame.Option1:SetScript("OnClick", function() SetupBigWigs() end)
+					PluginInstallFrame.Option1:SetText("Update BigWigs")
+				end
 			else
 				PluginInstallFrame.Desc1:SetText("|cffB33A3AOops, it looks like you don't have BigWigs installed!|r")
 				PluginInstallFrame.Desc2:SetText("BigWigs is recommended for use with RedtuzkUI")
@@ -584,19 +632,32 @@ local InstallerData = {
 		[6] = function()
 			PluginInstallFrame.SubTitle:SetText("Details")
 			if IsAddOnLoaded("Details") then --Make sure the User has Details installed.
-				PluginInstallFrame.Desc1:SetText("Import Redtuzk's Details profile. A new profile called RedtuzkUI will be created. If you already have the Redtuzk profile it will be updated.")
-				PluginInstallFrame.Option1:Show()
-				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupDetails() end)
-				PluginInstallFrame.Option1:SetText("Setup Details")
+				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == E.db[MyPluginName].install_version then
+					PluginInstallFrame.Desc1:SetText("Import Redtuzk's Details profile. A new profile called RedtuzkUI will be created. If you already have the Redtuzk profile it will be updated.")
+					PluginInstallFrame.Option1:Show()
+					PluginInstallFrame.Option1:SetScript("OnClick", function() SetupDetails() end)
+					PluginInstallFrame.Option1:SetText("Setup Details")
+				else
+					PluginInstallFrame.Desc1:SetText("Click \"Update Details\" to update the RedtuzkUI Details profile.")
+					PluginInstallFrame.Option1:Show()
+					PluginInstallFrame.Option1:SetScript("OnClick", function() SetupDetails() end)
+					PluginInstallFrame.Option1:SetText("Update Details")
+				end
 			else
 				PluginInstallFrame.Desc1:SetText("|cffB33A3AOops, it looks like you don't have Details installed!|r")
 				PluginInstallFrame.Desc2:SetText("Details is recommended for use with RedtuzkUI")
 			end
 		end,
 		[7] = function()
-			PluginInstallFrame.SubTitle:SetText("Installation Complete")
-			PluginInstallFrame.Desc1:SetText("You have completed the installation process.")
-			PluginInstallFrame.Desc2:SetText("Please click the button below in order to finalize the process and automatically reload your UI.")
+			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == E.db[MyPluginName].install_version then
+				PluginInstallFrame.SubTitle:SetText("Installation Complete")
+				PluginInstallFrame.Desc1:SetText("You have completed the installation process.")
+				PluginInstallFrame.Desc2:SetText("Please click the button below in order to finalize the process and automatically reload your UI.")
+			else
+				PluginInstallFrame.SubTitle:SetText("Update Complete")
+				PluginInstallFrame.Desc1:SetText("You have completed the update process.")
+				PluginInstallFrame.Desc2:SetText("Please click the button below in order to finalize the process and automatically reload your UI.")
+			end
 			PluginInstallFrame.Option1:Show()
 			PluginInstallFrame.Option1:SetScript("OnClick", InstallComplete)
 			PluginInstallFrame.Option1:SetText("Finished")
@@ -640,7 +701,7 @@ local function InsertOptions()
 			},
 			discordlink = {
 				order = 3, type = 'input', width = 'full', name = L["Join us on Discord!"],
-				get = function(info) return 'www.redtuzk.com/discord' end,
+				get = function(info) return discordLink end,
 			},
 			discordicon = {
 				order = 4,
@@ -686,6 +747,9 @@ P[MyPluginName] = {}
 
 --This function will handle initialization of the addon
 function mod:Initialize()
+    if E.db[MyPluginName].install_version == "1.0" then
+        E.db[MyPluginName].install_version == nil
+    end
 	--Initiate installation process if ElvUI install is complete and our plugin install has not yet been run or its a newer version
 	E.private.install_complete = E.version
 	if E.private.install_complete and (E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version ~= Version) then
