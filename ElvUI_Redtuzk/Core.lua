@@ -417,6 +417,14 @@ local function SetupLayoutBar(layout)
 		E.db["movers"]["ElvUF_PlayerCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,235"
 		E.db["unitframe"]["units"]["player"]["power"]["detachedWidth"] = 296
 		E.db["unitframe"]["units"]["player"]["classbar"]["detachedWidth"] = 296
+		E.db["movers"]["ElvUF_PlayerMover"] = "BOTTOM,ElvUIParent,BOTTOM,-300,330"
+		E.db["movers"]["ZoneAbility"] = "BOTTOM,ElvUIParent,BOTTOM,-300,193"
+		E.db["movers"]["BossButton"] = "BOTTOM,ElvUIParent,BOTTOM,-300,193"
+		E.db["movers"]["ElvUF_PetMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,474,330"
+		E.db["movers"]["PetAB"] = "BOTTOM,ElvUIParent,BOTTOM,-300,306"
+		E.db["movers"]["ElvUF_TargetMover"] = "BOTTOM,ElvUIParent,BOTTOM,300,330"
+		E.db["movers"]["ElvUF_TargetTargetMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-474,330"
+		E.db["movers"]["AltPowerBarMover"] = "BOTTOM,ElvUIParent,BOTTOM,-300,141"
 	end
 
 	--Enable ElvUI PowerBar by default
