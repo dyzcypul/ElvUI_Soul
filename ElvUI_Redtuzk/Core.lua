@@ -24,6 +24,7 @@ local RUIlayout = "5x2"
 
 --Create references to ElvUI internals
 local E, L, V, P, G = unpack(ElvUI)
+local UF = E:GetModule("UnitFrames")
 
 --Create reference to LibElvUIPlugin
 local EP = LibStub("LibElvUIPlugin-1.0")
