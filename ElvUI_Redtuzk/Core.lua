@@ -374,6 +374,21 @@ local function AddCustomTags()
 	end
 end
 
+local function UpdateAuraIconSettings(self, auras, noCycle)
+	local index = 1
+	local child = select(index, ElvUIPlayerBuffs:GetChildren())
+	local db = self.db.buffs
+	while child do
+		if child.time then
+			child.count:ClearAllPoints()
+			child.count:Point("CENTER", 1, 0)
+		end
+		index = index + 1
+		child = select(index, ElvUIPlayerBuffs:GetChildren())
+	end
+end
+hooksecurefunc(UF, "UpdateAuraIconSettings", UpdateAuraIconSettings)
+
 local function WASetup(aura)
 	if aura == "powerbar" then
 		E.db[MyPluginName].WABar = true
