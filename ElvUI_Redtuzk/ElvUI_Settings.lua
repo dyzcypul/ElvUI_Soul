@@ -1213,13 +1213,11 @@ function RUI:ElvUISettings()
     E.db["auras"]["buffs"]["size"] = 36
     E.db["auras"]["font"] = "Century Gothic Bold"
 
-
-
-
-
     --ElvUI Private Settings--
-	E.private.general.chatBubbles = 'backdrop'
 	E.private.general.namefont = "Century Gothic Bold"
 	E.private.general.dmgfont = "Century Gothic Bold"
-
+	E.private.general.chatBubbleFontSize = 12
+	E.private.general.chatBubbleFontOutline = "OUTLINE"
+	E.private.general.chatBubbleFont = "Century Gothic Bold"
+	
 end
