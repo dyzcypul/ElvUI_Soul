@@ -418,7 +418,9 @@ local function SetupLayoutBar(layout)
 	CreateCustomTexts()
 	CreatingMissingSettings()
 	EnableCustomTweaks()
+	local RUIver = E.db[MyPluginName].install_version
 	RUI:ElvUISettings()
+	E.db[MyPluginName].install_version = RUIver
 	E.db[MyPluginName].layout = layout
 	
 	if layout == "5x2" then
