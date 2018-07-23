@@ -1,9 +1,9 @@
 ## Interface: 80000
-## Author: Aldarana, Blazeflack
+## Author: Redtuzk
 ## Version: 1.1
 ## Title: |cff1784d1ElvUI|r |cffc41f3bRedtuzk|r
-## Notes: Contains layouts from Redtuzk
-## RequiredDeps: ElvUI
+## Notes: Contains profile layouts designed by Redtuzk
+## RequiredDeps: ElvUI, ElvUI_SLE
 ## DefaultState: enabled
 
 media\load_media.xml
