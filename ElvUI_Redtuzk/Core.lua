@@ -755,7 +755,7 @@ local function InsertOptions()
 			install = {
 				order = 9,
 				type = "execute",
-				name = "Install",
+				name = "Install/Update",
 				desc = "Run the installation process.",
 				func = function() E:GetModule("PluginInstaller"):Queue(InstallerData); E:ToggleConfig(); end,
 			},
