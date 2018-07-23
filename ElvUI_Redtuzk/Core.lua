@@ -529,7 +529,7 @@ local InstallerData = {
 	tutorialImage = "Interface\\AddOns\\ElvUI_Redtuzk\\Media\\logo.tga", --If you have a logo you want to use, otherwise it uses the one from ElvUI
 	Pages = {
 		[1] = function()
-			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == E.db[MyPluginName].install_version then
+			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
 				PluginInstallFrame.SubTitle:SetFormattedText("Welcome to the installation for %s.", MyPluginName)
 				PluginInstallFrame.Desc1:SetText("This installation process will guide you through a few steps and apply settings to your current ElvUI profile. If you want to be able to go back to your original settings then create a new profile before going through this installation process.")
 				PluginInstallFrame.Desc2:SetText("Please press the continue button if you wish to go through the installation process, otherwise click the 'Skip Process' button.")
@@ -554,7 +554,7 @@ local InstallerData = {
 			end
 		end,
 		[2] = function()
-			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == E.db[MyPluginName].install_version then
+			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
 				PluginInstallFrame.SubTitle:SetText("Profiles")
 				PluginInstallFrame.Desc1:SetText("You can either create a new profile to install RedtuzkUI onto or you can apply RedtuzkUI settings to your current profile")
 				PluginInstallFrame.Option1:Show()
@@ -579,7 +579,7 @@ local InstallerData = {
 		    if  not IsAddOnLoaded("ElvUI_SLE") then
 				DummySLE()
 			end
-			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == E.db[MyPluginName].install_version then
+			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
 				PluginInstallFrame.SubTitle:SetText("Action Bar Layouts")
 				PluginInstallFrame.Desc1:SetText("These are the layouts that are available. Please click a button below to apply the layout of your choosing.")
 				PluginInstallFrame.Desc2:SetText("Importance: |cff07D400High|r")
@@ -604,7 +604,7 @@ local InstallerData = {
 		[4] = function()
 			PluginInstallFrame.SubTitle:SetText("Weak Auras")
 			if IsAddOnLoaded("WeakAuras") then --Make sure the User has Weak Auras installed.
-				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == E.db[MyPluginName].install_version then
+				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
 					PluginInstallFrame.Desc1:SetText("Import some of Redtuzk's Weak Auras.\nThe \"Template\" option will add in a set of WeakAuras templates for you to use for buff tracking \n\n You can find aura groups for some classes/specs on the RedtuzkUI discord. Not all specs are supported yet but we're adding more!")
 					PluginInstallFrame.Desc2:SetText("Requires a UI reload for Aura imports to take effect")
 					PluginInstallFrame.Option1:Show()
@@ -621,7 +621,7 @@ local InstallerData = {
 		[5] = function()
 			PluginInstallFrame.SubTitle:SetText("BigWigs")
 			if IsAddOnLoaded("BigWigs") then --Make sure the User has BigWigs installed.
-				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == E.db[MyPluginName].install_version then
+				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
 					PluginInstallFrame.Desc1:SetText("Import Redtuzk's BigWigs profile. A new profile called RedtuzkUI will be crated. If you already have the Redtuzk profile it will be updated.")
 					PluginInstallFrame.Desc2:SetText("Requires a UI reload for profile switch to take effect")
 					PluginInstallFrame.Option1:Show()
@@ -642,7 +642,7 @@ local InstallerData = {
 		[6] = function()
 			PluginInstallFrame.SubTitle:SetText("Details")
 			if IsAddOnLoaded("Details") then --Make sure the User has Details installed.
-				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == E.db[MyPluginName].install_version then
+				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
 					PluginInstallFrame.Desc1:SetText("Import Redtuzk's Details profile. A new profile called RedtuzkUI will be created. If you already have the Redtuzk profile it will be updated.")
 					PluginInstallFrame.Option1:Show()
 					PluginInstallFrame.Option1:SetScript("OnClick", function() SetupDetails() end)
@@ -659,7 +659,7 @@ local InstallerData = {
 			end
 		end,
 		[7] = function()
-			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == E.db[MyPluginName].install_version then
+			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
 				PluginInstallFrame.SubTitle:SetText("Installation Complete")
 				PluginInstallFrame.Desc1:SetText("You have completed the installation process.")
 				PluginInstallFrame.Desc2:SetText("Please click the button below in order to finalize the process and automatically reload your UI.")
