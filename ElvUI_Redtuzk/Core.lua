@@ -33,7 +33,7 @@ local EP = LibStub("LibElvUIPlugin-1.0")
 local mod = E:NewModule(MyPluginName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0");
 
 --Store the Discord link
-discordLink = "http://discord.gg/JEa5yXc"
+discordLink = "http://discord.gg/Jje2he7"
 
 --Runs for the step questioning the user if they want a new ElvUI profile
 local function NewProfile(new)
