@@ -373,6 +373,21 @@ local function AddCustomTags()
 
 		return String
 	end
+	ElvUF.Tags.Events["power:RUIPower"] = "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER"
+	ElvUF.Tags.Methods["power:RUIPower"] = function(unit)
+		local pType = UnitPowerType(unit)
+		local min, max = UnitPower(unit, pType), UnitPowerMax(unit, pType)
+		local deficit = max - min
+		local String
+
+		if (max >= 100) and (max <= 200) then
+			String = GetFormattedText(min, max, "CURRENT", true)
+		else
+			String = GetFormattedText(min, max, "PERCENT", true)
+		end
+
+		return String
+	end
 end
 
 local function UpdateAuraIconSettings(self, auras, noCycle)
@@ -391,19 +406,7 @@ end
 hooksecurefunc(UF, "UpdateAuraIconSettings", UpdateAuraIconSettings)
 
 local function WASetup(aura)
-	if aura == "powerbar" then
-		E.db[MyPluginName].WABar = true
-		RUI:ImportPowerBar()
-		E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"]["enable"] = false
-		E.db["unitframe"]["units"]["player"]["power"]["enable"] = false
-		if E.db[MyPluginName].layout == "6x2" then
-			WeakAurasSaved["displays"]["RedtuzkUI Power Bar"]["width"] = 222.00022888184
-		elseif E.db[MyPluginName].layout == "8x2" then
-			WeakAurasSaved["displays"]["RedtuzkUI Power Bar"]["width"] = 296.00022888184
-		end
-		PluginInstallStepComplete.message = "PowerBar Aura Imported"
-		PluginInstallStepComplete:Show()
-	elseif aura == "templates" then
+	if aura == "templates" then
 		RUI:ImportTemplates()
 		PluginInstallStepComplete.message = "RUI Icon Templates Imported"
 		PluginInstallStepComplete:Show()
@@ -451,14 +454,8 @@ local function SetupLayoutBar(layout)
 		E.db["movers"]["AltPowerBarMover"] = "BOTTOM,ElvUIParent,BOTTOM,-300,141"
 	end
 
-	--Enable ElvUI PowerBar by default
-	if not E.db[MyPluginName].WABar then
-		E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"]["enable"] = true
-		E.db["unitframe"]["units"]["player"]["power"]["enable"] = true
-	else
-		E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"]["enable"] = false
-		E.db["unitframe"]["units"]["player"]["power"]["enable"] = false
-	end
+    E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"]["enable"] = true
+	E.db["unitframe"]["units"]["player"]["power"]["enable"] = true
 
 	E.db["chat"]["keywords"] = "ElvUI"
 	--Update ElvUI
@@ -608,20 +605,13 @@ local InstallerData = {
 			PluginInstallFrame.SubTitle:SetText("Weak Auras")
 			if IsAddOnLoaded("WeakAuras") then --Make sure the User has Weak Auras installed.
 				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == E.db[MyPluginName].install_version then
-					PluginInstallFrame.Desc1:SetText("Import some of Redtuzk's Weak Auras.\n Clicking the \"PowerBar\" options will add the WeakAuras power bar instead of the ElvUI one. \n\nThe \"Template\" option will add in a set of WeakAuras templates for you to use for buff tracking")
+					PluginInstallFrame.Desc1:SetText("Import some of Redtuzk's Weak Auras.\nThe \"Template\" option will add in a set of WeakAuras templates for you to use for buff tracking \n\n You can find aura groups for some classes/specs on the RedtuzkUI discord. Not all specs are supported yet but we're adding more!")
 					PluginInstallFrame.Desc2:SetText("Requires a UI reload for Aura imports to take effect")
 					PluginInstallFrame.Option1:Show()
-					PluginInstallFrame.Option1:SetScript("OnClick", function() WASetup("powerbar") end)
-					PluginInstallFrame.Option1:SetText("PowerBar")
-					PluginInstallFrame.Option2:Show()
-					PluginInstallFrame.Option2:SetScript("OnClick", function() WASetup("templates") end)
-					PluginInstallFrame.Option2:SetText("Templates")
+					PluginInstallFrame.Option1:SetScript("OnClick", function() WASetup("templates") end)
+					PluginInstallFrame.Option1:SetText("Templates")
 				else
-					PluginInstallFrame.Desc1:SetText("Click \"Update PowerBar\" to update the RedtuzkUI PowerBar.\n\nAny custom changes to the power bar will be overwritten.")
-					PluginInstallFrame.Desc2:SetText("Requires a UI reload for Aura imports to take effect")
-					PluginInstallFrame.Option1:Show()
-					PluginInstallFrame.Option1:SetScript("OnClick", function() WASetup("powerbar") end)
-					PluginInstallFrame.Option1:SetText("Update PowerBar")
+					PluginInstallFrame.Desc1:SetText("You can update WeakAuras by reimporting them from the discord links.")
 				end
 			else
 				PluginInstallFrame.Desc1:SetText("|cffB33A3AOops, it looks like you don't have Weak Auras installed!|r")
