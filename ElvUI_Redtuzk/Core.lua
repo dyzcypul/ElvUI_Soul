@@ -604,6 +604,27 @@ local InstallerData = {
 			end
 		end,
 		[4] = function()
+			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
+				PluginInstallFrame.SubTitle:SetText("Target Frame Options")
+				PluginInstallFrame.Desc1:SetText("Here you can select some options for how buffs and debuffs will be displayed on your target frame. \n\nIf you select \"Only Buffs\" or \"Only Debuffs\" then the auras will be displayed above the frame, similar to how player debuffs are displayed.\n\nIf you selece \"Show Both\" then debuffs will be displayed above the frame and buffs below.")
+				PluginInstallFrame.Option1:Show()
+				PluginInstallFrame.Option1:SetScript("OnClick", function() TargetFrameSetup("Debuffs") end)
+				PluginInstallFrame.Option1:SetText("Only Debuffs")
+				PluginInstallFrame.Option2:Show()
+				PluginInstallFrame.Option2:SetScript("OnClick", function() TargetFrameSetup("Buffs") end)
+				PluginInstallFrame.Option2:SetText("Only Buffs")
+				PluginInstallFrame.Option3:Show()
+				PluginInstallFrame.Option3:SetScript("OnClick", function() TargetFrameSetup("Both") end)
+				PluginInstallFrame.Option3:SetText("Show Both")
+			else
+				PluginInstallFrame.SubTitle:SetText("Target Frame Options")
+				PluginInstallFrame.Desc1:SetText("Press \"Update Buffs/Debuffs\" to update your target frame settings.")
+				PluginInstallFrame.Option1:Show()
+				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayoutBar(E.db[MyPluginName].layout) end)
+				PluginInstallFrame.Option1:SetText("Update Buffs/Debuffs")
+			end
+		end,
+		[5] = function()
 			PluginInstallFrame.SubTitle:SetText("Weak Auras")
 			if IsAddOnLoaded("WeakAuras") then --Make sure the User has Weak Auras installed.
 				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
@@ -620,7 +641,7 @@ local InstallerData = {
 				PluginInstallFrame.Desc2:SetText("Weak Auras is recommended for use with RedtuzkUI")
 			end
 		end,
-		[5] = function()
+		[6] = function()
 			PluginInstallFrame.SubTitle:SetText("BigWigs")
 			if IsAddOnLoaded("BigWigs") then --Make sure the User has BigWigs installed.
 				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
@@ -641,7 +662,7 @@ local InstallerData = {
 				PluginInstallFrame.Desc2:SetText("BigWigs is recommended for use with RedtuzkUI")
 			end
 		end,
-		[6] = function()
+		[7] = function()
 			PluginInstallFrame.SubTitle:SetText("Details")
 			if IsAddOnLoaded("Details") then --Make sure the User has Details installed.
 				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
@@ -660,7 +681,7 @@ local InstallerData = {
 				PluginInstallFrame.Desc2:SetText("Details is recommended for use with RedtuzkUI")
 			end
 		end,
-		[7] = function()
+		[8] = function()
 			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
 				PluginInstallFrame.SubTitle:SetText("Installation Complete")
 				PluginInstallFrame.Desc1:SetText("You have completed the installation process.")
@@ -682,10 +703,11 @@ local InstallerData = {
 		[1] = "Welcome",
 		[2] = "Profile Setup",
 		[3] = "Action Bar Layouts",
-		[4] = "Weak Auras",
-		[5] = "BigWigs Setup",
-		[6] = "Details Setup",
-		[7] = "Installation Complete",
+		[4] = "Target Frame Options",
+		[5] = "Weak Auras",
+		[6] = "BigWigs Setup",
+		[7] = "Details Setup",
+		[8] = "Installation Complete",
 	},
 	StepTitlesColor = {1, 1, 1},
 	StepTitlesColorSelected = {0.769, 0.122, 0.231},
