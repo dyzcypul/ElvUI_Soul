@@ -680,7 +680,8 @@ local InstallerData = {
 					PluginInstallFrame.Option1:SetScript("OnClick", function() WASetup("templates") end)
 					PluginInstallFrame.Option1:SetText("Templates")
 				else
-					PluginInstallFrame.Desc1:SetText("You can update WeakAuras by reimporting them from the discord links.")
+					PluginInstallFrame.Desc1:SetText("You can update WeakAuras by reimporting them from the Discord links.")
+					PluginInstallFrame.Desc2:SetText("You can find a link to join our Discord server on the last page of the installer")
 				end
 			else
 				PluginInstallFrame.Desc1:SetText("|cffB33A3AOops, it looks like you don't have Weak Auras installed!|r")
