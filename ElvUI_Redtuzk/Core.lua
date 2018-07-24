@@ -467,6 +467,52 @@ local function SetupLayoutBar(layout)
 	PluginInstallStepComplete:Show()
 end
 
+local function TargetFrameSetup(auras)
+	E.db[MyPluginName].TargetAuras = auras
+	if auras == "Debuffs" then
+		E.db["unitframe"]["units"]["target"]["debuffs"]["anchorPoint"] = "TOPLEFT"
+		E.db["unitframe"]["units"]["target"]["debuffs"]["sizeOverride"] = 33
+		E.db["unitframe"]["units"]["target"]["debuffs"]["attachTo"] = "FRAME"
+		E.db["unitframe"]["units"]["target"]["debuffs"]["sortDirection"] = "ASCENDING"
+		E.db["unitframe"]["units"]["target"]["debuffs"]["yOffset"] = 13
+		E.db["unitframe"]["units"]["target"]["debuffs"]["fontSize"] = 16
+		E.db["unitframe"]["units"]["target"]["debuffs"]["perrow"] = 7
+		E.db["unitframe"]["units"]["target"]["debuffs"]["enable"] = true
+		E.db["unitframe"]["units"]["target"]["buffs"]["enable"] = false
+	elseif auras == "Buffs" then
+		E.db["unitframe"]["units"]["target"]["buffs"]["anchorPoint"] = "TOPLEFT"
+		E.db["unitframe"]["units"]["target"]["buffs"]["sizeOverride"] = 33
+		E.db["unitframe"]["units"]["target"]["buffs"]["attachTo"] = "FRAME"
+		E.db["unitframe"]["units"]["target"]["buffs"]["sortDirection"] = "ASCENDING"
+		E.db["unitframe"]["units"]["target"]["buffs"]["yOffset"] = 13
+		E.db["unitframe"]["units"]["target"]["buffs"]["xOffset"] = 0
+		E.db["unitframe"]["units"]["target"]["buffs"]["fontSize"] = 16
+		E.db["unitframe"]["units"]["target"]["buffs"]["perrow"] = 7
+		E.db["unitframe"]["units"]["target"]["buffs"]["enable"] = true
+		E.db["unitframe"]["units"]["target"]["debuffs"]["enable"] = false
+	elseif auras == "Both" then
+		E.db["unitframe"]["units"]["target"]["debuffs"]["anchorPoint"] = "TOPLEFT"
+		E.db["unitframe"]["units"]["target"]["debuffs"]["fontSize"] = 16
+		E.db["unitframe"]["units"]["target"]["debuffs"]["attachTo"] = "FRAME"
+		E.db["unitframe"]["units"]["target"]["debuffs"]["sortDirection"] = "ASCENDING"
+		E.db["unitframe"]["units"]["target"]["debuffs"]["yOffset"] = 13
+		E.db["unitframe"]["units"]["target"]["debuffs"]["sizeOverride"] = 33
+		E.db["unitframe"]["units"]["target"]["debuffs"]["perrow"] = 7
+		E.db["unitframe"]["units"]["target"]["buffs"]["anchorPoint"] = "RIGHT"
+		E.db["unitframe"]["units"]["target"]["buffs"]["fontSize"] = 16
+		E.db["unitframe"]["units"]["target"]["buffs"]["xOffset"] = -240
+		E.db["unitframe"]["units"]["target"]["buffs"]["sizeOverride"] = 33
+		E.db["unitframe"]["units"]["target"]["buffs"]["yOffset"] = -34
+		E.db["unitframe"]["units"]["target"]["buffs"]["perrow"] = 7
+		E.db["unitframe"]["units"]["target"]["debuffs"]["enable"] = true
+		E.db["unitframe"]["units"]["target"]["buffs"]["enable"] = true
+	end
+	E:UpdateAll(true)
+	--Show message about layout being set
+	PluginInstallStepComplete.message = "Target Frame Options Set"
+	PluginInstallStepComplete:Show()
+end
+
 local function SetupDetails()
 	RUI:DetailsSettings()
 	_detalhes:ApplyProfile("RedtuzkUI", false, false)
@@ -581,7 +627,7 @@ local InstallerData = {
 		    if  not IsAddOnLoaded("ElvUI_SLE") then
 				DummySLE()
 			end
-			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
+			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version or not E.db[MyPluginName].layout then
 				PluginInstallFrame.SubTitle:SetText("Action Bar Layouts")
 				PluginInstallFrame.Desc1:SetText("These are the layouts that are available. Please click a button below to apply the layout of your choosing.")
 				PluginInstallFrame.Desc2:SetText("Importance: |cff07D400High|r")
@@ -604,7 +650,7 @@ local InstallerData = {
 			end
 		end,
 		[4] = function()
-			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
+			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version or not E.db[MyPluginName].TargetAuras then
 				PluginInstallFrame.SubTitle:SetText("Target Frame Options")
 				PluginInstallFrame.Desc1:SetText("Here you can select some options for how buffs and debuffs will be displayed on your target frame. \n\nIf you select \"Only Buffs\" or \"Only Debuffs\" then the auras will be displayed above the frame, similar to how player debuffs are displayed.\n\nIf you selece \"Show Both\" then debuffs will be displayed above the frame and buffs below.")
 				PluginInstallFrame.Option1:Show()
@@ -620,7 +666,7 @@ local InstallerData = {
 				PluginInstallFrame.SubTitle:SetText("Target Frame Options")
 				PluginInstallFrame.Desc1:SetText("Press \"Update Buffs/Debuffs\" to update your target frame settings.")
 				PluginInstallFrame.Option1:Show()
-				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayoutBar(E.db[MyPluginName].layout) end)
+				PluginInstallFrame.Option1:SetScript("OnClick", function() TargetFrameSetup(E.db[MyPluginName].TargetAuras) end)
 				PluginInstallFrame.Option1:SetText("Update Buffs/Debuffs")
 			end
 		end,
@@ -781,9 +827,6 @@ P[MyPluginName] = {}
 
 --This function will handle initialization of the addon
 function mod:Initialize()
-    if E.db[MyPluginName].install_version == "1.0" then
-        E.db[MyPluginName].install_version = nil
-    end
 	--Initiate installation process if ElvUI install is complete and our plugin install has not yet been run or its a newer version
 	E.private.install_complete = E.version
 	if E.private.install_complete and (E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version ~= Version) then
