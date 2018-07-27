@@ -392,15 +392,17 @@ end
 
 local function UpdateAuraIconSettings(self, auras, noCycle)
 	local index = 1
-	local child = select(index, ElvUIPlayerBuffs:GetChildren())
-	local db = self.db.buffs
-	while child do
-		if child.time then
-			child.count:ClearAllPoints()
-			child.count:Point("CENTER", 1, 0)
+		if ElvUIPlayerBuffs then 
+		local child = select(index, ElvUIPlayerBuffs:GetChildren())
+		local db = self.db.buffs
+		while child do
+			if child.time then
+				child.count:ClearAllPoints()
+				child.count:Point("CENTER", 1, 0)
+			end
+			index = index + 1
+			child = select(index, ElvUIPlayerBuffs:GetChildren())
 		end
-		index = index + 1
-		child = select(index, ElvUIPlayerBuffs:GetChildren())
 	end
 end
 hooksecurefunc(UF, "UpdateAuraIconSettings", UpdateAuraIconSettings)
