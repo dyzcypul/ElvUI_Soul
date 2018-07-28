@@ -444,10 +444,10 @@ local function SetupLayoutBar(layout)
 		E.db["actionbar"]["bar1"]["buttonsize"] = 36
 		E.db["movers"]["ElvAB_1"] = "BOTTOM,ElvUIParent,BOTTOM,0,293"
 		E.db["movers"]["ElvAB_2"] = "BOTTOM,ElvUIParent,BOTTOM,0,256"
-		E.db["unitframe"]["units"]["player"]["castbar"]["width"] = 296
+		E.db["unitframe"]["units"]["player"]["castbar"]["width"] = 295
 		E.db["movers"]["ElvUF_PlayerCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,235"
-		E.db["unitframe"]["units"]["player"]["power"]["detachedWidth"] = 296
-		E.db["unitframe"]["units"]["player"]["classbar"]["detachedWidth"] = 296
+		E.db["unitframe"]["units"]["player"]["power"]["detachedWidth"] = 295
+		E.db["unitframe"]["units"]["player"]["classbar"]["detachedWidth"] = 295
 		E.db["movers"]["ElvUF_PlayerMover"] = "BOTTOM,ElvUIParent,BOTTOM,-300,330"
 		E.db["movers"]["ZoneAbility"] = "BOTTOM,ElvUIParent,BOTTOM,-300,193"
 		E.db["movers"]["BossButton"] = "BOTTOM,ElvUIParent,BOTTOM,-300,193"
