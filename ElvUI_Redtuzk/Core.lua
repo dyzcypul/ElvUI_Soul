@@ -202,6 +202,16 @@ local function CreatingMissingSettings()
 	E.db["ESC"]["mmSScolor"] = E.db["ESC"]["mmSScolor"] or {}
 	E.db["auras"]["consolidatedBuffs"] = E.db["auras"]["consolidatedBuffs"] or {}
 	E.db["nameplates"]["cooldown"]["fonts"] = E.db["nameplates"]["cooldown"]["fonts"]or {}
+		E.db["nameplates"]["filters"]["MotC"] = E.db["nameplates"]["filters"]["MotC"] or {
+		["triggers"] = {
+			["enabled"] = {}
+		}
+	}
+	E.db["nameplates"]["filters"]["SCK"] = E.db["nameplates"]["filters"]["SCK"] or {
+		["triggers"] = {
+			["enabled"] = {}
+		}
+	}
 end
 
 local function EnableCustomTweaks()
