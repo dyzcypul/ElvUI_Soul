@@ -83,38 +83,38 @@ local function CreateCustomTexts()
 
 	E.db["unitframe"]["units"]["party"]["customTexts"] = E.db["unitframe"]["units"]["party"]["customTexts"] or {}
 	E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"] = {}
-	
+
 	E.db["unitframe"]["units"]["raid40"]["customTexts"] = E.db["unitframe"]["units"]["raid40"]["customTexts"] or {}
 	E.db["unitframe"]["units"]["raid40"]["customTexts"]["Health Text"] = {}
-	
+
 	E.db["unitframe"]["units"]["boss"]["customTexts"] = E.db["unitframe"]["units"]["boss"]["customTexts"] or {}
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["Health2"] = {}
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["AltPowerText"] = {}
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["!Health"] = {}
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["BossPower"] = {}
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["!Name"] = {}
-	
+
 	E.db["unitframe"]["units"]["target"]["customTexts"] = E.db["unitframe"]["units"]["target"]["customTexts"] or {}
 	E.db["unitframe"]["units"]["target"]["customTexts"]["Health2"] = {}
 	E.db["unitframe"]["units"]["target"]["customTexts"]["!Name"] = {}
 	E.db["unitframe"]["units"]["target"]["customTexts"]["PowerText"] = {}
 	E.db["unitframe"]["units"]["target"]["customTexts"]["!Percent"] = {}
-	
+
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"] = E.db["unitframe"]["units"]["targettarget"]["customTexts"] or {}
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["!Name"] = {}
-	
+
 	E.db["unitframe"]["units"]["focus"]["customTexts"] = E.db["unitframe"]["units"]["focus"]["customTexts"] or {}
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["!Amount"] = {}
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["!Percent"] = {}
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["!Name"] = {}
-	
+
 	E.db["unitframe"]["units"]["pet"]["customTexts"] = E.db["unitframe"]["units"]["pet"]["customTexts"] or {}
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["!Name"] = {}
-	
+
 	E.db["unitframe"]["units"]["arena"]["customTexts"] = E.db["unitframe"]["units"]["arena"]["customTexts"] or {}
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["!Name"] = {}
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["!Health"] = {}
-	
+
 end
 
 local function CreatingMissingSettings()
@@ -130,7 +130,7 @@ local function CreatingMissingSettings()
 			["dp6"] = {},
 			["dp1"] = {},
 			["top"] = {},
-			["dashboard"] = {},		
+			["dashboard"] = {},
 		}
 	E.db["sle"]["characterframeoptions"] = E.db["sle"]["characterframeoptions"] or {
 		["itemgem"] = {},
@@ -187,7 +187,7 @@ local function CreatingMissingSettings()
 			["duration"] = {
 				["color"] = {}
 			},
-		},	
+		},
 	}
 	E.db["CustomTweaks"]["CastbarTextAndBackdrop"] = E.db["CustomTweaks"]["CastbarTextAndBackdrop"] or {}
 	E.db["CustomTweaks"]["CastbarTextAndBackdrop"]["backdropColor"] = E.db["CustomTweaks"]["CastbarTextAndBackdrop"]["backdropColor"] or {}
@@ -402,7 +402,7 @@ end
 
 local function UpdateAuraIconSettings(self, auras, noCycle)
 	local index = 1
-		if ElvUIPlayerBuffs then 
+		if ElvUIPlayerBuffs then
 		local child = select(index, ElvUIPlayerBuffs:GetChildren())
 		local db = self.db.buffs
 		while child do
@@ -434,7 +434,7 @@ local function SetupLayoutBar(layout)
 	RUI:ElvUISettings()
 	E.db[MyPluginName].install_version = RUIver
 	E.db[MyPluginName].layout = layout
-	
+
 	if layout == "5x2" then
 	elseif layout == "6x2" then
 		E.db["actionbar"]["bar2"]["buttons"] = 6
@@ -534,7 +534,7 @@ end
 
 local function SetupBigWigs()
 	--Check see if the BigWigs database exists
-	if(BigWigs3DB) then	
+	if(BigWigs3DB) then
 		--If it does add RedtuzkUI to the profiles
         RUI:BigWigsSettings()
 	else
@@ -546,6 +546,12 @@ local function SetupBigWigs()
 	local BigWigs = LibStub("AceDB-3.0"):New(BigWigs3DB)
 	BigWigs:SetProfile("RedtuzkUI")
 	PluginInstallStepComplete.message = "BigWigs Profile Applied"
+	PluginInstallStepComplete:Show()
+end
+
+local function SetupDBM()
+	RUI:DBMSettings()
+	PluginInstallStepComplete.message = "DBM Profile Applied"
 	PluginInstallStepComplete:Show()
 end
 
@@ -567,6 +573,20 @@ local function createLink()
 	StaticPopup_Show("DiscordLinkDisplay", "test"); --tell our dialog box to show
 end
 
+local function LoadRUIProfile()
+	local SLEv = GetAddOnMetadata("ElvUI_SLE", "Version")
+	E.private.sle.install_complete = SLEv
+	ElvUI[1].data:SetProfile(E["global"][MyPluginName].profile_name)
+	if IsAddOnLoaded("BigWigs") then
+		SetupBigWigs()
+	elseif IsAddOnLoaded("DBM-Core") then
+		SetupDBM()
+	end
+	if IsAddOnLoaded("Details") then
+		SetupDetails()
+	end
+	ReloadUI()
+end
 --This function is executed when you press "Skip Process" or "Finished" in the installer.
 local function InstallComplete()
 	if GetCVarBool("Sound_EnableMusic") then
@@ -576,6 +596,7 @@ local function InstallComplete()
     local SLEv = GetAddOnMetadata("ElvUI_SLE", "Version")
     E.private.sle.install_complete = SLEv
 	--Set a variable tracking the version of the addon when layout was installed
+	E["global"][MyPluginName].profile_name = ElvUI[1].data:GetCurrentProfile()
 	E.db[MyPluginName].install_version = Version
 
 	ReloadUI()
@@ -589,8 +610,16 @@ local InstallerData = {
 	tutorialImage = "Interface\\AddOns\\ElvUI_Redtuzk\\Media\\logo.tga", --If you have a logo you want to use, otherwise it uses the one from ElvUI
 	Pages = {
 		[1] = function()
-			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
+			if E.db[MyPluginName].install_version == nil and E["global"][MyPluginName].profile_name then
 				PluginInstallFrame.SubTitle:SetFormattedText("Welcome to the installation for %s.", MyPluginName)
+				PluginInstallFrame.Desc1:SetText("It looks like you already have a RedtuzkUI profile installed called |cffc41f3b"..E["global"][MyPluginName].profile_name.."|r. Click \"Use Original\" to use the same profile on this character")
+				PluginInstallFrame.Option1:Show()
+				PluginInstallFrame.Option1:SetScript("OnClick", LoadRUIProfile)
+				PluginInstallFrame.Option1:SetText("Use Original")
+				PluginInstallFrame.Option2:Show()
+				PluginInstallFrame.Option2:SetScript("OnClick", InstallComplete)
+				PluginInstallFrame.Option2:SetText("Skip Process")
+			elseif E.db[MyPluginName].install_version == Version or E.db[MyPluginName].install_version == nil then
 				PluginInstallFrame.Desc1:SetText("This installation process will guide you through a few steps and apply settings to your current ElvUI profile. If you want to be able to go back to your original settings then create a new profile before going through this installation process.")
 				PluginInstallFrame.Desc2:SetText("Please press the continue button if you wish to go through the installation process, otherwise click the 'Skip Process' button.")
 				PluginInstallFrame.Option1:Show()
@@ -617,6 +646,7 @@ local InstallerData = {
 			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
 				PluginInstallFrame.SubTitle:SetText("Profiles")
 				PluginInstallFrame.Desc1:SetText("You can either create a new profile to install RedtuzkUI onto or you can apply RedtuzkUI settings to your current profile")
+				PluginInstallFrame.Desc3:SetText("You're currently active ElvUI profile is: |cffc41f3b"..ElvUI[1].data:GetCurrentProfile().."|r")
 				PluginInstallFrame.Option1:Show()
 				PluginInstallFrame.Option1:SetScript("OnClick", function() NewProfile(false) end)
 				PluginInstallFrame.Option1:SetText("Use Current")
@@ -627,6 +657,7 @@ local InstallerData = {
 				PluginInstallFrame.SubTitle:SetText("Profiles")
 				PluginInstallFrame.Desc1:SetText("Press \"Update Current\" to update your current profile with the new RedtuzkUI changes.")
 				PluginInstallFrame.Desc2:SetText("If you'd like to check out what the changes are, without overwriting your current settings, you can press \"Create New\"")
+				PluginInstallFrame.Desc3:SetText("You're currently active ElvUI profile is: |cffc41f3b"..ElvUI[1].data:GetCurrentProfile().."|r")
 				PluginInstallFrame.Option1:Show()
 				PluginInstallFrame.Option1:SetScript("OnClick", function() NewProfile(false) end)
 				PluginInstallFrame.Option1:SetText("Update Current")
@@ -701,10 +732,10 @@ local InstallerData = {
 			end
 		end,
 		[6] = function()
-			PluginInstallFrame.SubTitle:SetText("BigWigs")
 			if IsAddOnLoaded("BigWigs") then --Make sure the User has BigWigs installed.
+				PluginInstallFrame.SubTitle:SetText("BigWigs")
 				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
-					PluginInstallFrame.Desc1:SetText("Import Redtuzk's BigWigs profile. A new profile called RedtuzkUI will be crated. If you already have the Redtuzk profile it will be updated.")
+					PluginInstallFrame.Desc1:SetText("Import Redtuzk's BigWigs profile. A new profile called RedtuzkUI will be created. If you already have the Redtuzk profile it will be updated.")
 					PluginInstallFrame.Desc2:SetText("Requires a UI reload for profile switch to take effect")
 					PluginInstallFrame.Option1:Show()
 					PluginInstallFrame.Option1:SetScript("OnClick", function() SetupBigWigs() end)
@@ -716,7 +747,21 @@ local InstallerData = {
 					PluginInstallFrame.Option1:SetScript("OnClick", function() SetupBigWigs() end)
 					PluginInstallFrame.Option1:SetText("Update BigWigs")
 				end
+			elseif IsAddOnLoaded("DBM-Core") then
+				PluginInstallFrame.SubTitle:SetText("Deadly Boss Mods")
+				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
+					PluginInstallFrame.Desc1:SetText("Import Redtuzk's DBM profile. A new profile called RedtuzkUI will be created. If you already have the Redtuzk profile it will be updated.")
+					PluginInstallFrame.Option1:Show()
+					PluginInstallFrame.Option1:SetScript("OnClick", function() SetupDBM() end)
+					PluginInstallFrame.Option1:SetText("Setup DBM")
+				else
+					PluginInstallFrame.Desc1:SetText("Click \"Update DBM\" to update the RedtuzkUI BigWigs profile.\n\nCustom Settings for bosses will |cff07D400NOT|r be altered.")
+					PluginInstallFrame.Option1:Show()
+					PluginInstallFrame.Option1:SetScript("OnClick", function() SetupDBM() end)
+					PluginInstallFrame.Option1:SetText("Update DBM")
+				end
 			else
+				PluginInstallFrame.SubTitle:SetText("Boss Mod")
 				PluginInstallFrame.Desc1:SetText("|cffB33A3AOops, it looks like you don't have BigWigs installed!|r")
 				PluginInstallFrame.Desc2:SetText("BigWigs is recommended for use with RedtuzkUI")
 			end
@@ -764,7 +809,7 @@ local InstallerData = {
 		[3] = "Action Bar Layouts",
 		[4] = "Target Frame Options",
 		[5] = "Weak Auras",
-		[6] = "BigWigs Setup",
+		[6] = "Boss Mod Setup",
 		[7] = "Details Setup",
 		[8] = "Installation Complete",
 	},
@@ -841,6 +886,7 @@ P[MyPluginName] = {}
 --This function will handle initialization of the addon
 function mod:Initialize()
 	--Initiate installation process if ElvUI install is complete and our plugin install has not yet been run or its a newer version
+	E["global"][MyPluginName] = E["global"][MyPluginName] or {}
 	E.private.install_complete = E.version
 	if E.private.install_complete and (E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version ~= Version) then
 		E:GetModule("PluginInstaller"):Queue(InstallerData)
