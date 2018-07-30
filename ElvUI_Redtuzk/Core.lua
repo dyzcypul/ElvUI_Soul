@@ -619,6 +619,12 @@ local InstallerData = {
 				PluginInstallFrame.Option2:Show()
 				PluginInstallFrame.Option2:SetScript("OnClick", InstallComplete)
 				PluginInstallFrame.Option2:SetText("Skip Process")
+				if  not IsAddOnLoaded("ElvUI_SLE") then
+					PluginInstallFrame.Desc2:SetText("|cffff0000Caution! Some features won't work until you install/load|r |cff9482c9Shadow and Light|r")
+				end
+				if not IsAddOnLoaded("AddonSkins") then
+					PluginInstallFrame.Desc2:SetText(PluginInstallFrame.Desc2:GetText().." |cffff0000and|r |cff1784d1AddonSkins|r")
+				end
 			elseif E.db[MyPluginName].install_version == Version or E.db[MyPluginName].install_version == nil then
 				PluginInstallFrame.Desc1:SetText("This installation process will guide you through a few steps and apply settings to your current ElvUI profile. If you want to be able to go back to your original settings then create a new profile before going through this installation process.")
 				PluginInstallFrame.Desc2:SetText("Please press the continue button if you wish to go through the installation process, otherwise click the 'Skip Process' button.")
@@ -627,6 +633,9 @@ local InstallerData = {
 				PluginInstallFrame.Option1:SetText("Skip Process")
 				if  not IsAddOnLoaded("ElvUI_SLE") then
 					PluginInstallFrame.Desc3:SetText("|cffff0000Caution! Some features won't work until you install/load|r |cff9482c9Shadow and Light|r")
+				end
+				if not IsAddOnLoaded("AddonSkins") then
+					PluginInstallFrame.Desc3:SetText(PluginInstallFrame.Desc2:GetText().." |cffff0000and|r |cff1784d1AddonSkins|r")
 				end
 			else
 				PluginInstallFrame.SubTitle:SetFormattedText("|cff00ff00Looks like you've downloaded and update for|r |cffc41f3b%s|r!", MyPluginName)
