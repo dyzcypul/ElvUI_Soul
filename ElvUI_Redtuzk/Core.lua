@@ -577,6 +577,21 @@ local function LoadRUIProfile()
 	local SLEv = GetAddOnMetadata("ElvUI_SLE", "Version")
 	E.private.sle.install_complete = SLEv
 	ElvUI[1].data:SetProfile(E["global"][MyPluginName].profile_name)
+	E.private["general"]["chatBubbleFontSize"] = 12
+    E.private["general"]["chatBubbleFont"] = "Century Gothic Bold"
+    E.private["general"]["chatBubbleFontOutline"] = "OUTLINE"
+    E.private["general"]["namefont"] = "Century Gothic Bold"
+    E.private["general"]["dmgfont"] = "Century Gothic Bold"
+    E.private["skins"]["blizzard"]["alertframes"] = true
+    E.private["skins"]["blizzard"]["UIWidgets"] = true
+	if IsAddOnLoaded("ElvUI_SLE") then
+	    E.private["sle"]["pvpreadydialogreset"] = true
+        E.private["sle"]["install_complete"] = "3.421"
+	end
+	if IsAddOnLoaded("ElvUI_CustomTweaks") then
+	    E.private["CustomTweaks"]["CastbarText"] = true
+        E.private["CustomTweaks"]["AuraIconSpacing"] = true
+	end
 	if IsAddOnLoaded("BigWigs") then
 		SetupBigWigs()
 	elseif IsAddOnLoaded("DBM-Core") then
