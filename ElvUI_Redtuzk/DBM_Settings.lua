@@ -301,6 +301,14 @@ function RUI:DBMSettings()
 			["EndColorDB"] = 1,
 			["HugeTimerX"] = -256.000274658203,
 		},
-	}
-  DBM:ApplyProfile('RedtuzkUI')
+    }
+    if layout == "8x2" then
+        DBT_AllPersistentOptions["RedtuzkUI"]["DBM"]["HugeTimerY"] = -137.000213623047
+        DBT_AllPersistentOptions["RedtuzkUI"]["DBM"]["HugeTimerX"] = -286.000305175781
+    end
+    DBM:ApplyProfile('RedtuzkUI')
+    if IsAddOnLoaded("AddOnSkins") then
+        AddOnSkinsDB["DBMFont"] = "Century Gothic Bold"
+    end
+    DBM:ApplyProfile('RedtuzkUI')
 end
