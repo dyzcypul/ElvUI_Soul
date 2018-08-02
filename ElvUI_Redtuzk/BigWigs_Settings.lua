@@ -1,6 +1,6 @@
 local RUI = select(2, ...):unpack()
 
-function RUI:BigWigsSettings()
+function RUI:BigWigsSettings(layout)
 	-- Make sure all of the BigWigs module profiles exist, only need for first time users of BigWigs
 	BigWigs3DB["namespaces"]["BigWigs_Plugins_InfoBox"]["profiles"] = BigWigs3DB["namespaces"]["BigWigs_Plugins_InfoBox"]["profiles"] or {}
 	BigWigs3DB["namespaces"]["BigWigs_Plugins_Colors"]["profiles"] = BigWigs3DB["namespaces"]["BigWigs_Plugins_Colors"]["profiles"] or {}
@@ -98,6 +98,11 @@ function RUI:BigWigsSettings()
 	}
 	--This is the only settings that BigWigs actually stores under the profile, shouldn't ever need to be changed
     BigWigs3DB["profiles"]["RedtuzkUI"]["fakeDBMVersion"] = true
+    
+    if layout == "8x2" then
+		BigWigs3DB["namespaces"]["BigWigs_Plugins_Bars"]["profiles"]["RedtuzkUI"]["BigWigsEmphasizeAnchor_x"] = 401.066589572693
+		BigWigs3DB["namespaces"]["BigWigs_Plugins_Bars"]["profiles"]["RedtuzkUI"]["BigWigsEmphasizeAnchor_y"] = 302.932516015881
+	end
 end
 
 function RUI:BigWigsFresh()
