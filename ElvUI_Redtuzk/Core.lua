@@ -536,11 +536,11 @@ local function SetupBigWigs()
 	--Check see if the BigWigs database exists
 	if(BigWigs3DB) then
 		--If it does add RedtuzkUI to the profiles
-        RUI:BigWigsSettings()
+        RUI:BigWigsSettings(E.db[MyPluginName].layout)
 	else
 		--If it doesn't create the BigWigs database then add RedtuzkUI to the profiles
 		RUI:BigWigsFresh()
-		RUI:BigWigsSettings()
+		RUI:BigWigsSettings(E.db[MyPluginName].layout)
 	end
 	--Apply the RedtuzkUI profile
 	local BigWigs = LibStub("AceDB-3.0"):New(BigWigs3DB)
@@ -550,7 +550,7 @@ local function SetupBigWigs()
 end
 
 local function SetupDBM()
-	RUI:DBMSettings()
+	RUI:DBMSettings(E.db[MyPluginName].layout)
 	PluginInstallStepComplete.message = "DBM Profile Applied"
 	PluginInstallStepComplete:Show()
 end
