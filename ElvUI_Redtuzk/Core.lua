@@ -378,7 +378,7 @@ local function AddCustomTags()
 		local String
 
 		if (max >= 0) then
-			String = GetFormattedText(min, max, "CURRENT", true)
+			String = GetFormattedText(min, max, "CURRENT", false)
 		end
 
 		return String
