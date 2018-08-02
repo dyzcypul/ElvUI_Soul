@@ -1,6 +1,6 @@
 local RUI = select(2, ...):unpack()
 
-function RUI:DBMSettings()
+function RUI:DBMSettings(layout)
   DBM:CreateProfile('RedtuzkUI')
   DBM_AllSavedOptions["RedtuzkUI"] = {
 		["DontShowFarWarnings"] = true,
