@@ -192,7 +192,7 @@ function RUI:ElvUISettings()
     E.db["movers"]["PvPMover"] = "TOP,ElvUIParent,TOP,0,-15"
     E.db["movers"]["UIErrorsFrameMover"] = "TOP,ElvUIParent,TOP,0,-164"
     E.db["movers"]["RightBG_Mover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-10,26"
-    E.db["movers"]["VehicleSeatMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,10,-60"
+    E.db["movers"]["VehicleSeatMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-232,21"
     E.db["movers"]["ExperienceBarMover"] = "TOP,ElvUIParent,TOP,0,-4"
     E.db["movers"]["HonorBarMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,419,8"
     E.db["movers"]["ElvUF_TargetMover"] = "BOTTOM,ElvUIParent,BOTTOM,270,330"
