@@ -603,7 +603,6 @@ local function PartyFrameSetup(style)
 		E.db["unitframe"]["units"]["party"]["buffs"]["perrow"] = 20
 		E.db["unitframe"]["units"]["party"]["buffs"]["anchorPoint"] = "RIGHT"
 		E.db["unitframe"]["units"]["party"]["buffs"]["noConsolidated"] = false
-		E.db["unitframe"]["units"]["party"]["buffs"]["clickThrough"] = true
 		E.db["unitframe"]["units"]["party"]["buffs"]["sortDirection"] = "ASCENDING"
 		E.db["unitframe"]["units"]["party"]["buffs"]["sizeOverride"] = 28
 		E.db["unitframe"]["units"]["party"]["buffs"]["sortMethod"] = "INDEX"
