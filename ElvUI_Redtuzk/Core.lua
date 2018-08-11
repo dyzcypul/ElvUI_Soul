@@ -542,7 +542,7 @@ end
 local function PartyFrameSetup(style)
 	E.db[MyPluginName].PartyFrameStyle = style
 	if style  == "Standard" then
-			E.db["movers"]["ElvUF_PartyMover"] = "TOPRIGHT,ElvUIParent,BOTTOMLEFT,113,650"
+		E.db["movers"]["ElvUF_PartyMover"] = "TOPRIGHT,ElvUIParent,BOTTOMLEFT,113,650"
 		E.db["unitframe"]["units"]["party"]["horizontalSpacing"] = 3
 		E.db["unitframe"]["units"]["party"]["debuffs"]["countFontSize"] = 13
 		E.db["unitframe"]["units"]["party"]["debuffs"]["fontSize"] = 12
@@ -620,7 +620,7 @@ local function PartyFrameSetup(style)
 		E.db["unitframe"]["units"]["party"]["horizontalSpacing"] = 3
         E.db["unitframe"]["units"]["party"]["debuffs"]["countFontSize"] = 15
         E.db["unitframe"]["units"]["party"]["debuffs"]["fontSize"] = 15
-        E.db["unitframe"]["units"]["party"]["debuffs"]["sizeOverride"] = 29
+        E.db["unitframe"]["units"]["party"]["debuffs"]["sizeOverride"] = 32
         E.db["unitframe"]["units"]["party"]["debuffs"]["useWhitelist"] = true
         E.db["unitframe"]["units"]["party"]["debuffs"]["xOffset"] = 3
         E.db["unitframe"]["units"]["party"]["debuffs"]["useFilter"] = "DontShowMeThisShit"
@@ -702,7 +702,12 @@ local function PartyFrameSetup(style)
         E.db["unitframe"]["units"]["party"]["raidicon"]["size"] = 20
         E.db["unitframe"]["units"]["party"]["raidicon"]["xOffset"] = 52
         E.db["unitframe"]["units"]["party"]["raidicon"]["yOffset"] = 13
-
+        
+        
+        -----Do not change-----
+        E.db["unitframe"]["units"]["party"]["power"]["enable"] = true
+        E.db["unitframe"]["units"]["party"]["raidicon"]["enable"] = true
+        E.db["unitframe"]["units"]["party"]["debuffs"]["yOffset"] = 0
 	end
 	E:UpdateAll(true)
 	PluginInstallStepComplete.message = "Party Frame Options Set"
