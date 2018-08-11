@@ -20,7 +20,6 @@ local StopMusic = StopMusic
 
 --Change this line and use a unique name for your plugin.
 local MyPluginName = "RedtuzkUI"
-local RUIlayout = "5x2"
 
 --Create references to ElvUI internals
 local E, L, V, P, G = unpack(ElvUI)
@@ -83,6 +82,7 @@ local function CreateCustomTexts()
 
 	E.db["unitframe"]["units"]["party"]["customTexts"] = E.db["unitframe"]["units"]["party"]["customTexts"] or {}
 	E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"] = {}
+	E.db["unitframe"]["units"]["party"]["customTexts"]["!Name"] = {}
 
 	E.db["unitframe"]["units"]["raid40"]["customTexts"] = E.db["unitframe"]["units"]["raid40"]["customTexts"] or {}
 	E.db["unitframe"]["units"]["raid40"]["customTexts"]["Health Text"] = {}
@@ -417,23 +417,31 @@ local function UpdateAuraIconSettings(self, auras, noCycle)
 end
 hooksecurefunc(UF, "UpdateAuraIconSettings", UpdateAuraIconSettings)
 
-local function WASetup(aura)
-	if aura == "templates" then
-		RUI:ImportTemplates()
-		PluginInstallStepComplete.message = "RUI Icon Templates Imported"
-		PluginInstallStepComplete:Show()
-	end
-end
-
---This function will hold your layout settings
-local function SetupLayoutBar(layout)
+local function SetupLayout(layout)
 	CreateCustomTexts()
 	CreatingMissingSettings()
 	EnableCustomTweaks()
 	local RUIver = E.db[MyPluginName].install_version
-	RUI:ElvUISettings()
+	RUI:ElvUISettings(layout)
 	E.db[MyPluginName].install_version = RUIver
 	E.db[MyPluginName].layout = layout
+	if layout == "healer" then
+		E.db["actionbar"]["bar2"]["enabled"] = false
+	elseif layout == "dps" then
+		E.db["actionbar"]["bar3"]["buttonsPerRow"] = 6
+		E.db["actionbar"]["bar3"]["mouseover"] = false
+		E.db["unitframe"]["units"]["raid40"]["roleIcon"]["damager"] = true
+		E.db["unitframe"]["units"]["raid"]["roleIcon"]["damager"] = true
+		E.db["unitframe"]["units"]["party"]["roleIcon"]["damager"] = true
+	end
+	E:UpdateAll(true)
+	PluginInstallStepComplete.message = "Layout Set"
+	PluginInstallStepComplete:Show()
+end
+
+--This function will hold your layout settings
+local function SetupLayoutBar(layout)
+	E.db[MyPluginName].ABlayout = layout
 
 	if layout == "5x2" then
 	elseif layout == "6x2" then
@@ -475,7 +483,7 @@ local function SetupLayoutBar(layout)
 	--Update ElvUI
 	E:UpdateAll(true)
 	--Show message about layout being set
-	PluginInstallStepComplete.message = "Layout Set"
+	PluginInstallStepComplete.message = "Action Bar Layout Set"
 	PluginInstallStepComplete:Show()
 end
 
@@ -525,32 +533,235 @@ local function TargetFrameSetup(auras)
 	PluginInstallStepComplete:Show()
 end
 
+local function PartyFrameSetup(style)
+	E.db[MyPluginName].PartyFrameStyle = style
+	if style  == "Standard" then
+			E.db["movers"]["ElvUF_PartyMover"] = "TOPRIGHT,ElvUIParent,BOTTOMLEFT,113,650"
+		E.db["unitframe"]["units"]["party"]["horizontalSpacing"] = 3
+		E.db["unitframe"]["units"]["party"]["debuffs"]["countFontSize"] = 13
+		E.db["unitframe"]["units"]["party"]["debuffs"]["fontSize"] = 12
+		E.db["unitframe"]["units"]["party"]["debuffs"]["sizeOverride"] = 23
+		E.db["unitframe"]["units"]["party"]["debuffs"]["useWhitelist"] = true
+		E.db["unitframe"]["units"]["party"]["debuffs"]["xOffset"] = -64
+		E.db["unitframe"]["units"]["party"]["debuffs"]["useFilter"] = "DontShowMeThisShit"
+		E.db["unitframe"]["units"]["party"]["debuffs"]["perrow"] = 1
+		E.db["unitframe"]["units"]["party"]["debuffs"]["yOffset"] = -7
+		E.db["unitframe"]["units"]["party"]["portrait"]["rotation"] = 170
+		E.db["unitframe"]["units"]["party"]["portrait"]["overlay"] = true
+		E.db["unitframe"]["units"]["party"]["portrait"]["xOffset"] = 0.31
+		E.db["unitframe"]["units"]["party"]["portrait"]["width"] = 62
+		E.db["unitframe"]["units"]["party"]["rdebuffs"]["font"] = "Century Gothic Bold"
+		E.db["unitframe"]["units"]["party"]["growthDirection"] = "DOWN_LEFT"
+		E.db["unitframe"]["units"]["party"]["petsGroup"]["anchorPoint"] = "BOTTOM"
+		E.db["unitframe"]["units"]["party"]["health"]["xOffset"] = 72
+		E.db["unitframe"]["units"]["party"]["health"]["text_format"] = ""
+		E.db["unitframe"]["units"]["party"]["health"]["frequentUpdates"] = true
+		E.db["unitframe"]["units"]["party"]["health"]["position"] = "CENTER"
+		E.db["unitframe"]["units"]["party"]["groupBy"] = "ROLE"
+		E.db["unitframe"]["units"]["party"]["verticalSpacing"] = 1
+		E.db["unitframe"]["units"]["party"]["power"]["position"] = "BOTTOM"
+		E.db["unitframe"]["units"]["party"]["power"]["enable"] = false
+		E.db["unitframe"]["units"]["party"]["power"]["height"] = 3
+		E.db["unitframe"]["units"]["party"]["power"]["text_format"] = ""
+		E.db["unitframe"]["units"]["party"]["power"]["width"] = "spaced"
+		E.db["unitframe"]["units"]["party"]["roleIcon"]["xOffset"] = 2
+		E.db["unitframe"]["units"]["party"]["roleIcon"]["yOffset"] = 0
+		E.db["unitframe"]["units"]["party"]["roleIcon"]["position"] = "LEFT"
+		E.db["unitframe"]["units"]["party"]["roleIcon"]["size"] = 15
+		E.db["unitframe"]["units"]["party"]["targetsGroup"]["anchorPoint"] = "BOTTOM"
+		E.db["unitframe"]["units"]["party"]["GPSArrow"]["size"] = 40
+		E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["yOffset"] = -11
+		E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["font"] = "Century Gothic Bold"
+		E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["justifyH"] = "CENTER"
+		E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["fontOutline"] = "OUTLINE"
+		E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["enable"] = true
+		E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["xOffset"] = 0
+		E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["text_format"] = " [status]"
+		E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["size"] = 11
+		E.db["unitframe"]["units"]["party"]["healPrediction"] = true
+		E.db["unitframe"]["units"]["party"]["buffIndicator"]["size"] = 10
+		E.db["unitframe"]["units"]["party"]["buffIndicator"]["fontSize"] = 12
+		E.db["unitframe"]["units"]["party"]["width"] = 105
+		E.db["unitframe"]["units"]["party"]["raidWideSorting"] = true
+		E.db["unitframe"]["units"]["party"]["name"]["xOffset"] = 2
+		E.db["unitframe"]["units"]["party"]["name"]["yOffset"] = -2
+		E.db["unitframe"]["units"]["party"]["name"]["text_format"] = "||cffffffff[name:short] [difficultycolor][smartlevel]"
+		E.db["unitframe"]["units"]["party"]["name"]["position"] = "TOP"
+		E.db["unitframe"]["units"]["party"]["startFromCenter"] = true
+		E.db["unitframe"]["units"]["party"]["height"] = 43
+		E.db["unitframe"]["units"]["party"]["buffs"]["countFontSize"] = 13
+		E.db["unitframe"]["units"]["party"]["buffs"]["fontSize"] = 6
+		E.db["unitframe"]["units"]["party"]["buffs"]["onlyDispellable"] = true
+		E.db["unitframe"]["units"]["party"]["buffs"]["useWhitelist"] = true
+		E.db["unitframe"]["units"]["party"]["buffs"]["xOffset"] = 2
+		E.db["unitframe"]["units"]["party"]["buffs"]["perrow"] = 20
+		E.db["unitframe"]["units"]["party"]["buffs"]["anchorPoint"] = "RIGHT"
+		E.db["unitframe"]["units"]["party"]["buffs"]["noConsolidated"] = false
+		E.db["unitframe"]["units"]["party"]["buffs"]["clickThrough"] = true
+		E.db["unitframe"]["units"]["party"]["buffs"]["sortDirection"] = "ASCENDING"
+		E.db["unitframe"]["units"]["party"]["buffs"]["sizeOverride"] = 28
+		E.db["unitframe"]["units"]["party"]["buffs"]["sortMethod"] = "INDEX"
+		E.db["unitframe"]["units"]["party"]["buffs"]["useFilter"] = "TurtleBuffs"
+		E.db["unitframe"]["units"]["party"]["visibility"] = "[@raid6,exists][nogroup]hide;show"
+		E.db["unitframe"]["units"]["party"]["raidicon"]["attachTo"] = "CENTER"
+		E.db["unitframe"]["units"]["party"]["raidicon"]["xOffset"] = 25
+		E.db["unitframe"]["units"]["party"]["raidicon"]["yOffset"] = 0
+		E.db["unitframe"]["units"]["party"]["raidicon"]["enable"] = false
+		E.db["unitframe"]["units"]["party"]["raidicon"]["size"] = 13
+		E.db["unitframe"]["units"]["party"]["customTexts"]["!Name"]["enable"] = false
+	elseif style == "m+" then
+		E.db["movers"]["ElvUF_PartyMover"] = "TOPRIGHT,ElvUIParent,BOTTOMLEFT,500,630"
+		E.db["unitframe"]["units"]["party"]["horizontalSpacing"] = 3
+        E.db["unitframe"]["units"]["party"]["debuffs"]["countFontSize"] = 15
+        E.db["unitframe"]["units"]["party"]["debuffs"]["fontSize"] = 15
+        E.db["unitframe"]["units"]["party"]["debuffs"]["sizeOverride"] = 29
+        E.db["unitframe"]["units"]["party"]["debuffs"]["useWhitelist"] = true
+        E.db["unitframe"]["units"]["party"]["debuffs"]["xOffset"] = 3
+        E.db["unitframe"]["units"]["party"]["debuffs"]["useFilter"] = "DontShowMeThisShit"
+        E.db["unitframe"]["units"]["party"]["debuffs"]["attachTo"] = "HEALTH"
+        E.db["unitframe"]["units"]["party"]["debuffs"]["perrow"] = 3
+        E.db["unitframe"]["units"]["party"]["portrait"]["overlay"] = true
+        E.db["unitframe"]["units"]["party"]["portrait"]["rotation"] = 170
+        E.db["unitframe"]["units"]["party"]["portrait"]["xOffset"] = 0.31
+        E.db["unitframe"]["units"]["party"]["portrait"]["width"] = 62
+        E.db["unitframe"]["units"]["party"]["rdebuffs"]["font"] = "Century Gothic Bold"
+        E.db["unitframe"]["units"]["party"]["raidRoleIcons"]["position"] = "TOPRIGHT"
+        E.db["unitframe"]["units"]["party"]["growthDirection"] = "DOWN_LEFT"
+        E.db["unitframe"]["units"]["party"]["petsGroup"]["anchorPoint"] = "BOTTOM"
+        E.db["unitframe"]["units"]["party"]["health"]["xOffset"] = 72
+        E.db["unitframe"]["units"]["party"]["health"]["text_format"] = ""
+        E.db["unitframe"]["units"]["party"]["health"]["frequentUpdates"] = true
+        E.db["unitframe"]["units"]["party"]["health"]["position"] = "CENTER"
+        E.db["unitframe"]["units"]["party"]["groupBy"] = "ROLE"
+        E.db["unitframe"]["units"]["party"]["verticalSpacing"] = 10
+        E.db["unitframe"]["units"]["party"]["power"]["attachTextTo"] = "Frame"
+        E.db["unitframe"]["units"]["party"]["power"]["position"] = "BOTTOM"
+        E.db["unitframe"]["units"]["party"]["power"]["xOffset"] = 0
+        E.db["unitframe"]["units"]["party"]["power"]["height"] = 5
+        E.db["unitframe"]["units"]["party"]["power"]["text_format"] = " "
+        E.db["unitframe"]["units"]["party"]["power"]["width"] = "spaced"
+        E.db["unitframe"]["units"]["party"]["roleIcon"]["xOffset"] = -8
+        E.db["unitframe"]["units"]["party"]["roleIcon"]["size"] = 16
+        E.db["unitframe"]["units"]["party"]["roleIcon"]["position"] = "LEFT"
+        E.db["unitframe"]["units"]["party"]["roleIcon"]["yOffset"] = 13
+        E.db["unitframe"]["units"]["party"]["targetsGroup"]["anchorPoint"] = "BOTTOM"
+        E.db["unitframe"]["units"]["party"]["targetsGroup"]["name"]["text_format"] = "||cffFFFFFF[name:veryshort]||r"
+        E.db["unitframe"]["units"]["party"]["targetsGroup"]["xOffset"] = -93
+        E.db["unitframe"]["units"]["party"]["targetsGroup"]["width"] = 43
+        E.db["unitframe"]["units"]["party"]["targetsGroup"]["yOffset"] = 28
+        E.db["unitframe"]["units"]["party"]["GPSArrow"]["size"] = 40
+        E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["size"] = 14
+        E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["font"] = "Century Gothic Bold"
+        E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["justifyH"] = "CENTER"
+        E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["fontOutline"] = "OUTLINE"
+        E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["enable"] = true
+        E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["xOffset"] = 0
+        E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["text_format"] = "[status]"
+        E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["yOffset"] = -1
+        E.db["unitframe"]["units"]["party"]["customTexts"]["!Name"]["attachTextTo"] = "Frame"
+        E.db["unitframe"]["units"]["party"]["customTexts"]["!Name"]["enable"] = true
+        E.db["unitframe"]["units"]["party"]["customTexts"]["!Name"]["text_format"] = "||cffffffff[name:short] [difficultycolor][smartlevel]"
+        E.db["unitframe"]["units"]["party"]["customTexts"]["!Name"]["yOffset"] = 14
+        E.db["unitframe"]["units"]["party"]["customTexts"]["!Name"]["font"] = "Century Gothic Bold"
+        E.db["unitframe"]["units"]["party"]["customTexts"]["!Name"]["justifyH"] = "LEFT"
+        E.db["unitframe"]["units"]["party"]["customTexts"]["!Name"]["fontOutline"] = "OUTLINE"
+        E.db["unitframe"]["units"]["party"]["customTexts"]["!Name"]["xOffset"] = 10
+        E.db["unitframe"]["units"]["party"]["customTexts"]["!Name"]["size"] = 14
+        E.db["unitframe"]["units"]["party"]["healPrediction"] = true
+        E.db["unitframe"]["units"]["party"]["buffIndicator"]["size"] = 10
+        E.db["unitframe"]["units"]["party"]["buffIndicator"]["fontSize"] = 12
+        E.db["unitframe"]["units"]["party"]["width"] = 141
+        E.db["unitframe"]["units"]["party"]["raidWideSorting"] = true
+        E.db["unitframe"]["units"]["party"]["name"]["xOffset"] = -20
+        E.db["unitframe"]["units"]["party"]["name"]["yOffset"] = 8
+        E.db["unitframe"]["units"]["party"]["name"]["text_format"] = " "
+        E.db["unitframe"]["units"]["party"]["name"]["position"] = "TOP"
+        E.db["unitframe"]["units"]["party"]["startFromCenter"] = true
+        E.db["unitframe"]["units"]["party"]["height"] = 32
+        E.db["unitframe"]["units"]["party"]["buffs"]["countFontSize"] = 13
+        E.db["unitframe"]["units"]["party"]["buffs"]["sizeOverride"] = 17
+        E.db["unitframe"]["units"]["party"]["buffs"]["onlyDispellable"] = true
+        E.db["unitframe"]["units"]["party"]["buffs"]["useWhitelist"] = true
+        E.db["unitframe"]["units"]["party"]["buffs"]["xOffset"] = 2
+        E.db["unitframe"]["units"]["party"]["buffs"]["yOffset"] = 21
+        E.db["unitframe"]["units"]["party"]["buffs"]["anchorPoint"] = "BOTTOMLEFT"
+        E.db["unitframe"]["units"]["party"]["buffs"]["noConsolidated"] = false
+        E.db["unitframe"]["units"]["party"]["buffs"]["useFilter"] = "TurtleBuffs"
+        E.db["unitframe"]["units"]["party"]["buffs"]["sortDirection"] = "ASCENDING"
+        E.db["unitframe"]["units"]["party"]["buffs"]["sortMethod"] = "INDEX"
+        E.db["unitframe"]["units"]["party"]["buffs"]["enable"] = true
+        E.db["unitframe"]["units"]["party"]["buffs"]["perrow"] = 1
+        E.db["unitframe"]["units"]["party"]["visibility"] = "[@raid6,exists][nogroup]hide;show"
+        E.db["unitframe"]["units"]["party"]["raidicon"]["attachTo"] = "CENTER"
+        E.db["unitframe"]["units"]["party"]["raidicon"]["size"] = 20
+        E.db["unitframe"]["units"]["party"]["raidicon"]["xOffset"] = 52
+        E.db["unitframe"]["units"]["party"]["raidicon"]["yOffset"] = 13
+
+	end
+	E:UpdateAll(true)
+	PluginInstallStepComplete.message = "Party Frame Options Set"
+	PluginInstallStepComplete:Show()
+end
+
 local function SetupDetails()
-	RUI:DetailsSettings()
-	_detalhes:ApplyProfile("RedtuzkUI", false, false)
+	if E.db[MyPluginName].layout == "healer" then
+		RUI:DetailsSettings(E.db[MyPluginName].layout)
+		_detalhes:ApplyProfile("RedtuzkUI_Healer", false, false)
+	else
+		RUI:DetailsSettings(E.db[MyPluginName].layout)
+		_detalhes:ApplyProfile("RedtuzkUI", false, false)
+	end
 	PluginInstallStepComplete.message = "Details Profile Applied"
 	PluginInstallStepComplete:Show()
 end
 
-local function SetupBigWigs()
-	--Check see if the BigWigs database exists
-	if(BigWigs3DB) then
-		--If it does add RedtuzkUI to the profiles
-        RUI:BigWigsSettings(E.db[MyPluginName].layout)
-	else
-		--If it doesn't create the BigWigs database then add RedtuzkUI to the profiles
-		RUI:BigWigsFresh()
-		RUI:BigWigsSettings(E.db[MyPluginName].layout)
+local function WASetup(aura)
+	if aura == "templates" then
+		RUI:ImportTemplates()
+		PluginInstallStepComplete.message = "RUI Icon Templates Imported"
+		PluginInstallStepComplete:Show()
 	end
-	--Apply the RedtuzkUI profile
-	local BigWigs = LibStub("AceDB-3.0"):New(BigWigs3DB)
-	BigWigs:SetProfile("RedtuzkUI")
+end
+
+local function SetupBigWigs()
+	if E.db[MyPluginName].layout == "healer" then
+		if(BigWigs3DB) then
+			--If it does add RedtuzkUI to the profiles
+	        RUI:BigWigsSettings(E.db[MyPluginName].layout)
+		else
+			--If it doesn't create the BigWigs database then add RedtuzkUI to the profiles
+			RUI:BigWigsFresh(E.db[MyPluginName].layout)
+			RUI:BigWigsSettings(E.db[MyPluginName].layout)
+		end
+		--Apply the RedtuzkUI profile
+		local BigWigs = LibStub("AceDB-3.0"):New(BigWigs3DB)
+		BigWigs:SetProfile("RedtuzkUI_Healer")
+	else
+		--Check see if the BigWigs database exists
+		if(BigWigs3DB) then
+			--If it does add RedtuzkUI to the profiles
+	        RUI:BigWigsSettings(E.db[MyPluginName].ABlayout)
+		else
+			--If it doesn't create the BigWigs database then add RedtuzkUI to the profiles
+			RUI:BigWigsFresh()
+			RUI:BigWigsSettings(E.db[MyPluginName].ABlayout)
+		end
+		--Apply the RedtuzkUI profile
+		local BigWigs = LibStub("AceDB-3.0"):New(BigWigs3DB)
+		BigWigs:SetProfile("RedtuzkUI")
+	end
 	PluginInstallStepComplete.message = "BigWigs Profile Applied"
 	PluginInstallStepComplete:Show()
 end
 
 local function SetupDBM()
-	RUI:DBMSettings(E.db[MyPluginName].layout)
+	if E.db[MyPluginName].layout == "healer" then
+		RUI:DBMSettings(E.db[MyPluginName].layout)
+		DBM:ApplyProfile('RedtuzkUI_Healer')
+	else
+		RUI:DBMSettings(E.db[MyPluginName].ABlayout)
+		DBM:ApplyProfile('RedtuzkUI')
+	end
 	PluginInstallStepComplete.message = "DBM Profile Applied"
 	PluginInstallStepComplete:Show()
 end
@@ -691,13 +902,34 @@ local InstallerData = {
 			end
 		end,
 		[3] = function()
-		    if  not IsAddOnLoaded("ElvUI_SLE") then
+			if  not IsAddOnLoaded("ElvUI_SLE") then
 				DummySLE()
 			end
+			PluginInstallFrame.SubTitle:SetText("Layout")
+			if E.db[MyPluginName].layout ~= "dps" or E.db[MyPluginName].layout ~= "healer" then
+				E.db[MyPluginName].layout = nil
+			end
 			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version or not E.db[MyPluginName].layout then
-				PluginInstallFrame.SubTitle:SetText("Action Bar Layouts")
-				PluginInstallFrame.Desc1:SetText("These are the layouts that are available. Please click a button below to apply the layout of your choosing.")
-				PluginInstallFrame.Desc2:SetText("Importance: |cff07D400High|r")
+				PluginInstallFrame.Desc1:SetText("You can select either the \"DPS/Tank\" layout or the \"Healer\" layout.")
+				PluginInstallFrame.Option1:Show()
+				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayout("dps") end)
+				PluginInstallFrame.Option1:SetText("DPS/Tank")
+				PluginInstallFrame.Option2:Show()
+				PluginInstallFrame.Option2:SetScript("OnClick", function() SetupLayout("healer") end)
+				PluginInstallFrame.Option2:SetText("Healer")
+			else
+				PluginInstallFrame.Desc1:SetText("Press \"Update Layout\" to update your ElvUI profile.")
+				PluginInstallFrame.Option1:Show()
+				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayoutBar(E.db[MyPluginName].layout) end)
+				PluginInstallFrame.Option1:SetText("Update Layout")
+			end
+		end,
+		[4] = function()
+		    PluginInstallFrame.SubTitle:SetText("Action Bar Layout")
+            if E.db[MyPluginName].layout == "healer" then
+				PluginInstallFrame.Desc1:SetText("Action bar layouts are only avaiable for  DPS and Tank roles.")
+			elseif E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version or not E.db[MyPluginName].ABlayout then
+				PluginInstallFrame.Desc1:SetText("These are the action bar layouts that are available. Please click a button below to apply the layout of your choosing.")
 				PluginInstallFrame.Option1:Show()
 				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayoutBar("5x2") end)
 				PluginInstallFrame.Option1:SetText("5x2 (Default)")
@@ -708,15 +940,13 @@ local InstallerData = {
 				PluginInstallFrame.Option3:SetScript("OnClick", function() SetupLayoutBar("8x2") end)
 				PluginInstallFrame.Option3:SetText("8x2")
 			else
-				PluginInstallFrame.SubTitle:SetText("Action Bar Layout")
-				PluginInstallFrame.Desc1:SetText("Press \"Update Layout\" to update your ElvUI profile.")
-				PluginInstallFrame.Desc2:SetText("Importance: |cff07D400High|r")
+				PluginInstallFrame.Desc1:SetText("Press \"Update Bar Layout\" to update your ElvUI action bars.")
 				PluginInstallFrame.Option1:Show()
-				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayoutBar(E.db[MyPluginName].layout) end)
-				PluginInstallFrame.Option1:SetText("Update Layout")
+				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayoutBar(E.db[MyPluginName].ABlayout) end)
+				PluginInstallFrame.Option1:SetText("Update Bar Layout")
 			end
 		end,
-		[4] = function()
+		[5] = function()
 			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version or not E.db[MyPluginName].TargetAuras then
 				PluginInstallFrame.SubTitle:SetText("Target Frame Options")
 				PluginInstallFrame.Desc1:SetText("Here you can select some options for how buffs and debuffs will be displayed on your target frame. \n\nIf you select \"Only Buffs\" or \"Only Debuffs\" then the auras will be displayed above the frame, similar to how player debuffs are displayed.\n\nIf you selece \"Show Both\" then debuffs will be displayed above the frame and buffs below.")
@@ -737,7 +967,26 @@ local InstallerData = {
 				PluginInstallFrame.Option1:SetText("Update Buffs/Debuffs")
 			end
 		end,
-		[5] = function()
+		[6] = function()
+			PluginInstallFrame.SubTitle:SetText("Party Frame Options")
+			if E.db[MyPluginName].layout == "healer" then
+				PluginInstallFrame.Desc1:SetText("Party frame settings are only avaiable for  DPS and Tank roles.")
+			elseif E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version or not E.db[MyPluginName].PartyFrameStyle then
+				PluginInstallFrame.Desc1:SetText("Here you can select some options for the party frame style. \n\nThe \"Standard\" style includes more minimal party frames that more closely resembled the style of the raid frames. The \"Mythic+\" style enlarges the frames and moves them closer to the certer and also includes more details on the party frames such as: buff and debuff tracking and a power bar dispaly.\n\nWe recommend the Mythic+ frames.")
+				PluginInstallFrame.Option1:Show()
+				PluginInstallFrame.Option1:SetScript("OnClick", function() PartyFrameSetup("Standard") end)
+				PluginInstallFrame.Option1:SetText("Standard")
+				PluginInstallFrame.Option2:Show()
+				PluginInstallFrame.Option2:SetScript("OnClick", function() PartyFrameSetup("m+") end)
+				PluginInstallFrame.Option2:SetText("Mythic+")
+			else
+				PluginInstallFrame.Desc1:SetText("Press \"Update Party Frame\" to update your party frame settings.")
+				PluginInstallFrame.Option1:Show()
+				PluginInstallFrame.Option1:SetScript("OnClick", function() TargetFrameSetup(E.db[MyPluginName].PartyFrameStyle) end)
+				PluginInstallFrame.Option1:SetText("Update Party Frame")
+			end
+		end,
+		[7] = function()
 			PluginInstallFrame.SubTitle:SetText("Weak Auras")
 			if IsAddOnLoaded("WeakAuras") then --Make sure the User has Weak Auras installed.
 				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
@@ -755,7 +1004,7 @@ local InstallerData = {
 				PluginInstallFrame.Desc2:SetText("Weak Auras is recommended for use with RedtuzkUI")
 			end
 		end,
-		[6] = function()
+		[8] = function()
 			if IsAddOnLoaded("BigWigs") then --Make sure the User has BigWigs installed.
 				PluginInstallFrame.SubTitle:SetText("BigWigs")
 				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
@@ -790,7 +1039,7 @@ local InstallerData = {
 				PluginInstallFrame.Desc2:SetText("BigWigs is recommended for use with RedtuzkUI")
 			end
 		end,
-		[7] = function()
+		[9] = function()
 			PluginInstallFrame.SubTitle:SetText("Details")
 			if IsAddOnLoaded("Details") then --Make sure the User has Details installed.
 				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
@@ -809,7 +1058,7 @@ local InstallerData = {
 				PluginInstallFrame.Desc2:SetText("Details is recommended for use with RedtuzkUI")
 			end
 		end,
-		[8] = function()
+		[10] = function()
 			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
 				PluginInstallFrame.SubTitle:SetText("Installation Complete")
 				PluginInstallFrame.Desc1:SetText("You have completed the installation process.")
@@ -830,12 +1079,14 @@ local InstallerData = {
 	StepTitles = {
 		[1] = "Welcome",
 		[2] = "Profile Setup",
-		[3] = "Action Bar Layouts",
-		[4] = "Target Frame Options",
-		[5] = "Weak Auras",
-		[6] = "Boss Mod Setup",
-		[7] = "Details Setup",
-		[8] = "Installation Complete",
+		[3] = "Layout",
+		[4] = "Action Bar Layouts",
+		[5] = "Target Frame Options",
+		[6] = "Party Frame Options",
+		[7] = "Weak Auras",
+		[8] = "Boss Mod Setup",
+		[9] = "Details Setup",
+		[10] = "Installation Complete",
 	},
 	StepTitlesColor = {1, 1, 1},
 	StepTitlesColorSelected = {0.769, 0.122, 0.231},
@@ -843,6 +1094,7 @@ local InstallerData = {
 	StepTitleButtonWidth = 180,
 	StepTitleTextJustification = "RIGHT",
 }
+
 
 --This function holds the options table which will be inserted into the ElvUI config
 local function InsertOptions()
@@ -916,6 +1168,7 @@ function mod:Initialize()
 		E:GetModule("PluginInstaller"):Queue(InstallerData)
 	end
 	AddCustomTags()
+	ElvUF_Player.Castbar:SetFrameStrata("BACKGROUND")
 	--Insert our options table when ElvUI config is loaded
 	RUI:FPS()
 	RUI:Ping()
