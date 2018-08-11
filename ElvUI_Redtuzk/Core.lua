@@ -421,9 +421,15 @@ local function SetupLayout(layout)
 	CreateCustomTexts()
 	CreatingMissingSettings()
 	EnableCustomTweaks()
-	local RUIver = E.db[MyPluginName].install_version
+		local RUIver = E.db[MyPluginName].install_version
+	local RUIABlayout = E.db[MyPluginName].ABlayout
+	local RUITargetAuras = E.db[MyPluginName].TargetAuras
+	local RUIPartyFrameStyle = E.db[MyPluginName].PartyFrameStyle
 	RUI:ElvUISettings(layout)
 	E.db[MyPluginName].install_version = RUIver
+	E.db[MyPluginName].PartyFrameStyle = RUIPartyFrameStyle
+	E.db[MyPluginName].TargetAuras = RUITargetAuras
+	E.db[MyPluginName].ABlayout = RUIABlayout
 	E.db[MyPluginName].layout = layout
 	if layout == "healer" then
 		E.db["actionbar"]["bar2"]["enabled"] = false
