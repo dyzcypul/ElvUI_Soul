@@ -443,6 +443,27 @@ local function SetupLayout(layout)
 	E:UpdateAll(true)
 	PluginInstallStepComplete.message = "Layout Set"
 	PluginInstallStepComplete:Show()
+	--force clickthrough off
+	E.db["unitframe"]["units"]["party"]["buffs"]["clickThrough"] = false
+	E.db["unitframe"]["units"]["player"]["buffs"]["clickThrough"] = false
+	E.db["unitframe"]["units"]["target"]["buffs"]["clickThrough"] = false
+	E.db["unitframe"]["units"]["raid"]["buffs"]["clickThrough"] = false
+	E.db["unitframe"]["units"]["raid40"]["buffs"]["clickThrough"] = false
+	E.db["unitframe"]["units"]["boss"]["buffs"]["clickThrough"] = false
+	E.db["unitframe"]["units"]["focus"]["buffs"]["clickThrough"] = false
+	E.db["unitframe"]["units"]["targettarget"]["buffs"]["clickThrough"] = false
+	E.db["unitframe"]["units"]["pet"]["buffs"]["clickThrough"] = false
+	E.db["unitframe"]["units"]["arena"]["buffs"]["clickThrough"] = false
+	E.db["unitframe"]["units"]["party"]["debuffs"]["clickThrough"] = false
+	E.db["unitframe"]["units"]["player"]["debuffs"]["clickThrough"] = false
+	E.db["unitframe"]["units"]["target"]["debuffs"]["clickThrough"] = false
+	E.db["unitframe"]["units"]["raid"]["debuffs"]["clickThrough"] = false
+	E.db["unitframe"]["units"]["raid40"]["debuffs"]["clickThrough"] = false
+	E.db["unitframe"]["units"]["boss"]["debuffs"]["clickThrough"] = false
+	E.db["unitframe"]["units"]["focus"]["debuffs"]["clickThrough"] = false
+	E.db["unitframe"]["units"]["targettarget"]["debuffs"]["clickThrough"] = false
+	E.db["unitframe"]["units"]["pet"]["debuffs"]["clickThrough"] = false
+	E.db["unitframe"]["units"]["arena"]["debuffs"]["clickThrough"] = false
 end
 
 --This function will hold your layout settings
