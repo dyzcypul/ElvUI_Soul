@@ -2282,7 +2282,7 @@ function RUI:ElvUISettings(layout)
         E.db["CustomTweaks"]["CastbarText"]["Player"]["text"]["color"]["r"] = 1
         E.db["CustomTweaks"]["CastbarText"]["Player"]["text"]["color"]["g"] = 1
         E.db["CustomTweaks"]["CastbarText"]["Player"]["text"]["color"]["b"] = 1
-        E.db["CustomTweaks"]["CastbarText"]["Player"]["text"]["xOffset"] = 6
+        E.db["CustomTweaks"]["CastbarText"]["Player"]["text"]["xOffset"] = 0
         E.db["CustomTweaks"]["CastbarText"]["Player"]["text"]["point"] = "CENTER"
         E.db["CustomTweaks"]["CastbarText"]["Player"]["text"]["yOffset"] = 10
         E.db["CustomTweaks"]["CastbarText"]["Focus"]["duration"]["color"]["r"] = 1
