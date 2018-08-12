@@ -1259,6 +1259,10 @@ function RUI:ElvUISettings(layout)
         E.db["auras"]["buffs"]["durationFontSize"] = 14
         E.db["auras"]["buffs"]["size"] = 36
         E.db["auras"]["font"] = "Century Gothic Bold"
+        E.db["unitframe"]["units"]["raid"]["readycheckIcon"]["attachTo"] = "Frame"
+        E.db["unitframe"]["units"]["raid"]["readycheckIcon"]["size"] = 24
+        E.db["unitframe"]["units"]["raid"]["readycheckIcon"]["yOffset"] = 0
+        E.db["unitframe"]["units"]["raid"]["readycheckIcon"]["position"] = "CENTER"
 
 
     elseif layout == "healer" then
