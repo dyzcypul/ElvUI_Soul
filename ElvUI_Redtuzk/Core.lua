@@ -640,7 +640,7 @@ local function PartyFrameSetup(style)
 		E.db["unitframe"]["units"]["party"]["horizontalSpacing"] = 3
         E.db["unitframe"]["units"]["party"]["debuffs"]["countFontSize"] = 15
         E.db["unitframe"]["units"]["party"]["debuffs"]["fontSize"] = 15
-        E.db["unitframe"]["units"]["party"]["debuffs"]["sizeOverride"] = 32
+        E.db["unitframe"]["units"]["party"]["debuffs"]["sizeOverride"] = 30
         E.db["unitframe"]["units"]["party"]["debuffs"]["useWhitelist"] = true
         E.db["unitframe"]["units"]["party"]["debuffs"]["xOffset"] = 3
         E.db["unitframe"]["units"]["party"]["debuffs"]["useFilter"] = "DontShowMeThisShit"
