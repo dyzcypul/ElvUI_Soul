@@ -1794,7 +1794,7 @@ function RUI:ElvUISettings(layout)
         E.db["unitframe"]["units"]["target"]["buffs"]["anchorPoint"] = "RIGHT"
         E.db["unitframe"]["units"]["target"]["buffs"]["sizeOverride"] = 33
         E.db["unitframe"]["units"]["target"]["buffs"]["fontSize"] = 16
-        E.db["unitframe"]["units"]["target"]["buffs"]["xOffset"] = -240
+        E.db["unitframe"]["units"]["target"]["buffs"]["xOffset"] = -225
         E.db["unitframe"]["units"]["target"]["buffs"]["yOffset"] = -34
         E.db["unitframe"]["units"]["target"]["buffs"]["enable"] = false
         E.db["unitframe"]["units"]["target"]["buffs"]["perrow"] = 7
