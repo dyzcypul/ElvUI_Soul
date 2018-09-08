@@ -2517,16 +2517,19 @@ function RUI:ElvUISettings(layout)
         E.global["unitframe"]["buffwatch"]["SHAMAN"][207400]["onlyShowMissing"] = false
         
         -- Druid
+        E.global["unitframe"]["buffwatch"]["DRUID"][207386]["point"] = "BOTTOMRIGHT"
+        E.global["unitframe"]["buffwatch"]["DRUID"][155777]["xOffset"] = -12
+        E.global["unitframe"]["buffwatch"]["DRUID"][155777]["point"] = "TOPRIGHT"
+        E.global["unitframe"]["buffwatch"]["DRUID"][200389]["point"] = "BOTTOMRIGHT"
         E.global["unitframe"]["buffwatch"]["DRUID"][774]["onlyShowMissing"] = false
+        E.global["unitframe"]["buffwatch"]["DRUID"][102351]["color"]["b"] = 0.47450980392157
+        E.global["unitframe"]["buffwatch"]["DRUID"][102351]["color"]["g"] = 0.47450980392157
+        E.global["unitframe"]["buffwatch"]["DRUID"][102351]["color"]["r"] = 0.12156862745098
+        E.global["unitframe"]["buffwatch"]["DRUID"][102351]["onlyShowMissing"] = false
         E.global["unitframe"]["buffwatch"]["DRUID"][8936]["onlyShowMissing"] = false
         E.global["unitframe"]["buffwatch"]["DRUID"][33763]["onlyShowMissing"] = false
         E.global["unitframe"]["buffwatch"]["DRUID"][48438]["onlyShowMissing"] = false
-        E.global["unitframe"]["buffwatch"]["DRUID"][102351]["onlyShowMissing"] = false
-        E.global["unitframe"]["buffwatch"]["DRUID"][155777]["point"] = "TOPRIGHT"
-        E.global["unitframe"]["buffwatch"]["DRUID"][188550]["point"] = "TOPLEFT"
-        E.global["unitframe"]["buffwatch"]["DRUID"][200389]["point"] = "BOTTOMRIGHT"
-        E.global["unitframe"]["buffwatch"]["DRUID"][207386]["point"] = "BOTTOMRIGHT"
-       
+           
         -- Paladin
         E.global["unitframe"]["buffwatch"]["PALADIN"][1032] = E.global["unitframe"]["buffwatch"]["PALADIN"][1032] or {}
         E.global["unitframe"]["buffwatch"]["PALADIN"][1032]["onlyShowMissing"] = false
