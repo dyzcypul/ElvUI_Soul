@@ -1201,6 +1201,8 @@ function mod:Initialize()
 		_, _ ,majorUser, minorUser, buildUser = string.find(E.db[MyPluginName].install_version, "(%d+).(%d+).(%d+)")
 	end
 	if E.private.install_complete and (E.db[MyPluginName].install_version == nil or (majorUser ~= major or minorUser ~= minor)) then
+	    E:GetModule("PluginInstaller"):Queue(InstallerData)
+	end
 	AddCustomTags()
 	ElvUF_Player.Castbar:SetFrameStrata("BACKGROUND")
 	--Insert our options table when ElvUI config is loaded
