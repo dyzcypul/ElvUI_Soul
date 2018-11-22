@@ -1195,9 +1195,12 @@ function mod:Initialize()
 	--Initiate installation process if ElvUI install is complete and our plugin install has not yet been run or its a newer version
 	E["global"][MyPluginName] = E["global"][MyPluginName] or {}
 	E.private.install_complete = E.version
-	if E.private.install_complete and (E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version ~= Version) then
-		E:GetModule("PluginInstaller"):Queue(InstallerData)
+	local _, _ , major, minor, build = string.find(Version, "(%d+).(%d+).(%d+)")
+	local majorUser, minorUser, buildUser
+	if E.db[MyPluginName].install_version ~= nil then
+		_, _ ,majorUser, minorUser, buildUser = string.find(E.db[MyPluginName].install_version, "(%d+).(%d+).(%d+)")
 	end
+	if E.private.install_complete and (E.db[MyPluginName].install_version == nil or (majorUser ~= major or minorUser ~= minor)) then
 	AddCustomTags()
 	ElvUF_Player.Castbar:SetFrameStrata("BACKGROUND")
 	--Insert our options table when ElvUI config is loaded
