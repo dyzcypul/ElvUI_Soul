@@ -492,7 +492,7 @@ function RUI:ElvUISettings(layout)
         E.db["unitframe"]["units"]["pet"]["customTexts"]["!Name"]["fontOutline"] = "OUTLINE"
         E.db["unitframe"]["units"]["pet"]["customTexts"]["!Name"]["enable"] = true
         E.db["unitframe"]["units"]["pet"]["customTexts"]["!Name"]["size"] = 13
-        E.db["unitframe"]["units"]["pet"]["healPrediction"] = false
+        E.db["unitframe"]["units"]["pet"]["healPrediction"]["enable"] = false
         E.db["unitframe"]["units"]["pet"]["width"] = 65
         E.db["unitframe"]["units"]["pet"]["name"]["xOffset"] = 1
         E.db["unitframe"]["units"]["pet"]["name"]["text_format"] = " "
@@ -613,7 +613,7 @@ function RUI:ElvUISettings(layout)
         E.db["unitframe"]["units"]["focus"]["customTexts"]["!Name"]["fontOutline"] = "OUTLINE"
         E.db["unitframe"]["units"]["focus"]["customTexts"]["!Name"]["enable"] = true
         E.db["unitframe"]["units"]["focus"]["customTexts"]["!Name"]["size"] = 18
-        E.db["unitframe"]["units"]["focus"]["healPrediction"] = false
+        E.db["unitframe"]["units"]["focus"]["healPrediction"]["enable"] = false
         E.db["unitframe"]["units"]["focus"]["raidicon"]["enable"] = false
         E.db["unitframe"]["units"]["focus"]["width"] = 120
         E.db["unitframe"]["units"]["focus"]["name"]["yOffset"] = 6
@@ -733,7 +733,7 @@ function RUI:ElvUISettings(layout)
         E.db["unitframe"]["units"]["raid40"]["customTexts"]["Health Text"]["fontOutline"] = "OUTLINE"
         E.db["unitframe"]["units"]["raid40"]["customTexts"]["Health Text"]["enable"] = true
         E.db["unitframe"]["units"]["raid40"]["customTexts"]["Health Text"]["size"] = 12
-        E.db["unitframe"]["units"]["raid40"]["healPrediction"] = true
+        E.db["unitframe"]["units"]["raid40"]["healPrediction"]["enable"] = true
         E.db["unitframe"]["units"]["raid40"]["width"] = 120
         E.db["unitframe"]["units"]["raid40"]["groupsPerRowCol"] = 8
         E.db["unitframe"]["units"]["raid40"]["power"]["height"] = 3
@@ -797,7 +797,7 @@ function RUI:ElvUISettings(layout)
         E.db["unitframe"]["units"]["raid"]["power"]["position"] = "BOTTOM"
         E.db["unitframe"]["units"]["raid"]["power"]["width"] = "spaced"
         E.db["unitframe"]["units"]["raid"]["verticalSpacing"] = 1
-        E.db["unitframe"]["units"]["raid"]["healPrediction"] = true
+        E.db["unitframe"]["units"]["raid"]["healPrediction"]["enable"] = true
         E.db["unitframe"]["units"]["raid"]["width"] = 120
         E.db["unitframe"]["units"]["raid"]["groupsPerRowCol"] = 6
         E.db["unitframe"]["units"]["raid"]["growthDirection"] = "DOWN_RIGHT"
@@ -966,7 +966,7 @@ function RUI:ElvUISettings(layout)
         E.db["unitframe"]["units"]["party"]["customTexts"]["!Name"]["fontOutline"] = "OUTLINE"
         E.db["unitframe"]["units"]["party"]["customTexts"]["!Name"]["xOffset"] = 10
         E.db["unitframe"]["units"]["party"]["customTexts"]["!Name"]["size"] = 14
-        E.db["unitframe"]["units"]["party"]["healPrediction"] = true
+        E.db["unitframe"]["units"]["party"]["healPrediction"]["enable"] = true
         E.db["unitframe"]["units"]["party"]["groupBy"] = "ROLE"
         E.db["unitframe"]["units"]["party"]["width"] = 141
         E.db["unitframe"]["units"]["party"]["raidWideSorting"] = true
@@ -1214,10 +1214,6 @@ function RUI:ElvUISettings(layout)
         E.db["RedtuzkUI"]["TargetAuras"] = "Debuffs"
         E.db["RedtuzkUI"]["layout"] = "dps"
         E.db["RedtuzkUI"]["PartyFrameStyle"] = "m+"
-        E.db["RedtuzkUI"]["WABar"] = true
-        E.db["databars"]["artifact"]["orientation"] = "HORIZONTAL"
-        E.db["databars"]["artifact"]["height"] = 8
-        E.db["databars"]["artifact"]["width"] = 181
         E.db["databars"]["experience"]["font"] = "Century Gothic Bold"
         E.db["databars"]["experience"]["textFormat"] = "PERCENT"
         E.db["databars"]["experience"]["fontOutline"] = "OUTLINE"
@@ -1262,7 +1258,7 @@ function RUI:ElvUISettings(layout)
 
 
     elseif layout == "healer" then
-        
+
         E.db["unitframe"]["units"]["raid"]["readycheckIcon"]["attachTo"] = "Frame"
         E.db["unitframe"]["units"]["raid"]["readycheckIcon"]["size"] = 24
         E.db["unitframe"]["units"]["raid"]["readycheckIcon"]["yOffset"] = 0
@@ -1575,9 +1571,6 @@ function RUI:ElvUISettings(layout)
         E.db["tooltip"]["font"] = "Century Gothic Bold"
         E.db["tooltip"]["visibility"]["combat"] = true
         E.db["tooltip"]["talentInfo"] = true
-        E.db["databars"]["artifact"]["height"] = 8
-        E.db["databars"]["artifact"]["orientation"] = "HORIZONTAL"
-        E.db["databars"]["artifact"]["width"] = 181
         E.db["databars"]["experience"]["font"] = "Century Gothic Bold"
         E.db["databars"]["experience"]["textFormat"] = "PERCENT"
         E.db["databars"]["experience"]["fontOutline"] = "OUTLINE"
@@ -1624,7 +1617,7 @@ function RUI:ElvUISettings(layout)
         E.db["unitframe"]["units"]["pet"]["customTexts"]["!Name"]["fontOutline"] = "OUTLINE"
         E.db["unitframe"]["units"]["pet"]["customTexts"]["!Name"]["xOffset"] = 0
         E.db["unitframe"]["units"]["pet"]["customTexts"]["!Name"]["size"] = 13
-        E.db["unitframe"]["units"]["pet"]["healPrediction"] = false
+        E.db["unitframe"]["units"]["pet"]["healPrediction"]["enable"] = false
         E.db["unitframe"]["units"]["pet"]["width"] = 65
         E.db["unitframe"]["units"]["pet"]["name"]["xOffset"] = 1
         E.db["unitframe"]["units"]["pet"]["name"]["text_format"] = " "
@@ -1824,7 +1817,7 @@ function RUI:ElvUISettings(layout)
         E.db["unitframe"]["units"]["focus"]["customTexts"]["!Percent"]["fontOutline"] = "OUTLINE"
         E.db["unitframe"]["units"]["focus"]["customTexts"]["!Percent"]["xOffset"] = 30
         E.db["unitframe"]["units"]["focus"]["customTexts"]["!Percent"]["size"] = 15
-        E.db["unitframe"]["units"]["focus"]["healPrediction"] = false
+        E.db["unitframe"]["units"]["focus"]["healPrediction"]["enable"] = false
         E.db["unitframe"]["units"]["focus"]["raidicon"]["enable"] = false
         E.db["unitframe"]["units"]["focus"]["width"] = 120
         E.db["unitframe"]["units"]["focus"]["health"]["xOffset"] = 0
@@ -1959,7 +1952,7 @@ function RUI:ElvUISettings(layout)
         E.db["unitframe"]["units"]["raid40"]["customTexts"]["Health Text"]["fontOutline"] = "OUTLINE"
         E.db["unitframe"]["units"]["raid40"]["customTexts"]["Health Text"]["xOffset"] = 37
         E.db["unitframe"]["units"]["raid40"]["customTexts"]["Health Text"]["size"] = 12
-        E.db["unitframe"]["units"]["raid40"]["healPrediction"] = true
+        E.db["unitframe"]["units"]["raid40"]["healPrediction"]["enable"] = true
         E.db["unitframe"]["units"]["raid40"]["buffs"]["countFontSize"] = 12
         E.db["unitframe"]["units"]["raid40"]["buffs"]["fontSize"] = 12
         E.db["unitframe"]["units"]["raid40"]["buffs"]["useBlacklist"] = false
@@ -2018,7 +2011,7 @@ function RUI:ElvUISettings(layout)
         E.db["unitframe"]["units"]["raid"]["power"]["height"] = 3
         E.db["unitframe"]["units"]["raid"]["power"]["position"] = "BOTTOM"
         E.db["unitframe"]["units"]["raid"]["power"]["width"] = "spaced"
-        E.db["unitframe"]["units"]["raid"]["healPrediction"] = true
+        E.db["unitframe"]["units"]["raid"]["healPrediction"]["enable"] = true
         E.db["unitframe"]["units"]["raid"]["health"]["yOffset"] = 6
         E.db["unitframe"]["units"]["raid"]["health"]["text_format"] = "[status]"
         E.db["unitframe"]["units"]["raid"]["health"]["frequentUpdates"] = true
@@ -2082,7 +2075,7 @@ function RUI:ElvUISettings(layout)
         E.db["unitframe"]["units"]["party"]["roleIcon"]["damager"] = false
         E.db["unitframe"]["units"]["party"]["targetsGroup"]["anchorPoint"] = "BOTTOM"
         E.db["unitframe"]["units"]["party"]["GPSArrow"]["size"] = 40
-        E.db["unitframe"]["units"]["party"]["healPrediction"] = true
+        E.db["unitframe"]["units"]["party"]["healPrediction"]["enable"] = true
         E.db["unitframe"]["units"]["party"]["buffs"]["countFontSize"] = 14
         E.db["unitframe"]["units"]["party"]["buffs"]["fontSize"] = 14
         E.db["unitframe"]["units"]["party"]["buffs"]["onlyDispellable"] = true
@@ -2499,23 +2492,23 @@ function RUI:ElvUISettings(layout)
         E.db["general"]["reputation"]["height"] = 20
         E.db["general"]["reputation"]["width"] = 399
         E.db["general"]["topPanel"] = false
-        
+
         -- Healer Aura Filters
-        
+
         -- Monk
         E.global["unitframe"]["buffwatch"]["MONK"][116849]["onlyShowMissing"] = false
         E.global["unitframe"]["buffwatch"]["MONK"][119611]["onlyShowMissing"] = false
         E.global["unitframe"]["buffwatch"]["MONK"][124682]["anyUnit"] = false
         E.global["unitframe"]["buffwatch"]["MONK"][124682]["onlyShowMissing"] = false
         E.global["unitframe"]["buffwatch"]["MONK"][191840]["onlyShowMissing"] = false
-        
+
         -- Shaman
         E.global["unitframe"]["buffwatch"]["SHAMAN"][974] = E.global["unitframe"]["buffwatch"]["SHAMAN"][974] or {}
         E.global["unitframe"]["buffwatch"]["SHAMAN"][207400] = E.global["unitframe"]["buffwatch"]["SHAMAN"][207400] or {}
         E.global["unitframe"]["buffwatch"]["SHAMAN"][974]["onlyShowMissing"] = false
         E.global["unitframe"]["buffwatch"]["SHAMAN"][61295]["onlyShowMissing"] = false
         E.global["unitframe"]["buffwatch"]["SHAMAN"][207400]["onlyShowMissing"] = false
-        
+
         -- Druid
         E.global["unitframe"]["buffwatch"]["DRUID"][207386]["point"] = "BOTTOMRIGHT"
         E.global["unitframe"]["buffwatch"]["DRUID"][155777]["xOffset"] = -12
@@ -2529,7 +2522,7 @@ function RUI:ElvUISettings(layout)
         E.global["unitframe"]["buffwatch"]["DRUID"][8936]["onlyShowMissing"] = false
         E.global["unitframe"]["buffwatch"]["DRUID"][33763]["onlyShowMissing"] = false
         E.global["unitframe"]["buffwatch"]["DRUID"][48438]["onlyShowMissing"] = false
-           
+
         -- Paladin
         E.global["unitframe"]["buffwatch"]["PALADIN"][1032] = E.global["unitframe"]["buffwatch"]["PALADIN"][1032] or {}
         E.global["unitframe"]["buffwatch"]["PALADIN"][1032]["onlyShowMissing"] = false
@@ -2539,7 +2532,7 @@ function RUI:ElvUISettings(layout)
         E.global["unitframe"]["buffwatch"]["PALADIN"][156910]["onlyShowMissing"] = false
         E.global["unitframe"]["buffwatch"]["PALADIN"][200025]["onlyShowMissing"] = false
         E.global["unitframe"]["buffwatch"]["PALADIN"][223306]["onlyShowMissing"] = false
-       
+
         -- Priest
         E.global["unitframe"]["buffwatch"]["PRIEST"][17]["onlyShowMissing"] = false
         E.global["unitframe"]["buffwatch"]["PRIEST"][139]["onlyShowMissing"] = false
@@ -2560,5 +2553,5 @@ function RUI:ElvUISettings(layout)
 	E.private.general.chatBubbleFontSize = 12
 	E.private.general.chatBubbleFontOutline = "OUTLINE"
 	E.private.general.chatBubbleFont = "Century Gothic Bold"
-	
+
 end
