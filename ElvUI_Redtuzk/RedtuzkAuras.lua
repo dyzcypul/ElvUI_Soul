@@ -123,528 +123,555 @@ function RUI:ImportTemplates()
         ["radius"] = 200,
     }
 	WeakAurasSaved["displays"]["Duration + Stacks"] = {
-        ["glow"] = false,
-        ["text1FontSize"] = 18,
+    ["glow"] = false,
+    ["text1FontSize"] = 18,
+    ["cooldownTextEnabled"] = false,
+    ["customText"] = "function()\\n    ---------DO NOT EDIT!-------\\n    ----------------------------\\n    ----------------------------\\n    local region = aura_env.region\\n    if not region.text3 then\\n        local text3 = region:CreateFontString(nil, \\\"TOOLTIP\\\")\\n        region.text3 = text3\\n        region.text3:SetFont(region.text2:GetFont())\\n        \\n        region.text3:SetPoint(\\\"TOP\\\", 0, 10)\\n        region.text3:SetShadowColor(0,0,0,0)\\n        region.text3:SetTextColor(1,1,1,1)\\n        region.text3:Show()\\n    end\\n    region.text3:SetTextColor(region.text2:GetTextColor())\\n    region.text3:SetText(WeakAuras.ReplacePlaceHolders(\\\"%p\\\", region))\\n    return \\nend\\n\\n\\n\\n\\n\\n",
+    ["yOffset"] = 0,
+    ["anchorPoint"] = "CENTER",
+    ["customTextUpdate"] = "update",
+    ["actions"] = {
+        ["start"] = {
+            ["message"] = "++ Darkness used - 8 sec ++",
+            ["do_glow"] = false,
+            ["glow_frame"] = "WeakAuras:Serenity",
+            ["message_type"] = "SAY",
+            ["do_message"] = false,
+            ["do_custom"] = false,
+            ["glow_action"] = "show",
+        },
+        ["init"] = {
+        },
+        ["finish"] = {
+        },
+    },
+    ["triggers"] = {
+        [1] = {
+            ["trigger"] = {
+                ["ownOnly"] = true,
+                ["use_unit"] = true,
+                ["buffShowOn"] = "showOnActive",
+                ["subeventPrefix"] = "SPELL",
+                ["type"] = "aura",
+                ["use_specific_unit"] = false,
+                ["unevent"] = "timed",
+                ["debuffType"] = "HELPFUL",
+                ["spellName"] = "Darkness",
+                ["event"] = "Combat Log",
+                ["unit"] = "player",
+                ["subeventSuffix"] = "_CAST_SUCCESS",
+                ["use_spellName"] = true,
+                ["spellIds"] = {
+                },
+                ["use_sourceUnit"] = false,
+                ["duration"] = "8",
+                ["names"] = {
+                },
+                ["sourceUnit"] = "player",
+                ["custom_hide"] = "timed",
+            },
+            ["untrigger"] = {
+            },
+        },
         ["disjunctive"] = "any",
-        ["customText"] = "function()\n    ---------DO NOT EDIT!-------\n    ----------------------------\n    ----------------------------\n    local region = aura_env.region\n    if not region.text3 then\n        local text3 = region:CreateFontString(nil, \"TOOLTIP\")\n        region.text3 = text3\n        region.text3:SetFont(region.text2:GetFont())\n        \n        region.text3:SetPoint(\"TOP\", 0, 10)\n        region.text3:SetShadowColor(0,0,0,0)\n        region.text3:SetTextColor(1,1,1,1)\n        region.text3:Show()\n    end\n    region.text3:SetText(WeakAuras.ReplacePlaceHolders(\"%p\", region))\n    return \nend\n\n\n\n\n\n",
-        ["untrigger"] = {
+        ["activeTriggerMode"] = 1,
+    },
+    ["text1Enabled"] = true,
+    ["keepAspectRatio"] = false,
+    ["animation"] = {
+        ["start"] = {
+            ["duration_type"] = "seconds",
+            ["type"] = "none",
         },
-        ["anchorPoint"] = "CENTER",
-        ["activeTriggerMode"] = 0,
-        ["customTextUpdate"] = "update",
-        ["actions"] = {
-            ["start"] = {
-                ["message"] = "++ Darkness used - 8 sec ++",
-                ["glow_action"] = "show",
-                ["glow_frame"] = "WeakAuras:Serenity",
-                ["message_type"] = "SAY",
-                ["do_custom"] = false,
-                ["do_message"] = false,
-                ["do_glow"] = false,
-            },
-            ["finish"] = {
-            },
-            ["init"] = {
-            },
+        ["main"] = {
+            ["duration_type"] = "seconds",
+            ["colorType"] = "custom",
+            ["type"] = "none",
+            ["use_color"] = true,
         },
-        ["text2Font"] = "Century Gothic Bold",
-        ["keepAspectRatio"] = false,
-        ["animation"] = {
-            ["start"] = {
-                ["type"] = "none",
-                ["duration_type"] = "seconds",
-            },
-            ["main"] = {
-                ["duration_type"] = "seconds",
-                ["colorType"] = "custom",
-                ["type"] = "none",
-                ["use_color"] = true,
-            },
-            ["finish"] = {
-                ["type"] = "none",
-                ["duration_type"] = "seconds",
-            },
+        ["finish"] = {
+            ["duration_type"] = "seconds",
+            ["type"] = "none",
         },
-        ["trigger"] = {
-            ["ownOnly"] = true,
-            ["use_unit"] = true,
-            ["custom_hide"] = "timed",
-            ["use_specific_unit"] = false,
-            ["type"] = "aura",
-            ["names"] = {
-            },
-            ["unevent"] = "timed",
-            ["duration"] = "8",
-            ["spellName"] = "Darkness",
-            ["event"] = "Combat Log",
-            ["unit"] = "player",
-            ["subeventSuffix"] = "_CAST_SUCCESS",
-            ["use_spellName"] = true,
-            ["spellIds"] = {
-            },
-            ["use_sourceUnit"] = false,
-            ["showOn"] = "showOnActive",
-            ["debuffType"] = "HELPFUL",
-            ["sourceUnit"] = "player",
-            ["subeventPrefix"] = "SPELL",
-        },
-        ["stickyDuration"] = true,
-        ["progressPrecision"] = 0,
-        ["text1Point"] = "BOTTOM",
-        ["yOffset"] = 0,
-        ["text2FontFlags"] = "OUTLINE",
-        ["height"] = 35,
-        ["text2Point"] = "CENTER",
-        ["load"] = {
-            ["ingroup"] = {
-                ["multi"] = {
-                },
-            },
-            ["use_never"] = false,
-            ["talent"] = {
-                ["multi"] = {
-                },
-            },
-            ["class"] = {
-                ["single"] = "ROGUE",
-                ["multi"] = {
-                    ["ROGUE"] = true,
-                },
-            },
-            ["role"] = {
-                ["multi"] = {
-                },
-            },
-            ["difficulty"] = {
-                ["multi"] = {
-                },
-            },
-            ["race"] = {
-                ["multi"] = {
-                },
-            },
-            ["pvptalent"] = {
-                ["multi"] = {
-                },
-            },
-            ["talent2"] = {
-                ["multi"] = {
-                },
-            },
-            ["faction"] = {
-                ["multi"] = {
-                },
-            },
-            ["spec"] = {
-                ["single"] = 1,
-                ["multi"] = {
-                    [1] = true,
-                },
-            },
-            ["size"] = {
-                ["multi"] = {
-                },
+    },
+    ["xOffset"] = 0,
+    ["stickyDuration"] = true,
+    ["glowColor"] = {
+        [1] = 1,
+        [2] = 1,
+        [3] = 1,
+        [4] = 1,
+    },
+    ["text1Point"] = "BOTTOM",
+    ["text2Point"] = "CENTER",
+    ["text2FontFlags"] = "OUTLINE",
+    ["height"] = 35,
+    ["parent"] = "RUI Icon Templates",
+    ["load"] = {
+        ["ingroup"] = {
+            ["multi"] = {
             },
         },
-        ["displayIcon"] = "",
-        ["internalVersion"] = 3,
-        ["cooldownTextEnabled"] = false,
-        ["text2Containment"] = "INSIDE",
-        ["numTriggers"] = 1,
-        ["text1Font"] = "Century Gothic Bold",
-        ["icon"] = true,
-        ["text1Enabled"] = true,
-        ["text2Color"] = {
-            [1] = 1,
-            [2] = 1,
-            [3] = 1,
-            [4] = 1,
+        ["use_never"] = false,
+        ["talent"] = {
+            ["multi"] = {
+            },
         },
-        ["regionType"] = "icon",
-        ["width"] = 35,
-        ["text2Enabled"] = true,
-        ["text2FontSize"] = 24,
-        ["text1Containment"] = "INSIDE",
-        ["id"] = "Duration + Stacks",
-        ["text1"] = "%s",
-        ["selfPoint"] = "CENTER",
-        ["text2"] = "%c",
-        ["zoom"] = 0,
-        ["auto"] = true,
-        ["text1Color"] = {
-            [1] = 1,
-            [2] = 1,
-            [3] = 1,
-            [4] = 1,
+        ["class"] = {
+            ["single"] = "ROGUE",
+            ["multi"] = {
+                ["ROGUE"] = true,
+            },
         },
-        ["additional_triggers"] = {
+        ["difficulty"] = {
+            ["multi"] = {
+            },
         },
-        ["xOffset"] = 0,
-        ["frameStrata"] = 1,
-        ["anchorFrameType"] = "SCREEN",
-        ["text1FontFlags"] = "OUTLINE",
-        ["desaturate"] = false,
-        ["inverse"] = false,
-        ["color"] = {
-            [1] = 1,
-            [2] = 1,
-            [3] = 1,
-            [4] = 1,
+        ["role"] = {
+            ["multi"] = {
+            },
         },
-        ["init_started"] = 1,
-        ["conditions"] = {
+        ["race"] = {
+            ["multi"] = {
+            },
         },
-        ["cooldown"] = false,
-        ["parent"] = "RUI Icon Templates",
-    }
+        ["pvptalent"] = {
+            ["multi"] = {
+            },
+        },
+        ["spec"] = {
+            ["single"] = 1,
+            ["multi"] = {
+                [1] = true,
+            },
+        },
+        ["faction"] = {
+            ["multi"] = {
+            },
+        },
+        ["talent2"] = {
+            ["multi"] = {
+            },
+        },
+        ["size"] = {
+            ["multi"] = {
+            },
+        },
+    },
+    ["text2Font"] = "Century Gothic Bold",
+    ["conditions"] = {
+    },
+    ["color"] = {
+        [1] = 1,
+        [2] = 1,
+        [3] = 1,
+        [4] = 1,
+    },
+    ["text2Containment"] = "INSIDE",
+    ["glowType"] = "buttonOverlay",
+    ["text1Font"] = "Century Gothic Bold",
+    ["internalVersion"] = 9,
+    ["desaturate"] = false,
+    ["text1FontFlags"] = "OUTLINE",
+    ["regionType"] = "icon",
+    ["text2Color"] = {
+        [1] = 1,
+        [2] = 1,
+        [3] = 1,
+        [4] = 1,
+    },
+    ["anchorFrameType"] = "SCREEN",
+    ["text2FontSize"] = 24,
+    ["frameStrata"] = 1,
+    ["text1"] = "%s",
+    ["text1Color"] = {
+        [1] = 0.1843137254902,
+        [2] = 1,
+        [3] = 0,
+        [4] = 1,
+    },
+    ["zoom"] = 0,
+    ["text2"] = "%c",
+    ["auto"] = true,
+    ["selfPoint"] = "CENTER",
+    ["id"] = "Duration + Stacks",
+    ["text1Containment"] = "INSIDE",
+    ["alpha"] = 1,
+    ["width"] = 35,
+    ["text2Enabled"] = true,
+    ["icon"] = true,
+    ["inverse"] = false,
+    ["progressPrecision"] = 0,
+    ["displayIcon"] = "",
+    ["cooldown"] = false,
+    ["useglowColor"] = false,
+}
 	WeakAurasSaved["displays"]["Duration Only"] = {
-        ["glow"] = false,
-        ["text1FontSize"] = 18,
-        ["cooldownTextEnabled"] = false,
-        ["customText"] = "function()\n    ---------DO NOT EDIT!-------\n    ----------------------------\n    ----------------------------\n    local region = aura_env.region\n    if not region.text3 then\n        local text3 = region:CreateFontString(nil, \"TOOLTIP\")\n        region.text3 = text3\n        region.text3:SetFont(region.text2:GetFont())\n        \n        region.text3:SetPoint(\"TOP\", 0, 10)\n        region.text3:SetShadowColor(0,0,0,0)\n        region.text3:SetTextColor(1,1,1,1)\n        region.text3:Show()\n    end\n    region.text3:SetText(WeakAuras.ReplacePlaceHolders(\"%p\", region))\n    return \nend\n\n\n\n\n\n",
-        ["untrigger"] = {
-        },
-        ["anchorPoint"] = "CENTER",
-        ["activeTriggerMode"] = 0,
-        ["customTextUpdate"] = "update",
-        ["actions"] = {
-            ["start"] = {
-                ["message"] = "++ Darkness used - 8 sec ++",
-                ["do_glow"] = false,
-                ["glow_frame"] = "WeakAuras:Serenity",
-                ["message_type"] = "SAY",
-                ["do_message"] = false,
-                ["do_custom"] = false,
-                ["glow_action"] = "show",
+    ["glow"] = false,
+    ["text1FontSize"] = 18,
+    ["cooldownTextEnabled"] = false,
+    ["customText"] = "function()\\n    ---------DO NOT EDIT!-------\\n    ----------------------------\\n    ----------------------------\\n    local region = aura_env.region\\n    if not region.text3 then\\n        local text3 = region:CreateFontString(nil, \\\"TOOLTIP\\\")\\n        region.text3 = text3\\n        region.text3:SetFont(region.text2:GetFont())\\n        \\n        region.text3:SetPoint(\\\"TOP\\\", 0, 10)\\n        region.text3:SetShadowColor(0,0,0,0)\\n        region.text3:SetTextColor(1,1,1,1)\\n        region.text3:Show()\\n    end\\n    region.text3:SetTextColor(region.text2:GetTextColor())\\n    region.text3:SetText(WeakAuras.ReplacePlaceHolders(\\\"%p\\\", region))\\n    return \\nend\\n\\n\\n\\n\\n\\n",
+    ["yOffset"] = 0,
+    ["anchorPoint"] = "CENTER",
+    ["customTextUpdate"] = "update",
+    ["icon"] = true,
+    ["triggers"] = {
+        [1] = {
+            ["trigger"] = {
+                ["duration"] = "8",
+                ["use_unit"] = true,
+                ["buffShowOn"] = "showOnActive",
+                ["subeventPrefix"] = "SPELL",
+                ["type"] = "aura",
+                ["use_specific_unit"] = false,
+                ["subeventSuffix"] = "_CAST_SUCCESS",
+                ["debuffType"] = "HELPFUL",
+                ["spellName"] = "Darkness",
+                ["event"] = "Combat Log",
+                ["unit"] = "player",
+                ["unevent"] = "timed",
+                ["use_spellName"] = true,
+                ["spellIds"] = {
+                },
+                ["use_sourceUnit"] = false,
+                ["ownOnly"] = true,
+                ["names"] = {
+                },
+                ["sourceUnit"] = "player",
+                ["custom_hide"] = "timed",
             },
-            ["finish"] = {
-            },
-            ["init"] = {
-            },
-        },
-        ["internalVersion"] = 3,
-        ["keepAspectRatio"] = false,
-        ["animation"] = {
-            ["start"] = {
-                ["type"] = "none",
-                ["duration_type"] = "seconds",
-            },
-            ["main"] = {
-                ["duration_type"] = "seconds",
-                ["colorType"] = "custom",
-                ["type"] = "none",
-                ["use_color"] = true,
-            },
-            ["finish"] = {
-                ["type"] = "none",
-                ["duration_type"] = "seconds",
+            ["untrigger"] = {
             },
         },
-        ["trigger"] = {
-            ["duration"] = "8",
-            ["use_unit"] = true,
-            ["custom_hide"] = "timed",
-            ["use_specific_unit"] = false,
-            ["type"] = "aura",
-            ["names"] = {
-            },
-            ["subeventSuffix"] = "_CAST_SUCCESS",
-            ["ownOnly"] = true,
-            ["spellName"] = "Darkness",
-            ["event"] = "Combat Log",
-            ["unit"] = "player",
-            ["unevent"] = "timed",
-            ["use_spellName"] = true,
-            ["spellIds"] = {
-            },
-            ["use_sourceUnit"] = false,
-            ["showOn"] = "showOnActive",
-            ["debuffType"] = "HELPFUL",
-            ["sourceUnit"] = "player",
-            ["subeventPrefix"] = "SPELL",
-        },
-        ["stickyDuration"] = true,
-        ["progressPrecision"] = 0,
-        ["text1Point"] = "TOP",
-        ["yOffset"] = 0,
-        ["text2FontFlags"] = "OUTLINE",
-        ["height"] = 35,
-        ["text2Point"] = "CENTER",
-        ["load"] = {
-            ["ingroup"] = {
-                ["multi"] = {
-                },
-            },
-            ["use_never"] = false,
-            ["talent"] = {
-                ["multi"] = {
-                },
-            },
-            ["class"] = {
-                ["single"] = "ROGUE",
-                ["multi"] = {
-                    ["ROGUE"] = true,
-                },
-            },
-            ["role"] = {
-                ["multi"] = {
-                },
-            },
-            ["difficulty"] = {
-                ["multi"] = {
-                },
-            },
-            ["race"] = {
-                ["multi"] = {
-                },
-            },
-            ["pvptalent"] = {
-                ["multi"] = {
-                },
-            },
-            ["faction"] = {
-                ["multi"] = {
-                },
-            },
-            ["talent2"] = {
-                ["multi"] = {
-                },
-            },
-            ["spec"] = {
-                ["single"] = 1,
-                ["multi"] = {
-                    [1] = true,
-                },
-            },
-            ["size"] = {
-                ["multi"] = {
-                },
-            },
-        },
-        ["displayIcon"] = "",
-        ["text2Font"] = "Century Gothic Bold",
-        ["text1Containment"] = "OUTSIDE",
-        ["text2Containment"] = "INSIDE",
-        ["numTriggers"] = 1,
-        ["text1Font"] = "Century Gothic Bold",
         ["disjunctive"] = "any",
-        ["icon"] = true,
-        ["text2Color"] = {
-            [1] = 1,
-            [2] = 1,
-            [3] = 1,
-            [4] = 1,
+        ["activeTriggerMode"] = 1,
+    },
+    ["internalVersion"] = 9,
+    ["keepAspectRatio"] = false,
+    ["animation"] = {
+        ["start"] = {
+            ["duration_type"] = "seconds",
+            ["type"] = "none",
         },
-        ["regionType"] = "icon",
-        ["width"] = 35,
-        ["text2Enabled"] = true,
-        ["text2FontSize"] = 24,
-        ["text1Color"] = {
-            [1] = 1,
-            [2] = 1,
-            [3] = 1,
-            [4] = 1,
+        ["main"] = {
+            ["duration_type"] = "seconds",
+            ["colorType"] = "custom",
+            ["type"] = "none",
+            ["use_color"] = true,
         },
-        ["id"] = "Duration Only",
-        ["text1"] = " ",
-        ["text1Enabled"] = true,
-        ["text2"] = "%c",
-        ["zoom"] = 0,
-        ["auto"] = true,
-        ["desaturate"] = false,
-        ["additional_triggers"] = {
+        ["finish"] = {
+            ["duration_type"] = "seconds",
+            ["type"] = "none",
         },
-        ["xOffset"] = 0,
-        ["frameStrata"] = 1,
-        ["anchorFrameType"] = "SCREEN",
-        ["text1FontFlags"] = "OUTLINE",
-        ["selfPoint"] = "CENTER",
-        ["inverse"] = false,
-        ["color"] = {
-            [1] = 1,
-            [2] = 1,
-            [3] = 1,
-            [4] = 1,
+    },
+    ["xOffset"] = 0,
+    ["stickyDuration"] = true,
+    ["glowColor"] = {
+        [1] = 1,
+        [2] = 1,
+        [3] = 1,
+        [4] = 1,
+    },
+    ["text1Point"] = "TOP",
+    ["text2Point"] = "CENTER",
+    ["text2FontFlags"] = "OUTLINE",
+    ["height"] = 35,
+    ["parent"] = "RUI Icon Templates",
+    ["load"] = {
+        ["ingroup"] = {
+            ["multi"] = {
+            },
         },
-        ["init_started"] = 1,
-        ["conditions"] = {
+        ["use_never"] = false,
+        ["talent"] = {
+            ["multi"] = {
+            },
         },
-        ["cooldown"] = false,
-        ["parent"] = "RUI Icon Templates",
-    }
+        ["class"] = {
+            ["single"] = "ROGUE",
+            ["multi"] = {
+                ["ROGUE"] = true,
+            },
+        },
+        ["difficulty"] = {
+            ["multi"] = {
+            },
+        },
+        ["role"] = {
+            ["multi"] = {
+            },
+        },
+        ["race"] = {
+            ["multi"] = {
+            },
+        },
+        ["pvptalent"] = {
+            ["multi"] = {
+            },
+        },
+        ["spec"] = {
+            ["single"] = 1,
+            ["multi"] = {
+                [1] = true,
+            },
+        },
+        ["talent2"] = {
+            ["multi"] = {
+            },
+        },
+        ["faction"] = {
+            ["multi"] = {
+            },
+        },
+        ["size"] = {
+            ["multi"] = {
+            },
+        },
+    },
+    ["useglowColor"] = false,
+    ["conditions"] = {
+    },
+    ["color"] = {
+        [1] = 1,
+        [2] = 1,
+        [3] = 1,
+        [4] = 1,
+    },
+    ["text2Containment"] = "INSIDE",
+    ["glowType"] = "buttonOverlay",
+    ["text1Font"] = "Century Gothic Bold",
+    ["text2Font"] = "Century Gothic Bold",
+    ["selfPoint"] = "CENTER",
+    ["text1FontFlags"] = "OUTLINE",
+    ["regionType"] = "icon",
+    ["text2Color"] = {
+        [1] = 1,
+        [2] = 1,
+        [3] = 1,
+        [4] = 1,
+    },
+    ["anchorFrameType"] = "SCREEN",
+    ["text2FontSize"] = 24,
+    ["frameStrata"] = 1,
+    ["text1"] = " ",
+    ["desaturate"] = false,
+    ["zoom"] = 0,
+    ["text2"] = "%c",
+    ["auto"] = true,
+    ["text1Enabled"] = true,
+    ["id"] = "Duration Only",
+    ["text1Color"] = {
+        [1] = 1,
+        [2] = 1,
+        [3] = 1,
+        [4] = 1,
+    },
+    ["alpha"] = 1,
+    ["width"] = 35,
+    ["text2Enabled"] = true,
+    ["text1Containment"] = "OUTSIDE",
+    ["inverse"] = false,
+    ["progressPrecision"] = 0,
+    ["displayIcon"] = "",
+    ["cooldown"] = false,
+    ["actions"] = {
+        ["start"] = {
+            ["message"] = "++ Darkness used - 8 sec ++",
+            ["glow_frame"] = "WeakAuras:Serenity",
+            ["glow_action"] = "show",
+            ["message_type"] = "SAY",
+            ["do_custom"] = false,
+            ["do_message"] = false,
+            ["do_glow"] = false,
+        },
+        ["init"] = {
+        },
+        ["finish"] = {
+        },
+    },
+}
 	WeakAurasSaved["displays"]["Duration + Text"] = {
-        ["glow"] = false,
-        ["text1FontSize"] = 18,
+    ["glow"] = false,
+    ["text1FontSize"] = 18,
+    ["cooldownTextEnabled"] = false,
+    ["customText"] = "function()\\n    -----------------------------\\n    local text = \\\"YOUR TEXT HERE\\\"\\n    -----------------------------\\n    \\n    local region = aura_env.region\\n    if not region.text3 then\\n        local text3 = region:CreateFontString(nil, \\\"TOOLTIP\\\")\\n        region.text3 = text3\\n        region.text3:SetFont(region.text2:GetFont())\\n        \\n        region.text3:SetPoint(\\\"TOP\\\", 0, 10)\\n        region.text3:SetShadowColor(0,0,0,0)\\n        region.text3:SetTextColor(1,1,1,1)\\n        region.text3:Show()\\n    end\\n    region.text3:SetTextColor(region.text2:GetTextColor())\\n    region.text3:SetText(text)\\n    return \\nend\\n\\n\\n\\n\\n\\n",
+    ["yOffset"] = 0,
+    ["anchorPoint"] = "CENTER",
+    ["customTextUpdate"] = "update",
+    ["icon"] = true,
+    ["triggers"] = {
+        [1] = {
+            ["trigger"] = {
+                ["duration"] = "8",
+                ["use_unit"] = true,
+                ["buffShowOn"] = "showOnActive",
+                ["subeventPrefix"] = "SPELL",
+                ["type"] = "aura",
+                ["use_specific_unit"] = false,
+                ["subeventSuffix"] = "_CAST_SUCCESS",
+                ["debuffType"] = "HELPFUL",
+                ["spellName"] = "Darkness",
+                ["event"] = "Combat Log",
+                ["unit"] = "player",
+                ["unevent"] = "timed",
+                ["use_spellName"] = true,
+                ["spellIds"] = {
+                },
+                ["use_sourceUnit"] = false,
+                ["ownOnly"] = true,
+                ["names"] = {
+                },
+                ["sourceUnit"] = "player",
+                ["custom_hide"] = "timed",
+            },
+            ["untrigger"] = {
+            },
+        },
         ["disjunctive"] = "any",
-        ["customText"] = "function()\n    -----------------------------\n    local text = \"YOUR TEXT HERE\"\n    -----------------------------\n    \n    local region = aura_env.region\n    if not region.text3 then\n        local text3 = region:CreateFontString(nil, \"TOOLTIP\")\n        region.text3 = text3\n        region.text3:SetFont(region.text2:GetFont())\n        \n        region.text3:SetPoint(\"TOP\", 0, 10)\n        region.text3:SetShadowColor(0,0,0,0)\n        region.text3:SetTextColor(1,1,1,1)\n        region.text3:Show()\n    end\n    region.text3:SetText(text)\n    return \nend\n\n\n\n\n\n",
-        ["untrigger"] = {
+        ["activeTriggerMode"] = 1,
+    },
+    ["text2Font"] = "Century Gothic Bold",
+    ["keepAspectRatio"] = false,
+    ["animation"] = {
+        ["start"] = {
+            ["duration_type"] = "seconds",
+            ["type"] = "none",
         },
-        ["anchorPoint"] = "CENTER",
-        ["activeTriggerMode"] = 0,
-        ["customTextUpdate"] = "update",
-        ["actions"] = {
-            ["start"] = {
-                ["message"] = "++ Darkness used - 8 sec ++",
-                ["glow_frame"] = "WeakAuras:Serenity",
-                ["glow_action"] = "show",
-                ["message_type"] = "SAY",
-                ["do_custom"] = false,
-                ["do_message"] = false,
-                ["do_glow"] = false,
-            },
-            ["finish"] = {
-            },
-            ["init"] = {
-            },
+        ["main"] = {
+            ["duration_type"] = "seconds",
+            ["colorType"] = "custom",
+            ["type"] = "none",
+            ["use_color"] = true,
         },
-        ["text2Font"] = "Century Gothic Bold",
-        ["keepAspectRatio"] = false,
-        ["animation"] = {
-            ["start"] = {
-                ["type"] = "none",
-                ["duration_type"] = "seconds",
-            },
-            ["main"] = {
-                ["duration_type"] = "seconds",
-                ["colorType"] = "custom",
-                ["type"] = "none",
-                ["use_color"] = true,
-            },
-            ["finish"] = {
-                ["type"] = "none",
-                ["duration_type"] = "seconds",
-            },
+        ["finish"] = {
+            ["duration_type"] = "seconds",
+            ["type"] = "none",
         },
-        ["trigger"] = {
-            ["duration"] = "8",
-            ["use_unit"] = true,
-            ["custom_hide"] = "timed",
-            ["use_specific_unit"] = false,
-            ["type"] = "aura",
-            ["names"] = {
-            },
-            ["subeventSuffix"] = "_CAST_SUCCESS",
-            ["ownOnly"] = true,
-            ["spellName"] = "Darkness",
-            ["event"] = "Combat Log",
-            ["unit"] = "player",
-            ["unevent"] = "timed",
-            ["use_spellName"] = true,
-            ["spellIds"] = {
-            },
-            ["use_sourceUnit"] = false,
-            ["showOn"] = "showOnActive",
-            ["debuffType"] = "HELPFUL",
-            ["sourceUnit"] = "player",
-            ["subeventPrefix"] = "SPELL",
-        },
-        ["stickyDuration"] = true,
-        ["progressPrecision"] = 0,
-        ["text1Point"] = "CENTER",
-        ["internalVersion"] = 3,
-        ["text2FontFlags"] = "OUTLINE",
-        ["height"] = 35,
-        ["yOffset"] = 0,
-        ["load"] = {
-            ["talent2"] = {
-                ["multi"] = {
-                },
-            },
-            ["use_never"] = false,
-            ["talent"] = {
-                ["multi"] = {
-                },
-            },
-            ["class"] = {
-                ["single"] = "ROGUE",
-                ["multi"] = {
-                    ["ROGUE"] = true,
-                },
-            },
-            ["race"] = {
-                ["multi"] = {
-                },
-            },
-            ["difficulty"] = {
-                ["multi"] = {
-                },
-            },
-            ["role"] = {
-                ["multi"] = {
-                },
-            },
-            ["pvptalent"] = {
-                ["multi"] = {
-                },
-            },
-            ["ingroup"] = {
-                ["multi"] = {
-                },
-            },
-            ["faction"] = {
-                ["multi"] = {
-                },
-            },
-            ["spec"] = {
-                ["single"] = 1,
-                ["multi"] = {
-                    [1] = true,
-                },
-            },
-            ["size"] = {
-                ["multi"] = {
-                },
+    },
+    ["xOffset"] = 0,
+    ["stickyDuration"] = true,
+    ["glowColor"] = {
+        [1] = 1,
+        [2] = 1,
+        [3] = 1,
+        [4] = 1,
+    },
+    ["text1Point"] = "CENTER",
+    ["internalVersion"] = 9,
+    ["text2FontFlags"] = "OUTLINE",
+    ["height"] = 35,
+    ["parent"] = "RUI Icon Templates",
+    ["load"] = {
+        ["talent2"] = {
+            ["multi"] = {
             },
         },
-        ["displayIcon"] = "",
-        ["text2Point"] = "CENTER",
-        ["text1Containment"] = "OUTSIDE",
-        ["text2Containment"] = "INSIDE",
-        ["numTriggers"] = 1,
-        ["text1Font"] = "Century Gothic Bold",
-        ["cooldownTextEnabled"] = false,
-        ["icon"] = true,
-        ["text2Color"] = {
-            [1] = 1,
-            [2] = 1,
-            [3] = 1,
-            [4] = 1,
+        ["use_never"] = false,
+        ["talent"] = {
+            ["multi"] = {
+            },
         },
-        ["regionType"] = "icon",
-        ["width"] = 35,
-        ["text2Enabled"] = true,
-        ["text2FontSize"] = 14,
-        ["text1Color"] = {
-            [1] = 1,
-            [2] = 1,
-            [3] = 1,
-            [4] = 1,
+        ["class"] = {
+            ["single"] = "ROGUE",
+            ["multi"] = {
+                ["ROGUE"] = true,
+            },
         },
-        ["additional_triggers"] = {
+        ["difficulty"] = {
+            ["multi"] = {
+            },
         },
-        ["text1"] = "%p",
-        ["text1Enabled"] = true,
-        ["text2"] = "%c",
-        ["zoom"] = 0,
-        ["auto"] = true,
-        ["desaturate"] = false,
-        ["id"] = "Duration + Text",
-        ["xOffset"] = 0,
-        ["frameStrata"] = 1,
-        ["anchorFrameType"] = "SCREEN",
-        ["text1FontFlags"] = "OUTLINE",
-        ["selfPoint"] = "CENTER",
-        ["inverse"] = false,
-        ["color"] = {
-            [1] = 1,
-            [2] = 1,
-            [3] = 1,
-            [4] = 1,
+        ["race"] = {
+            ["multi"] = {
+            },
         },
-        ["init_started"] = 1,
-        ["conditions"] = {
+        ["role"] = {
+            ["multi"] = {
+            },
         },
-        ["cooldown"] = false,
-        ["parent"] = "RUI Icon Templates",
-    }
+        ["pvptalent"] = {
+            ["multi"] = {
+            },
+        },
+        ["spec"] = {
+            ["single"] = 1,
+            ["multi"] = {
+                [1] = true,
+            },
+        },
+        ["faction"] = {
+            ["multi"] = {
+            },
+        },
+        ["ingroup"] = {
+            ["multi"] = {
+            },
+        },
+        ["size"] = {
+            ["multi"] = {
+            },
+        },
+    },
+    ["useglowColor"] = false,
+    ["conditions"] = {
+    },
+    ["color"] = {
+        [1] = 1,
+        [2] = 1,
+        [3] = 1,
+        [4] = 1,
+    },
+    ["text2Containment"] = "INSIDE",
+    ["glowType"] = "buttonOverlay",
+    ["text1Font"] = "Century Gothic Bold",
+    ["text2Point"] = "CENTER",
+    ["selfPoint"] = "CENTER",
+    ["text1FontFlags"] = "OUTLINE",
+    ["regionType"] = "icon",
+    ["text2Color"] = {
+        [1] = 1,
+        [2] = 1,
+        [3] = 1,
+        [4] = 1,
+    },
+    ["anchorFrameType"] = "SCREEN",
+    ["text2FontSize"] = 14,
+    ["frameStrata"] = 1,
+    ["text1"] = "%p",
+    ["text1Enabled"] = true,
+    ["desaturate"] = false,
+    ["text2"] = "%c",
+    ["auto"] = true,
+    ["zoom"] = 0,
+    ["id"] = "Duration + Text",
+    ["text1Color"] = {
+        [1] = 1,
+        [2] = 1,
+        [3] = 1,
+        [4] = 1,
+    },
+    ["alpha"] = 1,
+    ["width"] = 35,
+    ["text2Enabled"] = true,
+    ["text1Containment"] = "OUTSIDE",
+    ["inverse"] = false,
+    ["progressPrecision"] = 0,
+    ["displayIcon"] = "",
+    ["cooldown"] = false,
+    ["actions"] = {
+        ["start"] = {
+            ["message"] = "++ Darkness used - 8 sec ++",
+            ["do_glow"] = false,
+            ["glow_action"] = "show",
+            ["message_type"] = "SAY",
+            ["do_message"] = false,
+            ["do_custom"] = false,
+            ["glow_frame"] = "WeakAuras:Serenity",
+        },
+        ["init"] = {
+        },
+        ["finish"] = {
+        },
+    },
+}
 end
