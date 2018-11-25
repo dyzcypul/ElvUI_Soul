@@ -605,7 +605,7 @@ local function PartyFrameSetup(style)
 		E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["xOffset"] = 0
 		E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["text_format"] = " [status]"
 		E.db["unitframe"]["units"]["party"]["customTexts"]["Health Text"]["size"] = 11
-		E.db["unitframe"]["units"]["party"]["healPrediction"] = true
+		E.db["unitframe"]["units"]["party"]["healPrediction"]["enable"] = true
 		E.db["unitframe"]["units"]["party"]["buffIndicator"]["size"] = 10
 		E.db["unitframe"]["units"]["party"]["buffIndicator"]["fontSize"] = 12
 		E.db["unitframe"]["units"]["party"]["width"] = 105
@@ -693,7 +693,7 @@ local function PartyFrameSetup(style)
         E.db["unitframe"]["units"]["party"]["customTexts"]["!Name"]["fontOutline"] = "OUTLINE"
         E.db["unitframe"]["units"]["party"]["customTexts"]["!Name"]["xOffset"] = 10
         E.db["unitframe"]["units"]["party"]["customTexts"]["!Name"]["size"] = 14
-        E.db["unitframe"]["units"]["party"]["healPrediction"] = true
+        E.db["unitframe"]["units"]["party"]["healPrediction"]["enable"] = true
         E.db["unitframe"]["units"]["party"]["buffIndicator"]["size"] = 10
         E.db["unitframe"]["units"]["party"]["buffIndicator"]["fontSize"] = 12
         E.db["unitframe"]["units"]["party"]["width"] = 141
