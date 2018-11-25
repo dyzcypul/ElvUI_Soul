@@ -1,6 +1,6 @@
 ## Interface: 80000
 ## Author: Redtuzk
-## Version: 1.5.2
+## Version: 1.5.3
 ## Title: |cff1784d1ElvUI|r |cffc41f3bRedtuzk|r
 ## Notes: Contains profile layouts designed by Redtuzk
 ## RequiredDeps: ElvUI, ElvUI_SLE
