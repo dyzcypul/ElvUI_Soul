@@ -471,6 +471,16 @@ local function SetupLayoutBar(layout)
 	E.db[MyPluginName].ABlayout = layout
 
 	if layout == "5x2" then
+	    E.db["actionbar"]["bar2"]["buttons"] = 5
+		E.db["actionbar"]["bar2"]["buttonsize"] = 40
+		E.db["actionbar"]["bar1"]["buttons"] = 5
+		E.db["actionbar"]["bar1"]["buttonsize"] = 40
+		E.db["movers"]["ElvAB_1"] = "BOTTOM,ElvUIParent,BOTTOM,0,289"
+		E.db["movers"]["ElvAB_2"] = "BOTTOM,ElvUIParent,BOTTOM,0,248"
+		E.db["unitframe"]["units"]["player"]["castbar"]["width"] = 204
+		E.db["movers"]["ElvUF_PlayerCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,227"
+		E.db["unitframe"]["units"]["player"]["power"]["detachedWidth"] = 204
+		E.db["unitframe"]["units"]["player"]["classbar"]["detachedWidth"] = 204
 	elseif layout == "6x2" then
 		E.db["actionbar"]["bar2"]["buttons"] = 6
 		E.db["actionbar"]["bar2"]["buttonsize"] = 36
