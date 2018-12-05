@@ -126,19 +126,21 @@ function RUI:ImportTemplates()
     ["glow"] = false,
     ["text1FontSize"] = 18,
     ["cooldownTextEnabled"] = false,
-    ["customText"] = "function()\\n    ---------DO NOT EDIT!-------\\n    ----------------------------\\n    ----------------------------\\n    local region = aura_env.region\\n    if not region.text3 then\\n        local text3 = region:CreateFontString(nil, \\\"TOOLTIP\\\")\\n        region.text3 = text3\\n        region.text3:SetFont(region.text2:GetFont())\\n        \\n        region.text3:SetPoint(\\\"TOP\\\", 0, 10)\\n        region.text3:SetShadowColor(0,0,0,0)\\n        region.text3:SetTextColor(1,1,1,1)\\n        region.text3:Show()\\n    end\\n    region.text3:SetTextColor(region.text2:GetTextColor())\\n    region.text3:SetText(WeakAuras.ReplacePlaceHolders(\\\"%p\\\", region))\\n    return \\nend\\n\\n\\n\\n\\n\\n",
+    ["customText"] = "function()\n    ---------DO NOT EDIT!-------\n    ----------------------------\n    ----------------------------\n    local region = aura_env.region\n    if not region.text3 then\n        local text3 = region:CreateFontString(nil, \"TOOLTIP\")\n        region.text3 = text3\n        region.text3:SetFont(region.text2:GetFont())\n        \n        region.text3:SetPoint(\"TOP\", 0, 10)\n        region.text3:SetShadowColor(0,0,0,0)\n        region.text3:SetTextColor(1,1,1,1)\n        region.text3:Show()\n    end\n    region.text3:SetTextColor(region.text2:GetTextColor())\n    region.text3:SetText(WeakAuras.ReplacePlaceHolders(\"%p\", region))\n    return \nend",
     ["yOffset"] = 0,
     ["anchorPoint"] = "CENTER",
+    ["cooldownSwipe"] = true,
     ["customTextUpdate"] = "update",
+    ["cooldownEdge"] = false,
     ["actions"] = {
         ["start"] = {
             ["message"] = "++ Darkness used - 8 sec ++",
             ["do_glow"] = false,
-            ["glow_frame"] = "WeakAuras:Serenity",
+            ["glow_action"] = "show",
             ["message_type"] = "SAY",
             ["do_message"] = false,
             ["do_custom"] = false,
-            ["glow_action"] = "show",
+            ["glow_frame"] = "WeakAuras:Serenity",
         },
         ["init"] = {
         },
@@ -184,17 +186,20 @@ function RUI:ImportTemplates()
             ["type"] = "none",
         },
         ["main"] = {
-            ["duration_type"] = "seconds",
             ["colorType"] = "custom",
-            ["type"] = "none",
             ["use_color"] = true,
+            ["type"] = "none",
+            ["duration_type"] = "seconds",
         },
         ["finish"] = {
             ["duration_type"] = "seconds",
             ["type"] = "none",
         },
     },
-    ["xOffset"] = 0,
+    ["frameStrata"] = 1,
+    ["progressPrecision"] = 0,
+    ["authorOptions"] = {
+    },
     ["stickyDuration"] = true,
     ["glowColor"] = {
         [1] = 1,
@@ -203,10 +208,10 @@ function RUI:ImportTemplates()
         [4] = 1,
     },
     ["text1Point"] = "BOTTOM",
-    ["text2Point"] = "CENTER",
+    ["alpha"] = 1,
     ["text2FontFlags"] = "OUTLINE",
     ["height"] = 35,
-    ["parent"] = "RUI Icon Templates",
+    ["xOffset"] = 0,
     ["load"] = {
         ["ingroup"] = {
             ["multi"] = {
@@ -258,50 +263,51 @@ function RUI:ImportTemplates()
             },
         },
     },
-    ["text2Font"] = "Century Gothic Bold",
+    ["text2Point"] = "CENTER",
     ["conditions"] = {
     },
-    ["color"] = {
-        [1] = 1,
-        [2] = 1,
-        [3] = 1,
-        [4] = 1,
-    },
+    ["text2Font"] = "Century Gothic Bold",
     ["text2Containment"] = "INSIDE",
     ["glowType"] = "buttonOverlay",
     ["text1Font"] = "Century Gothic Bold",
-    ["internalVersion"] = 9,
-    ["desaturate"] = false,
+    ["parent"] = "RUI Icon Templates",
+    ["icon"] = true,
     ["text1FontFlags"] = "OUTLINE",
     ["regionType"] = "icon",
+    ["internalVersion"] = 9,
+    ["desaturate"] = false,
+    ["text2FontSize"] = 24,
+    ["anchorFrameType"] = "SCREEN",
+    ["text1"] = "%s",
     ["text2Color"] = {
         [1] = 1,
         [2] = 1,
         [3] = 1,
         [4] = 1,
     },
-    ["anchorFrameType"] = "SCREEN",
-    ["text2FontSize"] = 24,
-    ["frameStrata"] = 1,
-    ["text1"] = "%s",
+    ["selfPoint"] = "CENTER",
+    ["zoom"] = 0,
+    ["auto"] = true,
+    ["text2"] = "%c",
+    ["id"] = "Duration + Stacks",
     ["text1Color"] = {
         [1] = 0.1843137254902,
         [2] = 1,
         [3] = 0,
         [4] = 1,
     },
-    ["zoom"] = 0,
-    ["text2"] = "%c",
-    ["auto"] = true,
-    ["selfPoint"] = "CENTER",
-    ["id"] = "Duration + Stacks",
-    ["text1Containment"] = "INSIDE",
-    ["alpha"] = 1,
-    ["width"] = 35,
     ["text2Enabled"] = true,
-    ["icon"] = true,
+    ["width"] = 35,
+    ["text1Containment"] = "INSIDE",
+    ["config"] = {
+    },
     ["inverse"] = false,
-    ["progressPrecision"] = 0,
+    ["color"] = {
+        [1] = 1,
+        [2] = 1,
+        [3] = 1,
+        [4] = 1,
+    },
     ["displayIcon"] = "",
     ["cooldown"] = false,
     ["useglowColor"] = false,
@@ -310,31 +316,47 @@ function RUI:ImportTemplates()
     ["glow"] = false,
     ["text1FontSize"] = 18,
     ["cooldownTextEnabled"] = false,
-    ["customText"] = "function()\\n    ---------DO NOT EDIT!-------\\n    ----------------------------\\n    ----------------------------\\n    local region = aura_env.region\\n    if not region.text3 then\\n        local text3 = region:CreateFontString(nil, \\\"TOOLTIP\\\")\\n        region.text3 = text3\\n        region.text3:SetFont(region.text2:GetFont())\\n        \\n        region.text3:SetPoint(\\\"TOP\\\", 0, 10)\\n        region.text3:SetShadowColor(0,0,0,0)\\n        region.text3:SetTextColor(1,1,1,1)\\n        region.text3:Show()\\n    end\\n    region.text3:SetTextColor(region.text2:GetTextColor())\\n    region.text3:SetText(WeakAuras.ReplacePlaceHolders(\\\"%p\\\", region))\\n    return \\nend\\n\\n\\n\\n\\n\\n",
+    ["customText"] = "function()    \n    ---------DO NOT EDIT!-------\n    ---------------------------- \n    ----------------------------\n    local region = aura_env.region\n    if not region.text3 then\n        local text3 = region:CreateFontString(nil, \"TOOLTIP\")\n        region.text3 = text3\n        region.text3:SetFont(region.text2:GetFont())\n        \n        region.text3:SetPoint(\"TOP\", 0, 10)\n        region.text3:SetShadowColor(0,0,0,0)\n        region.text3:SetTextColor(1,1,1,1)\n        region.text3:Show()\n    end\n    region.text3:SetTextColor(region.text2:GetTextColor())\n    region.text3:SetText(WeakAuras.ReplacePlaceHolders(\"%p\", region))\n    return \nend",
     ["yOffset"] = 0,
     ["anchorPoint"] = "CENTER",
+    ["cooldownSwipe"] = true,
     ["customTextUpdate"] = "update",
-    ["icon"] = true,
+    ["cooldownEdge"] = false,
+    ["actions"] = {
+        ["start"] = {
+            ["message"] = "++ Darkness used - 8 sec ++",
+            ["do_glow"] = false,
+            ["glow_action"] = "show",
+            ["message_type"] = "SAY",
+            ["do_message"] = false,
+            ["do_custom"] = false,
+            ["glow_frame"] = "WeakAuras:Serenity",
+        },
+        ["init"] = {
+        },
+        ["finish"] = {
+        },
+    },
     ["triggers"] = {
         [1] = {
             ["trigger"] = {
-                ["duration"] = "8",
+                ["ownOnly"] = true,
                 ["use_unit"] = true,
                 ["buffShowOn"] = "showOnActive",
                 ["subeventPrefix"] = "SPELL",
                 ["type"] = "aura",
                 ["use_specific_unit"] = false,
-                ["subeventSuffix"] = "_CAST_SUCCESS",
+                ["unevent"] = "timed",
                 ["debuffType"] = "HELPFUL",
                 ["spellName"] = "Darkness",
                 ["event"] = "Combat Log",
                 ["unit"] = "player",
-                ["unevent"] = "timed",
+                ["subeventSuffix"] = "_CAST_SUCCESS",
                 ["use_spellName"] = true,
                 ["spellIds"] = {
                 },
                 ["use_sourceUnit"] = false,
-                ["ownOnly"] = true,
+                ["duration"] = "8",
                 ["names"] = {
                 },
                 ["sourceUnit"] = "player",
@@ -346,7 +368,7 @@ function RUI:ImportTemplates()
         ["disjunctive"] = "any",
         ["activeTriggerMode"] = 1,
     },
-    ["internalVersion"] = 9,
+    ["text1Enabled"] = false,
     ["keepAspectRatio"] = false,
     ["animation"] = {
         ["start"] = {
@@ -364,19 +386,23 @@ function RUI:ImportTemplates()
             ["type"] = "none",
         },
     },
-    ["xOffset"] = 0,
-    ["stickyDuration"] = true,
-    ["glowColor"] = {
+    ["selfPoint"] = "CENTER",
+    ["text2Font"] = "Century Gothic Bold",
+    ["color"] = {
         [1] = 1,
         [2] = 1,
         [3] = 1,
         [4] = 1,
     },
-    ["text1Point"] = "TOP",
-    ["text2Point"] = "CENTER",
+    ["stickyDuration"] = true,
+    ["progressPrecision"] = 0,
+    ["text1Point"] = "BOTTOM",
+    ["authorOptions"] = {
+    },
     ["text2FontFlags"] = "OUTLINE",
     ["height"] = 35,
-    ["parent"] = "RUI Icon Templates",
+    ["conditions"] = {
+    },
     ["load"] = {
         ["ingroup"] = {
             ["multi"] = {
@@ -415,11 +441,11 @@ function RUI:ImportTemplates()
                 [1] = true,
             },
         },
-        ["talent2"] = {
+        ["faction"] = {
             ["multi"] = {
             },
         },
-        ["faction"] = {
+        ["talent2"] = {
             ["multi"] = {
             },
         },
@@ -428,76 +454,64 @@ function RUI:ImportTemplates()
             },
         },
     },
-    ["useglowColor"] = false,
-    ["conditions"] = {
-    },
-    ["color"] = {
+    ["glowColor"] = {
         [1] = 1,
         [2] = 1,
         [3] = 1,
         [4] = 1,
     },
+    ["xOffset"] = 0,
+    ["text1Containment"] = "INSIDE",
     ["text2Containment"] = "INSIDE",
     ["glowType"] = "buttonOverlay",
     ["text1Font"] = "Century Gothic Bold",
-    ["text2Font"] = "Century Gothic Bold",
-    ["selfPoint"] = "CENTER",
-    ["text1FontFlags"] = "OUTLINE",
-    ["regionType"] = "icon",
+    ["text1Color"] = {
+        [1] = 0.1843137254902,
+        [2] = 1,
+        [3] = 0,
+        [4] = 1,
+    },
+    ["parent"] = "RUI Icon Templates",
     ["text2Color"] = {
         [1] = 1,
         [2] = 1,
         [3] = 1,
         [4] = 1,
     },
+    ["regionType"] = "icon",
     ["anchorFrameType"] = "SCREEN",
+    ["text2Enabled"] = true,
     ["text2FontSize"] = 24,
-    ["frameStrata"] = 1,
-    ["text1"] = " ",
-    ["desaturate"] = false,
+    ["text1FontFlags"] = "OUTLINE",
+    ["text1"] = "%s",
+    ["internalVersion"] = 9,
     ["zoom"] = 0,
     ["text2"] = "%c",
     ["auto"] = true,
-    ["text1Enabled"] = true,
+    ["icon"] = true,
     ["id"] = "Duration Only",
-    ["text1Color"] = {
-        [1] = 1,
-        [2] = 1,
-        [3] = 1,
-        [4] = 1,
-    },
+    ["frameStrata"] = 1,
     ["alpha"] = 1,
     ["width"] = 35,
-    ["text2Enabled"] = true,
-    ["text1Containment"] = "OUTSIDE",
+    ["desaturate"] = false,
+    ["config"] = {
+    },
     ["inverse"] = false,
-    ["progressPrecision"] = 0,
+    ["text2Point"] = "CENTER",
     ["displayIcon"] = "",
     ["cooldown"] = false,
-    ["actions"] = {
-        ["start"] = {
-            ["message"] = "++ Darkness used - 8 sec ++",
-            ["glow_frame"] = "WeakAuras:Serenity",
-            ["glow_action"] = "show",
-            ["message_type"] = "SAY",
-            ["do_custom"] = false,
-            ["do_message"] = false,
-            ["do_glow"] = false,
-        },
-        ["init"] = {
-        },
-        ["finish"] = {
-        },
-    },
+    ["useglowColor"] = false,
 }
 	WeakAurasSaved["displays"]["Duration + Text"] = {
     ["glow"] = false,
     ["text1FontSize"] = 18,
     ["cooldownTextEnabled"] = false,
-    ["customText"] = "function()\\n    -----------------------------\\n    local text = \\\"YOUR TEXT HERE\\\"\\n    -----------------------------\\n    \\n    local region = aura_env.region\\n    if not region.text3 then\\n        local text3 = region:CreateFontString(nil, \\\"TOOLTIP\\\")\\n        region.text3 = text3\\n        region.text3:SetFont(region.text2:GetFont())\\n        \\n        region.text3:SetPoint(\\\"TOP\\\", 0, 10)\\n        region.text3:SetShadowColor(0,0,0,0)\\n        region.text3:SetTextColor(1,1,1,1)\\n        region.text3:Show()\\n    end\\n    region.text3:SetTextColor(region.text2:GetTextColor())\\n    region.text3:SetText(text)\\n    return \\nend\\n\\n\\n\\n\\n\\n",
+    ["customText"] = "function()\n    -----------------------------\n    local text = \"YOUR TEXT HERE\"\n    -----------------------------\n    \n    local region = aura_env.region\n    if not region.text3 then\n        local text3 = region:CreateFontString(nil, \"TOOLTIP\")\n        region.text3 = text3\n        region.text3:SetFont(region.text2:GetFont())\n        \n        region.text3:SetPoint(\"TOP\", 0, 10)\n        region.text3:SetShadowColor(0,0,0,0)\n        region.text3:SetTextColor(1,1,1,1)\n        region.text3:Show()\n    end\n    region.text3:SetTextColor(region.text2:GetTextColor())\n    region.text3:SetText(text)\n    return \nend",
     ["yOffset"] = 0,
     ["anchorPoint"] = "CENTER",
+    ["cooldownSwipe"] = true,
     ["customTextUpdate"] = "update",
+    ["cooldownEdge"] = false,
     ["icon"] = true,
     ["triggers"] = {
         [1] = {
@@ -505,12 +519,13 @@ function RUI:ImportTemplates()
                 ["duration"] = "8",
                 ["use_unit"] = true,
                 ["buffShowOn"] = "showOnActive",
-                ["subeventPrefix"] = "SPELL",
+                ["custom_hide"] = "timed",
                 ["type"] = "aura",
                 ["use_specific_unit"] = false,
                 ["subeventSuffix"] = "_CAST_SUCCESS",
-                ["debuffType"] = "HELPFUL",
-                ["spellName"] = "Darkness",
+                ["names"] = {
+                },
+                ["ownOnly"] = true,
                 ["event"] = "Combat Log",
                 ["unit"] = "player",
                 ["unevent"] = "timed",
@@ -518,11 +533,10 @@ function RUI:ImportTemplates()
                 ["spellIds"] = {
                 },
                 ["use_sourceUnit"] = false,
-                ["ownOnly"] = true,
-                ["names"] = {
-                },
+                ["spellName"] = "Darkness",
+                ["debuffType"] = "HELPFUL",
                 ["sourceUnit"] = "player",
-                ["custom_hide"] = "timed",
+                ["subeventPrefix"] = "SPELL",
             },
             ["untrigger"] = {
             },
@@ -534,8 +548,8 @@ function RUI:ImportTemplates()
     ["keepAspectRatio"] = false,
     ["animation"] = {
         ["start"] = {
-            ["duration_type"] = "seconds",
             ["type"] = "none",
+            ["duration_type"] = "seconds",
         },
         ["main"] = {
             ["duration_type"] = "seconds",
@@ -544,23 +558,39 @@ function RUI:ImportTemplates()
             ["use_color"] = true,
         },
         ["finish"] = {
-            ["duration_type"] = "seconds",
             ["type"] = "none",
+            ["duration_type"] = "seconds",
         },
     },
+    ["desaturate"] = false,
     ["xOffset"] = 0,
+    ["actions"] = {
+        ["start"] = {
+            ["message"] = "++ Darkness used - 8 sec ++",
+            ["glow_action"] = "show",
+            ["glow_frame"] = "WeakAuras:Serenity",
+            ["message_type"] = "SAY",
+            ["do_custom"] = false,
+            ["do_message"] = false,
+            ["do_glow"] = false,
+        },
+        ["finish"] = {
+        },
+        ["init"] = {
+        },
+    },
     ["stickyDuration"] = true,
+    ["progressPrecision"] = 0,
+    ["text1Point"] = "CENTER",
     ["glowColor"] = {
         [1] = 1,
         [2] = 1,
         [3] = 1,
         [4] = 1,
     },
-    ["text1Point"] = "CENTER",
-    ["internalVersion"] = 9,
     ["text2FontFlags"] = "OUTLINE",
     ["height"] = 35,
-    ["parent"] = "RUI Icon Templates",
+    ["displayIcon"] = "",
     ["load"] = {
         ["talent2"] = {
             ["multi"] = {
@@ -593,18 +623,18 @@ function RUI:ImportTemplates()
             ["multi"] = {
             },
         },
-        ["spec"] = {
-            ["single"] = 1,
+        ["ingroup"] = {
             ["multi"] = {
-                [1] = true,
             },
         },
         ["faction"] = {
             ["multi"] = {
             },
         },
-        ["ingroup"] = {
+        ["spec"] = {
+            ["single"] = 1,
             ["multi"] = {
+                [1] = true,
             },
         },
         ["size"] = {
@@ -612,66 +642,54 @@ function RUI:ImportTemplates()
             },
         },
     },
-    ["useglowColor"] = false,
-    ["conditions"] = {
-    },
     ["color"] = {
         [1] = 1,
         [2] = 1,
         [3] = 1,
         [4] = 1,
     },
+    ["alpha"] = 1,
+    ["useglowColor"] = false,
     ["text2Containment"] = "INSIDE",
     ["glowType"] = "buttonOverlay",
     ["text1Font"] = "Century Gothic Bold",
-    ["text2Point"] = "CENTER",
-    ["selfPoint"] = "CENTER",
-    ["text1FontFlags"] = "OUTLINE",
-    ["regionType"] = "icon",
-    ["text2Color"] = {
-        [1] = 1,
-        [2] = 1,
-        [3] = 1,
-        [4] = 1,
-    },
-    ["anchorFrameType"] = "SCREEN",
-    ["text2FontSize"] = 14,
-    ["frameStrata"] = 1,
-    ["text1"] = "%p",
-    ["text1Enabled"] = true,
-    ["desaturate"] = false,
-    ["text2"] = "%c",
-    ["auto"] = true,
-    ["zoom"] = 0,
-    ["id"] = "Duration + Text",
     ["text1Color"] = {
         [1] = 1,
         [2] = 1,
         [3] = 1,
         [4] = 1,
     },
-    ["alpha"] = 1,
     ["width"] = 35,
+    ["text1FontFlags"] = "OUTLINE",
+    ["regionType"] = "icon",
     ["text2Enabled"] = true,
+    ["text1Enabled"] = true,
+    ["text2FontSize"] = 14,
+    ["selfPoint"] = "CENTER",
+    ["text1"] = "%p",
+    ["text2Color"] = {
+        [1] = 1,
+        [2] = 1,
+        [3] = 1,
+        [4] = 1,
+    },
+    ["zoom"] = 0,
+    ["text2"] = "%c",
+    ["auto"] = true,
     ["text1Containment"] = "OUTSIDE",
+    ["id"] = "Duration + Text",
+    ["text2Point"] = "CENTER",
+    ["frameStrata"] = 1,
+    ["anchorFrameType"] = "SCREEN",
+    ["parent"] = "RUI Icon Templates",
+    ["config"] = {
+    },
     ["inverse"] = false,
-    ["progressPrecision"] = 0,
-    ["displayIcon"] = "",
+    ["internalVersion"] = 9,
+    ["conditions"] = {
+    },
     ["cooldown"] = false,
-    ["actions"] = {
-        ["start"] = {
-            ["message"] = "++ Darkness used - 8 sec ++",
-            ["do_glow"] = false,
-            ["glow_action"] = "show",
-            ["message_type"] = "SAY",
-            ["do_message"] = false,
-            ["do_custom"] = false,
-            ["glow_frame"] = "WeakAuras:Serenity",
-        },
-        ["init"] = {
-        },
-        ["finish"] = {
-        },
+    ["authorOptions"] = {
     },
 }
 end
