@@ -417,6 +417,17 @@ local function UpdateAuraIconSettings(self, auras, noCycle)
 end
 hooksecurefunc(UF, "UpdateAuraIconSettings", UpdateAuraIconSettings)
 
+local function Update_ThreatList(table, frame)
+	if E.db[MyPluginName].treantsThreat then
+		if frame.UnitType ~= "ENEMY_NPC" then return end
+		local unit = frame.displayedUnit
+		if (UnitName(unit..'target')=='Treant') then
+			frame.isBeingTanked = true
+		end
+	end
+end
+hooksecurefunc(NP, "Update_ThreatList", Update_ThreatList)
+
 local function SetupLayout(layout)
 	CreateCustomTexts()
 	CreatingMissingSettings()
@@ -1193,6 +1204,20 @@ local function InsertOptions()
 				name = "Install/Update",
 				desc = "Run the installation process.",
 				func = function() E:GetModule("PluginInstaller"):Queue(InstallerData); E:ToggleConfig(); end,
+			},
+						},
+			spacer3 = {
+				order = 10,
+				type = "description",
+				name = "",
+			},
+			nameplate_threat = {
+				order = 12,
+				type = "toggle",
+				name = "Treat Treants as tanks",
+				desc = "Treants will also be treated as tanks if you're using the \"tanked\" color NamePlate option.",
+				get = function(info) return E.db[MyPluginName].treantsThreat end,
+				set = function(info, value) E.db[MyPluginName].treantsThreat = value end,
 			},
 		},
 	}
