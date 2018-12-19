@@ -916,7 +916,7 @@ local InstallerData = {
 					PluginInstallFrame.Desc3:SetText(PluginInstallFrame.Desc2:GetText().." |cffff0000and|r |cff1784d1AddonSkins|r")
 				end
 			else
-				PluginInstallFrame.SubTitle:SetFormattedText("|cff00ff00Looks like you've downloaded and update for|r |cffc41f3b%s|r!", MyPluginName)
+				PluginInstallFrame.SubTitle:SetFormattedText("|cff00ff00Looks like you've downloaded an update for|r |cffc41f3b%s|r!", MyPluginName)
 				PluginInstallFrame.Desc1:SetText("Please go through the installer again to update parts of the UI you'd like updated.\n\n\nAny changes that you've made from the default RedtuzkUI profile will be removed.")
 				PluginInstallFrame.Option1:Show()
 				PluginInstallFrame.Option1:SetScript("OnClick", InstallComplete)
