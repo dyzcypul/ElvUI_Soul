@@ -24,6 +24,7 @@ local MyPluginName = "RedtuzkUI"
 --Create references to ElvUI internals
 local E, L, V, P, G = unpack(ElvUI)
 local UF = E:GetModule("UnitFrames")
+local NP = E:GetModule('NamePlates')
 
 --Create reference to LibElvUIPlugin
 local EP = LibStub("LibElvUIPlugin-1.0")
@@ -417,16 +418,19 @@ local function UpdateAuraIconSettings(self, auras, noCycle)
 end
 hooksecurefunc(UF, "UpdateAuraIconSettings", UpdateAuraIconSettings)
 
-local function Update_ThreatList(table, frame)
+local function TreantsAreTanksToo(table, frame)
 	if E.db[MyPluginName].treantsThreat then
 		if frame.UnitType ~= "ENEMY_NPC" then return end
 		local unit = frame.displayedUnit
 		if (UnitName(unit..'target')=='Treant') then
+			frame.ThreatData['treant'] = frame.ThreatData['treant'] or {}
+			isTanking, status, percent = UnitDetailedThreatSituation(unit..'target', unit)
+			frame.ThreatData['treant'] = {isTanking, status, percent}
 			frame.isBeingTanked = true
 		end
 	end
 end
-hooksecurefunc(NP, "Update_ThreatList", Update_ThreatList)
+hooksecurefunc(NP, "Update_ThreatList", TreantsAreTanksToo)
 
 local function SetupLayout(layout)
 	CreateCustomTexts()
@@ -1205,7 +1209,6 @@ local function InsertOptions()
 				desc = "Run the installation process.",
 				func = function() E:GetModule("PluginInstaller"):Queue(InstallerData); E:ToggleConfig(); end,
 			},
-						},
 			spacer3 = {
 				order = 10,
 				type = "description",
