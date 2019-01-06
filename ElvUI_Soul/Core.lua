@@ -19,7 +19,7 @@ local StopMusic = StopMusic
 -- GLOBALS: PluginInstallStepComplete, PluginInstallFrame
 
 --Change this line and use a unique name for your plugin.
-local MyPluginName = "RedtuzkUI"
+local MyPluginName = "SoulUI"
 
 --Create references to ElvUI internals
 local E, L, V, P, G = unpack(ElvUI)
@@ -47,7 +47,7 @@ local function NewProfile(new)
 		hideOnEscape = 1,
 		timeout = 0,
 		OnShow = function(self, data)
-		  self.editBox:SetText("RedtuzkUI"); --default text in the editbox
+          self.editBox:SetText("SoulUI"); --default text in the editbox
 		end,
 		OnAccept = function(self, data, data2)
 		  local text = self.editBox:GetText()
@@ -147,13 +147,13 @@ local function CreatingMissingSettings()
 	E.db["sle"]["unitframes"]["unit"]["player"] = E.db["sle"]["unitframes"]["unit"]["player"] or {}
 	E.db["sle"]["unitframes"]["unit"]["player"]["rested"] = E.db["sle"]["unitframes"]["unit"]["player"]["rested"] or {}
 	E.db["sle"]["unitframes"]["unit"]["player"]["combatico"] = E.db["sle"]["unitframes"]["unit"]["player"]["combatico"] or {}
-	E.db["raidcooldown"] = E.db["raidcooldown"] or {}
-	E.db["raidcooldown"]["cooldown"] = E.db["raidcooldown"]["cooldown"] or {}
+	-- E.db["raidcooldown"] = E.db["raidcooldown"] or {}
+	-- E.db["raidcooldown"]["cooldown"] = E.db["raidcooldown"]["cooldown"] or {}
 	E.db["unitframe"]["units"]["targettarget"]["buffs"]["useWhitelist"] = E.db["unitframe"]["units"]["targettarget"]["buffs"]["useWhitelist"] or {}
 	E.db["unitframe"]["units"]["party"]["GPSArrow"] = E.db["unitframe"]["units"]["party"]["GPSArrow"] or {}
 	E.db["unitframe"]["units"]["raid40"]["GPSArrow"] = E.db["unitframe"]["units"]["raid40"]["GPSArrow"] or {}
 	E.db["unitframe"]["units"]["target"]["combobar"] = E.db["unitframe"]["units"]["target"]["combobar"] or {}
-		E.db["CustomTweaks"] = E.db["CustomTweaks"] or {}
+	E.db["CustomTweaks"] = E.db["CustomTweaks"] or {}
 	E.db["CustomTweaks"]["PowerBarTexture"] = E.db["CustomTweaks"]["PowerBarTexture"] or {}
 	E.db["CustomTweaks"]["AuraIconSpacing"] = E.db["CustomTweaks"]["AuraIconSpacing"] or {}
 	E.db["CustomTweaks"]["CastbarText"] = E.db["CustomTweaks"]["CastbarText"] or {
@@ -199,8 +199,8 @@ local function CreatingMissingSettings()
 	E.db["nameplates"]["filters"]["SCK"] = E.db["nameplates"]["filters"]["SCK"]or {
 		["triggers"] = {},
 	}
-	E.db["ESC"] = E.db["ESC"] or {}
-	E.db["ESC"]["mmSScolor"] = E.db["ESC"]["mmSScolor"] or {}
+	-- E.db["ESC"] = E.db["ESC"] or {}
+	-- E.db["ESC"]["mmSScolor"] = E.db["ESC"]["mmSScolor"] or {}
 	E.db["auras"]["consolidatedBuffs"] = E.db["auras"]["consolidatedBuffs"] or {}
 	E.db["nameplates"]["cooldown"]["fonts"] = E.db["nameplates"]["cooldown"]["fonts"]or {}
 		E.db["nameplates"]["filters"]["MotC"] = E.db["nameplates"]["filters"]["MotC"] or {
@@ -436,7 +436,7 @@ local function SetupLayout(layout)
 	CreateCustomTexts()
 	CreatingMissingSettings()
 	EnableCustomTweaks()
-		local RUIver = E.db[MyPluginName].install_version
+	local RUIver = E.db[MyPluginName].install_version
 	local RUIABlayout = E.db[MyPluginName].ABlayout
 	local RUITargetAuras = E.db[MyPluginName].TargetAuras
 	local RUIPartyFrameStyle = E.db[MyPluginName].PartyFrameStyle
@@ -446,15 +446,15 @@ local function SetupLayout(layout)
 	E.db[MyPluginName].TargetAuras = RUITargetAuras
 	E.db[MyPluginName].ABlayout = RUIABlayout
 	E.db[MyPluginName].layout = layout
-	if layout == "healer" then
-		E.db["actionbar"]["bar2"]["enabled"] = false
-	elseif layout == "dps" then
-		E.db["actionbar"]["bar3"]["buttonsPerRow"] = 6
-		E.db["actionbar"]["bar3"]["mouseover"] = false
-		E.db["unitframe"]["units"]["raid40"]["roleIcon"]["damager"] = true
-		E.db["unitframe"]["units"]["raid"]["roleIcon"]["damager"] = true
-		E.db["unitframe"]["units"]["party"]["roleIcon"]["damager"] = true
-	end
+	if layout == "desktop" then
+		-- E.db["actionbar"]["bar2"]["enabled"] = false
+	elseif layout == "laptop" then
+		-- E.db["unitframe"]["units"]["raid40"]["roleIcon"]["damager"] = true
+		-- E.db["unitframe"]["units"]["raid"]["roleIcon"]["damager"] = true
+		-- E.db["unitframe"]["units"]["party"]["roleIcon"]["damager"] = true
+    end
+    E.db["actionbar"]["bar3"]["buttonsPerRow"] = 6
+	E.db["actionbar"]["bar3"]["mouseover"] = false
 	E:UpdateAll(true)
 	PluginInstallStepComplete.message = "Layout Set"
 	PluginInstallStepComplete:Show()
@@ -531,7 +531,7 @@ local function SetupLayoutBar(layout)
     E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"]["enable"] = true
 	E.db["unitframe"]["units"]["player"]["power"]["enable"] = true
 
-	E.db["chat"]["keywords"] = "ElvUI"
+    E.db["chat"]["keywords"] = "%MYNAME%"
 	--Update ElvUI
 	E:UpdateAll(true)
 	--Show message about layout being set
@@ -760,12 +760,12 @@ local function PartyFrameSetup(style)
 end
 
 local function SetupDetails()
-	if E.db[MyPluginName].layout == "healer" then
+	if E.db[MyPluginName].layout == "desktop" then
 		RUI:DetailsSettings(E.db[MyPluginName].layout)
-		_detalhes:ApplyProfile("RedtuzkUI_Healer", false, false)
+		_detalhes:ApplyProfile("SoulUI_Desktop", false, false)
 	else
 		RUI:DetailsSettings(E.db[MyPluginName].layout)
-		_detalhes:ApplyProfile("RedtuzkUI", false, false)
+		_detalhes:ApplyProfile("SoulUI_Laptop", false, false)
 	end
 	PluginInstallStepComplete.message = "Details Profile Applied"
 	PluginInstallStepComplete:Show()
@@ -780,7 +780,7 @@ local function WASetup(aura)
 end
 
 local function SetupBigWigs()
-	if E.db[MyPluginName].layout == "healer" then
+	if E.db[MyPluginName].layout == "desktop" then
 		if(BigWigs3DB) then
 			--If it does add RedtuzkUI to the profiles
 	        RUI:BigWigsSettings(E.db[MyPluginName].layout)
@@ -791,7 +791,7 @@ local function SetupBigWigs()
 		end
 		--Apply the RedtuzkUI profile
 		local BigWigs = LibStub("AceDB-3.0"):New(BigWigs3DB)
-		BigWigs:SetProfile("RedtuzkUI_Healer")
+		BigWigs:SetProfile("SoulUI_Desktop")
 	else
 		--Check see if the BigWigs database exists
 		if(BigWigs3DB) then
@@ -804,19 +804,19 @@ local function SetupBigWigs()
 		end
 		--Apply the RedtuzkUI profile
 		local BigWigs = LibStub("AceDB-3.0"):New(BigWigs3DB)
-		BigWigs:SetProfile("RedtuzkUI")
+		BigWigs:SetProfile("SoulUI_Laptop")
 	end
 	PluginInstallStepComplete.message = "BigWigs Profile Applied"
 	PluginInstallStepComplete:Show()
 end
 
 local function SetupDBM()
-	if E.db[MyPluginName].layout == "healer" then
+	if E.db[MyPluginName].layout == "desktop" then
 		RUI:DBMSettings(E.db[MyPluginName].layout)
-		DBM:ApplyProfile('RedtuzkUI_Healer')
+		DBM:ApplyProfile('SoulUI_Desktop')
 	else
 		RUI:DBMSettings(E.db[MyPluginName].ABlayout)
-		DBM:ApplyProfile('RedtuzkUI')
+		DBM:ApplyProfile('SoulUI_Laptop')
 	end
 	PluginInstallStepComplete.message = "DBM Profile Applied"
 	PluginInstallStepComplete:Show()
@@ -894,7 +894,7 @@ local InstallerData = {
 		[1] = function()
 			if E.db[MyPluginName].install_version == nil and E["global"][MyPluginName].profile_name then
 				PluginInstallFrame.SubTitle:SetFormattedText("Welcome to the installation for %s.", MyPluginName)
-				PluginInstallFrame.Desc1:SetText("It looks like you already have a RedtuzkUI profile installed called |cffc41f3b"..E["global"][MyPluginName].profile_name.."|r. Click \"Use Original\" to use the same profile on this character")
+				PluginInstallFrame.Desc1:SetText("It looks like you already have a SoulUI profile installed called |cffc41f3b"..E["global"][MyPluginName].profile_name.."|r. Click \"Use Original\" to use the same profile on this character")
 				PluginInstallFrame.Option1:Show()
 				PluginInstallFrame.Option1:SetScript("OnClick", LoadRUIProfile)
 				PluginInstallFrame.Option1:SetText("Use Original")
@@ -921,7 +921,7 @@ local InstallerData = {
 				end
 			else
 				PluginInstallFrame.SubTitle:SetFormattedText("|cff00ff00Looks like you've downloaded an update for|r |cffc41f3b%s|r!", MyPluginName)
-				PluginInstallFrame.Desc1:SetText("Please go through the installer again to update parts of the UI you'd like updated.\n\n\nAny changes that you've made from the default RedtuzkUI profile will be removed.")
+				PluginInstallFrame.Desc1:SetText("Please go through the installer again to update parts of the UI you'd like updated.\n\n\nAny changes that you've made from the default SoulUI profile will be removed.")
 				PluginInstallFrame.Option1:Show()
 				PluginInstallFrame.Option1:SetScript("OnClick", InstallComplete)
 				PluginInstallFrame.Option1:SetText("Skip Process")
@@ -936,24 +936,24 @@ local InstallerData = {
 		[2] = function()
 			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
 				PluginInstallFrame.SubTitle:SetText("Profiles")
-				PluginInstallFrame.Desc1:SetText("You can either create a new profile to install RedtuzkUI onto or you can apply RedtuzkUI settings to your current profile")
+				PluginInstallFrame.Desc1:SetText("You can either create a new profile to install SoulUI onto or you can apply SoulUI settings to your current profile")
 				PluginInstallFrame.Desc3:SetText("You're currently active ElvUI profile is: |cffc41f3b"..ElvUI[1].data:GetCurrentProfile().."|r")
 				PluginInstallFrame.Option1:Show()
 				PluginInstallFrame.Option1:SetScript("OnClick", function() NewProfile(false) end)
 				PluginInstallFrame.Option1:SetText("Use Current")
 				PluginInstallFrame.Option2:Show()
-				PluginInstallFrame.Option2:SetScript("OnClick", function() NewProfile(true, "RedtuzkUI") end)
+				PluginInstallFrame.Option2:SetScript("OnClick", function() NewProfile(true, "SoulUI") end)
 				PluginInstallFrame.Option2:SetText("Create New")
 			else
 				PluginInstallFrame.SubTitle:SetText("Profiles")
-				PluginInstallFrame.Desc1:SetText("Press \"Update Current\" to update your current profile with the new RedtuzkUI changes.")
+				PluginInstallFrame.Desc1:SetText("Press \"Update Current\" to update your current profile with the new SoulUI changes.")
 				PluginInstallFrame.Desc2:SetText("If you'd like to check out what the changes are, without overwriting your current settings, you can press \"Create New\"")
 				PluginInstallFrame.Desc3:SetText("You're currently active ElvUI profile is: |cffc41f3b"..ElvUI[1].data:GetCurrentProfile().."|r")
 				PluginInstallFrame.Option1:Show()
 				PluginInstallFrame.Option1:SetScript("OnClick", function() NewProfile(false) end)
 				PluginInstallFrame.Option1:SetText("Update Current")
 				PluginInstallFrame.Option2:Show()
-				PluginInstallFrame.Option2:SetScript("OnClick", function() NewProfile(true, "RedtuzkUI-Update") end)
+				PluginInstallFrame.Option2:SetScript("OnClick", function() NewProfile(true, "SoulUI-Update") end)
 				PluginInstallFrame.Option2:SetText("Create New")
 			end
 		end,
@@ -962,17 +962,17 @@ local InstallerData = {
 				DummySLE()
 			end
 			PluginInstallFrame.SubTitle:SetText("Layout")
-			if E.db[MyPluginName].layout ~= "dps" or E.db[MyPluginName].layout ~= "healer" then
+			if E.db[MyPluginName].layout ~= "laptop" or E.db[MyPluginName].layout ~= "desktop" then
 				E.db[MyPluginName].layout = nil
 			end
 			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version or not E.db[MyPluginName].layout then
-				PluginInstallFrame.Desc1:SetText("You can select either the \"DPS/Tank\" layout or the \"Healer\" layout.")
+				PluginInstallFrame.Desc1:SetText("You can select either the \"Laptop\" layout or the \"Desktop\" layout.")
 				PluginInstallFrame.Option1:Show()
-				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayout("dps") end)
-				PluginInstallFrame.Option1:SetText("DPS/Tank")
+				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayout("laptop") end)
+				PluginInstallFrame.Option1:SetText("Laptop")
 				PluginInstallFrame.Option2:Show()
-				PluginInstallFrame.Option2:SetScript("OnClick", function() SetupLayout("healer") end)
-				PluginInstallFrame.Option2:SetText("Healer")
+				PluginInstallFrame.Option2:SetScript("OnClick", function() SetupLayout("desktop") end)
+				PluginInstallFrame.Option2:SetText("Desktop")
 			else
 				PluginInstallFrame.Desc1:SetText("Press \"Update Layout\" to update your ElvUI profile.")
 				PluginInstallFrame.Option1:Show()
@@ -982,9 +982,10 @@ local InstallerData = {
 		end,
 		[4] = function()
 		    PluginInstallFrame.SubTitle:SetText("Action Bar Layout")
-            if E.db[MyPluginName].layout == "healer" then
-				PluginInstallFrame.Desc1:SetText("Action bar layouts are only avaiable for  DPS and Tank roles.")
-			elseif E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version or not E.db[MyPluginName].ABlayout then
+            -- if E.db[MyPluginName].layout == "healer" then
+			-- 	PluginInstallFrame.Desc1:SetText("Action bar layouts are only avaiable for  DPS and Tank roles.")
+            -- else
+            if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version or not E.db[MyPluginName].ABlayout then
 				PluginInstallFrame.Desc1:SetText("These are the action bar layouts that are available. Please click a button below to apply the layout of your choosing.")
 				PluginInstallFrame.Option1:Show()
 				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayoutBar("5x2") end)
@@ -1023,26 +1024,26 @@ local InstallerData = {
 				PluginInstallFrame.Option1:SetText("Update Buffs/Debuffs")
 			end
 		end,
+		-- [6] = function()
+		-- 	PluginInstallFrame.SubTitle:SetText("Party Frame Options")
+		-- 	if E.db[MyPluginName].layout == "healer" then
+		-- 		PluginInstallFrame.Desc1:SetText("Party frame settings are only avaiable for  DPS and Tank roles.")
+		-- 	elseif E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version or not E.db[MyPluginName].PartyFrameStyle then
+		-- 		PluginInstallFrame.Desc1:SetText("Here you can select some options for the party frame style. \n\nThe \"Standard\" style includes more minimal party frames that more closely resembled the style of the raid frames. The \"Mythic+\" style enlarges the frames and moves them closer to the certer and also includes more details on the party frames such as: buff and debuff tracking and a power bar dispaly.\n\nWe recommend the Mythic+ frames.")
+		-- 		PluginInstallFrame.Option1:Show()
+		-- 		PluginInstallFrame.Option1:SetScript("OnClick", function() PartyFrameSetup("Standard") end)
+		-- 		PluginInstallFrame.Option1:SetText("Standard")
+		-- 		PluginInstallFrame.Option2:Show()
+		-- 		PluginInstallFrame.Option2:SetScript("OnClick", function() PartyFrameSetup("m+") end)
+		-- 		PluginInstallFrame.Option2:SetText("Mythic+")
+		-- 	else
+		-- 		PluginInstallFrame.Desc1:SetText("Press \"Update Party Frame\" to update your party frame settings.")
+		-- 		PluginInstallFrame.Option1:Show()
+		-- 		PluginInstallFrame.Option1:SetScript("OnClick", function() TargetFrameSetup(E.db[MyPluginName].PartyFrameStyle) end)
+		-- 		PluginInstallFrame.Option1:SetText("Update Party Frame")
+		-- 	end
+		-- end,
 		[6] = function()
-			PluginInstallFrame.SubTitle:SetText("Party Frame Options")
-			if E.db[MyPluginName].layout == "healer" then
-				PluginInstallFrame.Desc1:SetText("Party frame settings are only avaiable for  DPS and Tank roles.")
-			elseif E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version or not E.db[MyPluginName].PartyFrameStyle then
-				PluginInstallFrame.Desc1:SetText("Here you can select some options for the party frame style. \n\nThe \"Standard\" style includes more minimal party frames that more closely resembled the style of the raid frames. The \"Mythic+\" style enlarges the frames and moves them closer to the certer and also includes more details on the party frames such as: buff and debuff tracking and a power bar dispaly.\n\nWe recommend the Mythic+ frames.")
-				PluginInstallFrame.Option1:Show()
-				PluginInstallFrame.Option1:SetScript("OnClick", function() PartyFrameSetup("Standard") end)
-				PluginInstallFrame.Option1:SetText("Standard")
-				PluginInstallFrame.Option2:Show()
-				PluginInstallFrame.Option2:SetScript("OnClick", function() PartyFrameSetup("m+") end)
-				PluginInstallFrame.Option2:SetText("Mythic+")
-			else
-				PluginInstallFrame.Desc1:SetText("Press \"Update Party Frame\" to update your party frame settings.")
-				PluginInstallFrame.Option1:Show()
-				PluginInstallFrame.Option1:SetScript("OnClick", function() TargetFrameSetup(E.db[MyPluginName].PartyFrameStyle) end)
-				PluginInstallFrame.Option1:SetText("Update Party Frame")
-			end
-		end,
-		[7] = function()
 			PluginInstallFrame.SubTitle:SetText("Weak Auras")
 			if IsAddOnLoaded("WeakAuras") then --Make sure the User has Weak Auras installed.
 				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
@@ -1057,20 +1058,20 @@ local InstallerData = {
 				end
 			else
 				PluginInstallFrame.Desc1:SetText("|cffB33A3AOops, it looks like you don't have Weak Auras installed!|r")
-				PluginInstallFrame.Desc2:SetText("Weak Auras is recommended for use with RedtuzkUI")
+				PluginInstallFrame.Desc2:SetText("Weak Auras is recommended for use with SoulUI")
 			end
 		end,
-		[8] = function()
+		[7] = function()
 			if IsAddOnLoaded("BigWigs") then --Make sure the User has BigWigs installed.
 				PluginInstallFrame.SubTitle:SetText("BigWigs")
 				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
-					PluginInstallFrame.Desc1:SetText("Import Redtuzk's BigWigs profile. A new profile called RedtuzkUI will be created. If you already have the Redtuzk profile it will be updated.")
+					PluginInstallFrame.Desc1:SetText("Import Redtuzk's BigWigs profile. A new profile called SoulUI will be created. If you already have the Redtuzk profile it will be updated.")
 					PluginInstallFrame.Desc2:SetText("Requires a UI reload for profile switch to take effect")
 					PluginInstallFrame.Option1:Show()
 					PluginInstallFrame.Option1:SetScript("OnClick", function() SetupBigWigs() end)
 					PluginInstallFrame.Option1:SetText("Setup BigWigs")
 				else
-					PluginInstallFrame.Desc1:SetText("Click \"Update BigWigs\" to update the RedtuzkUI BigWigs profile.\n\nCustom Settings for bosses will |cff07D400NOT|r be altered.")
+					PluginInstallFrame.Desc1:SetText("Click \"Update BigWigs\" to update the SoulUI BigWigs profile.\n\nCustom Settings for bosses will |cff07D400NOT|r be altered.")
 					PluginInstallFrame.Desc2:SetText("Requires a UI reload for profile changes to take effect")
 					PluginInstallFrame.Option1:Show()
 					PluginInstallFrame.Option1:SetScript("OnClick", function() SetupBigWigs() end)
@@ -1079,12 +1080,12 @@ local InstallerData = {
 			elseif IsAddOnLoaded("DBM-Core") then
 				PluginInstallFrame.SubTitle:SetText("Deadly Boss Mods")
 				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
-					PluginInstallFrame.Desc1:SetText("Import Redtuzk's DBM profile. A new profile called RedtuzkUI will be created. If you already have the Redtuzk profile it will be updated.")
+					PluginInstallFrame.Desc1:SetText("Import Redtuzk's DBM profile. A new profile called SoulUI will be created. If you already have the Redtuzk profile it will be updated.")
 					PluginInstallFrame.Option1:Show()
 					PluginInstallFrame.Option1:SetScript("OnClick", function() SetupDBM() end)
 					PluginInstallFrame.Option1:SetText("Setup DBM")
 				else
-					PluginInstallFrame.Desc1:SetText("Click \"Update DBM\" to update the RedtuzkUI BigWigs profile.\n\nCustom Settings for bosses will |cff07D400NOT|r be altered.")
+					PluginInstallFrame.Desc1:SetText("Click \"Update DBM\" to update the SoulUI BigWigs profile.\n\nCustom Settings for bosses will |cff07D400NOT|r be altered.")
 					PluginInstallFrame.Option1:Show()
 					PluginInstallFrame.Option1:SetScript("OnClick", function() SetupDBM() end)
 					PluginInstallFrame.Option1:SetText("Update DBM")
@@ -1092,29 +1093,29 @@ local InstallerData = {
 			else
 				PluginInstallFrame.SubTitle:SetText("Boss Mod")
 				PluginInstallFrame.Desc1:SetText("|cffB33A3AOops, it looks like you don't have BigWigs installed!|r")
-				PluginInstallFrame.Desc2:SetText("BigWigs is recommended for use with RedtuzkUI")
+				PluginInstallFrame.Desc2:SetText("BigWigs is recommended for use with SoulUI")
 			end
 		end,
-		[9] = function()
+		[8] = function()
 			PluginInstallFrame.SubTitle:SetText("Details")
 			if IsAddOnLoaded("Details") then --Make sure the User has Details installed.
 				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
-					PluginInstallFrame.Desc1:SetText("Import Redtuzk's Details profile. A new profile called RedtuzkUI will be created. If you already have the Redtuzk profile it will be updated.")
+					PluginInstallFrame.Desc1:SetText("Import Redtuzk's Details profile. A new profile called SoulUI will be created. If you already have the Redtuzk profile it will be updated.")
 					PluginInstallFrame.Option1:Show()
 					PluginInstallFrame.Option1:SetScript("OnClick", function() SetupDetails() end)
 					PluginInstallFrame.Option1:SetText("Setup Details")
 				else
-					PluginInstallFrame.Desc1:SetText("Click \"Update Details\" to update the RedtuzkUI Details profile.")
+					PluginInstallFrame.Desc1:SetText("Click \"Update Details\" to update the SoulUI Details profile.")
 					PluginInstallFrame.Option1:Show()
 					PluginInstallFrame.Option1:SetScript("OnClick", function() SetupDetails() end)
 					PluginInstallFrame.Option1:SetText("Update Details")
 				end
 			else
 				PluginInstallFrame.Desc1:SetText("|cffB33A3AOops, it looks like you don't have Details installed!|r")
-				PluginInstallFrame.Desc2:SetText("Details is recommended for use with RedtuzkUI")
+				PluginInstallFrame.Desc2:SetText("Details is recommended for use with SoulUI")
 			end
 		end,
-		[10] = function()
+		[9] = function()
 			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
 				PluginInstallFrame.SubTitle:SetText("Installation Complete")
 				PluginInstallFrame.Desc1:SetText("You have completed the installation process.")
@@ -1138,11 +1139,11 @@ local InstallerData = {
 		[3] = "Layout",
 		[4] = "Action Bar Layouts",
 		[5] = "Target Frame Options",
-		[6] = "Party Frame Options",
-		[7] = "Weak Auras",
-		[8] = "Boss Mod Setup",
-		[9] = "Details Setup",
-		[10] = "Installation Complete",
+		-- [6] = "Party Frame Options",
+		[6] = "Weak Auras",
+		[7] = "Boss Mod Setup",
+		[8] = "Details Setup",
+		[9] = "Installation Complete",
 	},
 	StepTitlesColor = {1, 1, 1},
 	StepTitlesColorSelected = {0.769, 0.122, 0.231},
