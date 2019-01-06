@@ -1,0 +1,19 @@
+## Interface: 80100
+## Author: Redtuzk
+## Version: 1.5.3
+## Title: |cff1784d1ElvUI|r |cffc41f3bRedtuzk|r
+## Notes: Contains profile layouts designed by Redtuzk
+## RequiredDeps: ElvUI, ElvUI_SLE
+## DefaultState: enabled
+## X-Tukui-ProjectID: 107
+## X-Tukui-ProjectFolders: ElvUI_Redtuzk
+
+media\load_media.xml
+Core.lua
+ElvUI_Settings.lua
+Details_Settings.lua
+BigWigs_Settings.lua
+DBM_Settings.lua
+RedtuzkAuras.lua
+media\FPS.lua
+media\Ping.lua
