@@ -20,11 +20,13 @@ local StopMusic = StopMusic
 
 --Change this line and use a unique name for your plugin.
 local MyPluginName = "SoulUI"
+local CreatedFrames = 1;
 
 --Create references to ElvUI internals
 local E, L, V, P, G = unpack(ElvUI)
 local UF = E:GetModule("UnitFrames")
 local NP = E:GetModule('NamePlates')
+local CH = E:GetModule('Chat')
 
 --Create reference to LibElvUIPlugin
 local EP = LibStub("LibElvUIPlugin-1.0")
@@ -481,6 +483,113 @@ local function SetupLayout(layout)
 	E.db["unitframe"]["units"]["arena"]["debuffs"]["clickThrough"] = false
 end
 
+local function PositionChat(self, override)
+	if ((InCombatLockdown() and not override and self.initialMove) or (IsMouseButtonDown("LeftButton") and not override)) then return end
+	if not RightChatPanel or not LeftChatPanel then return; end
+	RightChatPanel:SetSize(E.db.chat.separateSizes and E.db.chat.panelWidthRight or E.db.chat.panelWidth, E.db.chat.separateSizes and E.db.chat.panelHeightRight or E.db.chat.panelHeight)
+	LeftChatPanel:SetSize(E.db.chat.panelWidth, E.db.chat.panelHeight)
+
+	self.RightChatWindowID = 1
+
+	if not self.db.lockPositions or E.private.chat.enable ~= true then return end
+
+	local chat, chatbg, tab, id, isDocked
+	local fadeUndockedTabs = E.db.chat.fadeUndockedTabs
+	local fadeTabsNoBackdrop = E.db.chat.fadeTabsNoBackdrop
+
+	for i=1, CreatedFrames do
+		local BASE_OFFSET = 57 + E.Spacing*3
+
+		chat = _G[format("ChatFrame%d", i)]
+		chatbg = format("ChatFrame%dBackground", i)
+		id = chat:GetID()
+		tab = _G[format("ChatFrame%sTab", i)]
+		isDocked = chat.isDocked
+		tab.isDocked = chat.isDocked
+		tab.owner = chat
+
+		if id > NUM_CHAT_WINDOWS then
+			if select(2, tab:GetPoint()):GetName() ~= chatbg then
+				isDocked = true
+			else
+				isDocked = false
+			end
+		end
+
+		if chat:IsShown() and not (id > NUM_CHAT_WINDOWS) and id == self.RightChatWindowID then
+			chat:ClearAllPoints()
+			if E.db.datatexts.rightChatPanel then
+				chat:Point("BOTTOMLEFT", RightChatDataPanel, "TOPLEFT", 1, 3)
+			else
+				BASE_OFFSET = BASE_OFFSET - 24
+				chat:Point("BOTTOMLEFT", RightChatDataPanel, "BOTTOMLEFT", 1, 1)
+			end
+			if id ~= 2 then
+				chat:SetSize((E.db.chat.separateSizes and E.db.chat.panelWidthRight or E.db.chat.panelWidth) - 11, (E.db.chat.separateSizes and E.db.chat.panelHeightRight or E.db.chat.panelHeight) - BASE_OFFSET)
+			else
+				chat:SetSize(E.db.chat.panelWidth - 11, (E.db.chat.panelHeight - BASE_OFFSET) - CombatLogQuickButtonFrame_Custom:GetHeight())
+			end
+
+			--Pass a 2nd argument which prevents an infinite loop in our ON_FCF_SavePositionAndDimensions function
+			if chat:GetLeft() then
+				FCF_SavePositionAndDimensions(chat, true)
+			end
+
+			tab:SetParent(RightChatPanel)
+			chat:SetParent(RightChatPanel)
+
+			if chat:IsMovable() then
+				chat:SetUserPlaced(true)
+			end
+			if E.db.chat.panelBackdrop == 'HIDEBOTH' or E.db.chat.panelBackdrop == 'LEFT' then
+				CH:SetupChatTabs(tab, fadeTabsNoBackdrop and true or false)
+			else
+				CH:SetupChatTabs(tab, false)
+			end
+		elseif not isDocked and chat:IsShown() then
+			tab:SetParent(UIParent)
+			chat:SetParent(UIParent)
+			CH:SetupChatTabs(tab, fadeUndockedTabs and true or false)
+		else
+			if id ~= 2 and not (id > NUM_CHAT_WINDOWS) then
+				chat:ClearAllPoints()
+				if E.db.datatexts.leftChatPanel then
+					chat:Point("BOTTOMLEFT", LeftChatToggleButton, "TOPLEFT", 1, 3)
+				else
+					BASE_OFFSET = BASE_OFFSET - 24
+					chat:Point("BOTTOMLEFT", LeftChatToggleButton, "BOTTOMLEFT", 1, 1)
+				end
+				chat:SetSize(E.db.chat.panelWidth - 11, (E.db.chat.panelHeight - BASE_OFFSET))
+
+				--Pass a 2nd argument which prevents an infinite loop in our ON_FCF_SavePositionAndDimensions function
+				if chat:GetLeft() then
+					FCF_SavePositionAndDimensions(chat, true)
+				end
+			end
+			chat:SetParent(LeftChatPanel)
+			if i > 2 then
+				tab:SetParent(GeneralDockManagerScrollFrameChild)
+			else
+				tab:SetParent(GeneralDockManager)
+			end
+			if chat:IsMovable() then
+				chat:SetUserPlaced(true)
+			end
+
+			if E.db.chat.panelBackdrop == 'HIDEBOTH' or E.db.chat.panelBackdrop == 'RIGHT' then
+				CH:SetupChatTabs(tab, fadeTabsNoBackdrop and true or false)
+			else
+				CH:SetupChatTabs(tab, false)
+			end
+		end
+	end
+
+	E.Layout:RepositionChatDataPanels() --Bugfix: #686
+
+	self.initialMove = true;
+end
+hooksecurefunc(CH, "PositionChat", PositionChat)
+
 --This function will hold your layout settings
 local function SetupLayoutBar(layout)
 	E.db[MyPluginName].ABlayout = layout
@@ -512,20 +621,20 @@ local function SetupLayoutBar(layout)
 		E.db["actionbar"]["bar2"]["buttonsize"] = 36
 		E.db["actionbar"]["bar1"]["buttons"] = 8
 		E.db["actionbar"]["bar1"]["buttonsize"] = 36
-		E.db["movers"]["ElvAB_1"] = "BOTTOM,ElvUIParent,BOTTOM,0,293"
-		E.db["movers"]["ElvAB_2"] = "BOTTOM,ElvUIParent,BOTTOM,0,256"
+		E.db["movers"]["ElvAB_1"] = "BOTTOM,ElvUIParent,BOTTOM,0,280"
+        E.db["movers"]["ElvAB_2"] = "BOTTOM,ElvUIParent,BOTTOM,0,241"
 		E.db["unitframe"]["units"]["player"]["castbar"]["width"] = 295
-		E.db["movers"]["ElvUF_PlayerCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,235"
+		E.db["movers"]["ElvUF_PlayerCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,215"
 		E.db["unitframe"]["units"]["player"]["power"]["detachedWidth"] = 295
 		E.db["unitframe"]["units"]["player"]["classbar"]["detachedWidth"] = 295
-		E.db["movers"]["ElvUF_PlayerMover"] = "BOTTOM,ElvUIParent,BOTTOM,-300,330"
-		E.db["movers"]["ZoneAbility"] = "BOTTOM,ElvUIParent,BOTTOM,-300,193"
-		E.db["movers"]["BossButton"] = "BOTTOM,ElvUIParent,BOTTOM,-300,193"
-		E.db["movers"]["ElvUF_PetMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,474,330"
-		E.db["movers"]["PetAB"] = "BOTTOM,ElvUIParent,BOTTOM,-300,306"
-		E.db["movers"]["ElvUF_TargetMover"] = "BOTTOM,ElvUIParent,BOTTOM,300,330"
-		E.db["movers"]["ElvUF_TargetTargetMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-474,330"
-		E.db["movers"]["AltPowerBarMover"] = "BOTTOM,ElvUIParent,BOTTOM,-300,141"
+		E.db["movers"]["ElvUF_PlayerMover"] = "BOTTOM,ElvUIParent,BOTTOM,-270,330"
+		E.db["movers"]["ZoneAbility"] = "BOTTOM,ElvUIParent,BOTTOM,-268,193"
+		E.db["movers"]["BossButton"] = "BOTTOM,ElvUIParent,BOTTOM,-268,193"
+		E.db["movers"]["ElvUF_PetMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,504,330"
+		E.db["movers"]["PetAB"] = "BOTTOM,ElvUIParent,BOTTOM,-270,306"
+		E.db["movers"]["ElvUF_TargetMover"] = "BOTTOM,ElvUIParent,BOTTOM,270,330"
+		E.db["movers"]["ElvUF_TargetTargetMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-504,330"
+		E.db["movers"]["AltPowerBarMover"] = "BOTTOM,ElvUIParent,BOTTOM,-268,141"
 	end
 
     E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"]["enable"] = true
@@ -759,6 +868,45 @@ local function PartyFrameSetup(style)
 	PluginInstallStepComplete:Show()
 end
 
+local function SetupCVars()
+	SetCVar("statusTextDisplay", "BOTH")
+	SetCVar("ShowClassColorInNameplate", 1)
+	SetCVar("screenshotQuality", 10)
+	SetCVar("chatMouseScroll", 1)
+	SetCVar("chatStyle", "classic")
+	SetCVar("WholeChatWindowClickable", 0)
+	SetCVar("showTutorials", 0)
+	SetCVar("UberTooltips", 1)
+	SetCVar("threatWarning", 3)
+	SetCVar('alwaysShowActionBars', 1)
+	SetCVar('lockActionBars', 1)
+	SetCVar('SpamFilter', 0)
+	SetCVar("nameplateShowSelf", 0)
+	SetCVar("cameraDistanceMaxZoomFactor", 2.6)
+	SetCVar("nameplateShowFriendlyNPCs", 1)
+	SetCVar("findYourselfAnywhere", 1)
+	SetCVar("findYourselfMode", 1)
+	SetCVar("outline", 3)
+	SetCVar("chatBubblesParty", 0)
+	SetCVar("profanityFilter", 0)
+	SetCVar("autoAcceptQuickJoinRequests", 1)
+	SetCVar("cameraWaterCollision", 1)
+	SetCVar("cameraSmoothStyle", 0)
+	SetCVar("movieSubtitle", 1)
+	SetCVar("maxFPS", 30)
+	SetCVar("useIPv6", 1)
+	SetCVar("MacUseCommandAsControl", 1)
+	SetCVar("MacUseCommandLeftClickAsRightClick", 0)
+	SetCVar("autoLootDefault", 1)
+
+
+	InterfaceOptionsActionBarsPanelPickupActionKeyDropDown:SetValue('SHIFT')
+	InterfaceOptionsActionBarsPanelPickupActionKeyDropDown:RefreshValue()
+
+	PluginInstallStepComplete.message = "CVars Set"
+	PluginInstallStepComplete:Show()
+end
+
 local function SetupDetails()
 	if E.db[MyPluginName].layout == "desktop" then
 		RUI:DetailsSettings(E.db[MyPluginName].layout)
@@ -889,7 +1037,7 @@ end
 local InstallerData = {
 	Title = format("|cffc41f3b%s %s|r", MyPluginName, "Installation"),
 	Name = MyPluginName,
-	tutorialImage = "Interface\\AddOns\\ElvUI_Redtuzk\\Media\\logo.tga", --If you have a logo you want to use, otherwise it uses the one from ElvUI
+	tutorialImage = "Interface\\AddOns\\ElvUI_Soul\\Media\\logo.tga", --If you have a logo you want to use, otherwise it uses the one from ElvUI
 	Pages = {
 		[1] = function()
 			if E.db[MyPluginName].install_version == nil and E["global"][MyPluginName].profile_name then
@@ -958,6 +1106,21 @@ local InstallerData = {
 			end
 		end,
 		[3] = function()
+			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
+				PluginInstallFrame.SubTitle:SetText("CVars")
+				PluginInstallFrame.Desc1:SetText("Setup CVars")
+				PluginInstallFrame.Option1:Show()
+				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupCVars() end)
+				PluginInstallFrame.Option1:SetText("Set CVars")
+			else
+				PluginInstallFrame.SubTitle:SetText("Profiles")
+				PluginInstallFrame.Desc1:SetText("Press \"Update CVars\" to update your current CVars with the new SoulUI changes.")
+				PluginInstallFrame.Option1:Show()
+				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupCVars() end)
+				PluginInstallFrame.Option1:SetText("Update CVars")
+			end
+		end,
+		[4] = function()
 			if  not IsAddOnLoaded("ElvUI_SLE") then
 				DummySLE()
 			end
@@ -980,7 +1143,7 @@ local InstallerData = {
 				PluginInstallFrame.Option1:SetText("Update Layout")
 			end
 		end,
-		[4] = function()
+		[5] = function()
 		    PluginInstallFrame.SubTitle:SetText("Action Bar Layout")
             -- if E.db[MyPluginName].layout == "healer" then
 			-- 	PluginInstallFrame.Desc1:SetText("Action bar layouts are only avaiable for  DPS and Tank roles.")
@@ -1003,7 +1166,7 @@ local InstallerData = {
 				PluginInstallFrame.Option1:SetText("Update Bar Layout")
 			end
 		end,
-		[5] = function()
+		[6] = function()
 			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version or not E.db[MyPluginName].TargetAuras then
 				PluginInstallFrame.SubTitle:SetText("Target Frame Options")
 				PluginInstallFrame.Desc1:SetText("Here you can select some options for how buffs and debuffs will be displayed on your target frame. \n\nIf you select \"Only Buffs\" or \"Only Debuffs\" then the auras will be displayed above the frame, similar to how player debuffs are displayed.\n\nIf you selece \"Show Both\" then debuffs will be displayed above the frame and buffs below.")
@@ -1043,7 +1206,7 @@ local InstallerData = {
 		-- 		PluginInstallFrame.Option1:SetText("Update Party Frame")
 		-- 	end
 		-- end,
-		[6] = function()
+		[7] = function()
 			PluginInstallFrame.SubTitle:SetText("Weak Auras")
 			if IsAddOnLoaded("WeakAuras") then --Make sure the User has Weak Auras installed.
 				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
@@ -1061,7 +1224,7 @@ local InstallerData = {
 				PluginInstallFrame.Desc2:SetText("Weak Auras is recommended for use with SoulUI")
 			end
 		end,
-		[7] = function()
+		[8] = function()
 			if IsAddOnLoaded("BigWigs") then --Make sure the User has BigWigs installed.
 				PluginInstallFrame.SubTitle:SetText("BigWigs")
 				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
@@ -1096,7 +1259,7 @@ local InstallerData = {
 				PluginInstallFrame.Desc2:SetText("BigWigs is recommended for use with SoulUI")
 			end
 		end,
-		[8] = function()
+		[9] = function()
 			PluginInstallFrame.SubTitle:SetText("Details")
 			if IsAddOnLoaded("Details") then --Make sure the User has Details installed.
 				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
@@ -1115,7 +1278,7 @@ local InstallerData = {
 				PluginInstallFrame.Desc2:SetText("Details is recommended for use with SoulUI")
 			end
 		end,
-		[9] = function()
+		[10] = function()
 			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
 				PluginInstallFrame.SubTitle:SetText("Installation Complete")
 				PluginInstallFrame.Desc1:SetText("You have completed the installation process.")
@@ -1136,14 +1299,15 @@ local InstallerData = {
 	StepTitles = {
 		[1] = "Welcome",
 		[2] = "Profile Setup",
-		[3] = "Layout",
-		[4] = "Action Bar Layouts",
-		[5] = "Target Frame Options",
+		[3] = "Setup CVars",
+		[4] = "Layout",
+		[5] = "Action Bar Layouts",
+		[6] = "Target Frame Options",
 		-- [6] = "Party Frame Options",
-		[6] = "Weak Auras",
-		[7] = "Boss Mod Setup",
-		[8] = "Details Setup",
-		[9] = "Installation Complete",
+		[7] = "Weak Auras",
+		[8] = "Boss Mod Setup",
+		[9] = "Details Setup",
+		[10] = "Installation Complete",
 	},
 	StepTitlesColor = {1, 1, 1},
 	StepTitlesColorSelected = {0.769, 0.122, 0.231},
@@ -1178,7 +1342,7 @@ local function InsertOptions()
 				order = 4,
 				type = "description",
 				name = "",
-				image = "Interface\\AddOns\\ElvUI_Redtuzk\\Media\\discord.tga",
+				image = "Interface\\AddOns\\ElvUI_Soul\\Media\\discord.tga",
 				imageWidth = 256,
 				imageHeight = 128,
 				imageCoords = {0,1,0,1},
