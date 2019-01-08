@@ -618,29 +618,28 @@ local function SetupLayoutBar(layout)
 		E.db["unitframe"]["units"]["player"]["classbar"]["detachedWidth"] = 222
 	elseif layout == "8x2" then
 		E.db["actionbar"]["bar2"]["buttons"] = 8
-		E.db["actionbar"]["bar2"]["buttonsize"] = 36
+		E.db["actionbar"]["bar2"]["buttonsize"] = 40
 		E.db["actionbar"]["bar1"]["buttons"] = 8
-		E.db["actionbar"]["bar1"]["buttonsize"] = 36
-		E.db["movers"]["ElvAB_1"] = "BOTTOM,ElvUIParent,BOTTOM,0,280"
+		E.db["actionbar"]["bar1"]["buttonsize"] = 40
+		E.db["movers"]["ElvAB_1"] = "BOTTOM,ElvUIParent,BOTTOM,0,285"
         E.db["movers"]["ElvAB_2"] = "BOTTOM,ElvUIParent,BOTTOM,0,241"
-		E.db["unitframe"]["units"]["player"]["castbar"]["width"] = 295
+		E.db["unitframe"]["units"]["player"]["castbar"]["width"] = 335
 		E.db["movers"]["ElvUF_PlayerCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,215"
-		E.db["unitframe"]["units"]["player"]["power"]["detachedWidth"] = 295
-		E.db["unitframe"]["units"]["player"]["classbar"]["detachedWidth"] = 295
-		E.db["movers"]["ElvUF_PlayerMover"] = "BOTTOM,ElvUIParent,BOTTOM,-270,330"
+		E.db["unitframe"]["units"]["player"]["power"]["detachedWidth"] = 335
+		E.db["unitframe"]["units"]["player"]["classbar"]["detachedWidth"] = 335
+		E.db["movers"]["ElvUF_PlayerMover"] = "BOTTOM,ElvUIParent,BOTTOM,-300,330"
 		E.db["movers"]["ZoneAbility"] = "BOTTOM,ElvUIParent,BOTTOM,-268,193"
 		E.db["movers"]["BossButton"] = "BOTTOM,ElvUIParent,BOTTOM,-268,193"
-		E.db["movers"]["ElvUF_PetMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,504,330"
-		E.db["movers"]["PetAB"] = "BOTTOM,ElvUIParent,BOTTOM,-270,306"
-		E.db["movers"]["ElvUF_TargetMover"] = "BOTTOM,ElvUIParent,BOTTOM,270,330"
-		E.db["movers"]["ElvUF_TargetTargetMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-504,330"
-		E.db["movers"]["AltPowerBarMover"] = "BOTTOM,ElvUIParent,BOTTOM,-268,141"
+		E.db["movers"]["ElvUF_PetMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,475,330"
+		E.db["movers"]["PetAB"] = "BOTTOM,ElvUIParent,BOTTOM,-300,306"
+		E.db["movers"]["ElvUF_TargetMover"] = "BOTTOM,ElvUIParent,BOTTOM,300,330"
+		E.db["movers"]["ElvUF_TargetTargetMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-475,330"
+		E.db["movers"]["AltPowerBarMover"] = "BOTTOM,ElvUIParent,BOTTOM,-300,141"
 	end
 
     E.db["unitframe"]["units"]["player"]["customTexts"]["PowerText"]["enable"] = true
 	E.db["unitframe"]["units"]["player"]["power"]["enable"] = true
 
-    E.db["chat"]["keywords"] = "%MYNAME%"
 	--Update ElvUI
 	E:UpdateAll(true)
 	--Show message about layout being set
