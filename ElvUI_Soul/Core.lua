@@ -926,6 +926,23 @@ local function WASetup(aura)
 	end
 end
 
+local function SetupAddOnSkins()
+	if(AddOnSkinsDB) then
+		--If it does add SoulUI to the profiles
+		RUI:AddOnSkinsSettings(E.db[MyPluginName].layout)
+		
+		--Apply the SoulUI profile
+		local AddOnSkins = LibStub("AceDB-3.0"):New(AddOnSkinsDB)
+		AddOnSkins:SetProfile("SoulUI")
+
+		PluginInstallStepComplete.message = "AddOnSkins Profile Applied"
+	else
+		PluginInstallStepComplete.message = "AddOnSkins Profile NotApplied"
+	end
+	
+	PluginInstallStepComplete:Show()
+end
+
 local function SetupBigWigs()
 	if E.db[MyPluginName].layout == "desktop" then
 		if(BigWigs3DB) then
@@ -1278,6 +1295,25 @@ local InstallerData = {
 			end
 		end,
 		[10] = function()
+			PluginInstallFrame.SubTitle:SetText("AddOnSkins")
+			if IsAddOnLoaded("AddOnSkins") then --Make sure the User has Details installed.
+				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
+					PluginInstallFrame.Desc1:SetText("Import Soul's AddOnSkins profile. A new profile called SoulUI will be created. If you already have the SoulUI profile it will be updated.")
+					PluginInstallFrame.Option1:Show()
+					PluginInstallFrame.Option1:SetScript("OnClick", function() SetupAddOnSkins() end)
+					PluginInstallFrame.Option1:SetText("Setup AddOnSkins")
+				else
+					PluginInstallFrame.Desc1:SetText("Click \"Update AddOnSkins\" to update the SoulUI profile.")
+					PluginInstallFrame.Option1:Show()
+					PluginInstallFrame.Option1:SetScript("OnClick", function() SetupAddOnSkins() end)
+					PluginInstallFrame.Option1:SetText("Update AddOnSkins")
+				end
+			else
+				PluginInstallFrame.Desc1:SetText("|cffB33A3AOops, it looks like you don't have AddOnSkins installed!|r")
+				PluginInstallFrame.Desc2:SetText("AddOnSkins is recommended for use with SoulUI")
+			end
+		end,
+		[11] = function()
 			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
 				PluginInstallFrame.SubTitle:SetText("Installation Complete")
 				PluginInstallFrame.Desc1:SetText("You have completed the installation process.")
@@ -1306,7 +1342,8 @@ local InstallerData = {
 		[7] = "Weak Auras",
 		[8] = "Boss Mod Setup",
 		[9] = "Details Setup",
-		[10] = "Installation Complete",
+		[10] = "AddOnSkins Setup",
+		[11] = "Installation Complete",
 	},
 	StepTitlesColor = {1, 1, 1},
 	StepTitlesColorSelected = {0.769, 0.122, 0.231},

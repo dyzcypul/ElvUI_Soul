@@ -1,8 +1,8 @@
 local RUI = select(2, ...):unpack()
 
 function RUI:DetailsSettings(layout)
-	if layout == "healer" then
-		_detalhes_global["__profiles"]["RedtuzkUI_Healer"] = {
+	if layout == "laptop" then
+		_detalhes_global["__profiles"]["SoulUI_Laptop"] = {
 			["show_arena_role_icon"] = false,
 			["capture_real"] = {
 				["heal"] = true,

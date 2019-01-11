@@ -12,6 +12,7 @@ ElvUI_Settings.lua
 Details_Settings.lua
 BigWigs_Settings.lua
 DBM_Settings.lua
+AddOnSkins_Settings.lua
 RedtuzkAuras.lua
 media\FPS.lua
 media\Ping.lua
