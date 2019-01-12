@@ -15,6 +15,7 @@ DBM_Settings.lua
 AddOnSkins_Settings.lua
 AdiBags_Settings.lua
 Amr_Settings.lua
+ChatTweaks_Settings.lua
 AskMrRobot.lua
 EasyScrap.lua
 RedtuzkAuras.lua

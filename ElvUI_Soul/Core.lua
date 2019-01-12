@@ -973,6 +973,19 @@ local function SetupAskMrRobot()
 	PluginInstallStepComplete:Show()
 end
 
+local function SetupChatTweaks()
+	if(ElvUI_ChatTweaksDB) then
+		--If it does add SoulUI to the profiles
+		RUI:ChatTweaksSettings(E.db[MyPluginName].layout)
+
+		PluginInstallStepComplete.message = "ChatTweaks Profile Applied"
+	else
+		PluginInstallStepComplete.message = "ChatTweaks Profile NotApplied"
+	end
+	
+	PluginInstallStepComplete:Show()
+end
+
 local function SetupBigWigs()
 	if E.db[MyPluginName].layout == "desktop" then
 		if(BigWigs3DB) then
@@ -1347,6 +1360,11 @@ local InstallerData = {
 				PluginInstallFrame.Option3:Show()
 				PluginInstallFrame.Option3:SetScript("OnClick", function() SetupAskMrRobot() end)
 				PluginInstallFrame.Option3:SetText("AskMrRobot")
+			end
+			if IsAddOnLoaded("ElvUI_ChatTweaks") then --Make sure the User has AskMrRobot installed.
+				PluginInstallFrame.Option4:Show()
+				PluginInstallFrame.Option4:SetScript("OnClick", function() SetupChatTweaks() end)
+				PluginInstallFrame.Option4:SetText("ChatTweaks")
 			end
 		end,
 		[11] = function()
