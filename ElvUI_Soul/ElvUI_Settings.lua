@@ -142,7 +142,7 @@ function RUI:ElvUISettings(layout)
         E.db["movers"]["ReputationBarMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-403,24"
         E.db["movers"]["ObjectiveFrameMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,275,-4"
         E.db["movers"]["BNETMover"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,225"
-        E.db["movers"]["ShiftAB"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-415,4"
+        E.db["movers"]["ShiftAB"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,545,4"
         E.db["movers"]["RaidUtility_Mover"] = "TOPLEFT,ElvUIParent,TOPLEFT,277,0"
         E.db["movers"]["ArenaHeaderMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,205,300"
         E.db["movers"]["ActionBG_Mover"] = "BOTTOM,ElvUIParent,BOTTOM,0,2"
@@ -1132,7 +1132,7 @@ function RUI:ElvUISettings(layout)
         E.db["actionbar"]["fontOutline"] = "MONOCHROMEOUTLINE"
         E.db["actionbar"]["stanceBar"]["enabled"] = true
         E.db["actionbar"]["stanceBar"]["point"] = "BOTTOMLEFT"
-        E.db["actionbar"]["stanceBar"]["buttonsPerRow"] = 1
+        E.db["actionbar"]["stanceBar"]["buttonsPerRow"] = 10
         E.db["actionbar"]["stanceBar"]["mouseover"] = false
         E.db["actionbar"]["stanceBar"]["style"] = "classic"
         E.db["actionbar"]["stanceBar"]["backdrop"] = true

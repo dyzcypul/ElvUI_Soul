@@ -3,7 +3,7 @@
 ## Version: 1.5.3
 ## Title: |cff1784d1ElvUI|r |cffc41f3bSoul|r
 ## Notes: Contains profile layouts designed by Redtuzk / Modified by Soul
-## RequiredDeps: ElvUI, ElvUI_SLE, AddonSkins
+## RequiredDeps: ElvUI, ElvUI_SLE, AddonSkins, AskMrRobot
 ## DefaultState: enabled
 
 media\load_media.xml
@@ -13,6 +13,10 @@ Details_Settings.lua
 BigWigs_Settings.lua
 DBM_Settings.lua
 AddOnSkins_Settings.lua
+AdiBags_Settings.lua
+Amr_Settings.lua
+AskMrRobot.lua
+EasyScrap.lua
 RedtuzkAuras.lua
 media\FPS.lua
 media\Ping.lua

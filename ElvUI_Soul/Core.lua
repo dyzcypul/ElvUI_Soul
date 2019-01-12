@@ -943,6 +943,36 @@ local function SetupAddOnSkins()
 	PluginInstallStepComplete:Show()
 end
 
+local function SetupAdiBags()
+	if(AdiBagsDB) then
+		--If it does add SoulUI to the profiles
+		RUI:AdiBagsSettings(E.db[MyPluginName].layout)
+		
+		--Apply the SoulUI profile
+		local AdiBags = LibStub("AceDB-3.0"):New(AdiBagsDB)
+		AdiBags:SetProfile("SoulUI")
+
+		PluginInstallStepComplete.message = "AdiBags Profile Applied"
+	else
+		PluginInstallStepComplete.message = "AdiBags Profile NotApplied"
+	end
+	
+	PluginInstallStepComplete:Show()
+end
+
+local function SetupAskMrRobot()
+	if(AskMrRobot) then
+		--If it does add SoulUI to the profiles
+		RUI:AskMrRobotSettings(E.db[MyPluginName].layout)
+
+		PluginInstallStepComplete.message = "AskMrRobot Profile Applied"
+	else
+		PluginInstallStepComplete.message = "AskMrRobot Profile NotApplied"
+	end
+	
+	PluginInstallStepComplete:Show()
+end
+
 local function SetupBigWigs()
 	if E.db[MyPluginName].layout == "desktop" then
 		if(BigWigs3DB) then
@@ -1295,22 +1325,28 @@ local InstallerData = {
 			end
 		end,
 		[10] = function()
-			PluginInstallFrame.SubTitle:SetText("AddOnSkins")
-			if IsAddOnLoaded("AddOnSkins") then --Make sure the User has Details installed.
-				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
-					PluginInstallFrame.Desc1:SetText("Import Soul's AddOnSkins profile. A new profile called SoulUI will be created. If you already have the SoulUI profile it will be updated.")
-					PluginInstallFrame.Option1:Show()
-					PluginInstallFrame.Option1:SetScript("OnClick", function() SetupAddOnSkins() end)
-					PluginInstallFrame.Option1:SetText("Setup AddOnSkins")
-				else
-					PluginInstallFrame.Desc1:SetText("Click \"Update AddOnSkins\" to update the SoulUI profile.")
-					PluginInstallFrame.Option1:Show()
-					PluginInstallFrame.Option1:SetScript("OnClick", function() SetupAddOnSkins() end)
-					PluginInstallFrame.Option1:SetText("Update AddOnSkins")
-				end
+			PluginInstallFrame.SubTitle:SetText("AddOns")
+			
+			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
+				PluginInstallFrame.Desc1:SetText("Import Soul's AddOn profiles. A new profile called SoulUI will be created. If you already have the SoulUI profile it will be updated.")
 			else
-				PluginInstallFrame.Desc1:SetText("|cffB33A3AOops, it looks like you don't have AddOnSkins installed!|r")
-				PluginInstallFrame.Desc2:SetText("AddOnSkins is recommended for use with SoulUI")
+				PluginInstallFrame.Desc1:SetText("Click \"Setup AskMrRobot\" to update the SoulUI profile.")
+			end
+
+			if IsAddOnLoaded("AddOnSkins") then --Make sure the User has AddOnSkins installed.
+				PluginInstallFrame.Option1:Show()
+				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupAddOnSkins() end)
+				PluginInstallFrame.Option1:SetText("AddOnSkins")
+			end
+			if IsAddOnLoaded("AdiBags") then --Make sure the User has AdiBags installed.
+				PluginInstallFrame.Option2:Show()
+				PluginInstallFrame.Option2:SetScript("OnClick", function() SetupAdiBags() end)
+				PluginInstallFrame.Option2:SetText("AdiBags")
+			end
+			if IsAddOnLoaded("AskMrRobot") then --Make sure the User has AskMrRobot installed.
+				PluginInstallFrame.Option3:Show()
+				PluginInstallFrame.Option3:SetScript("OnClick", function() SetupAskMrRobot() end)
+				PluginInstallFrame.Option3:SetText("AskMrRobot")
 			end
 		end,
 		[11] = function()
