@@ -11,7 +11,7 @@ function RUI:ChatTweaksSettings(layout)
                     ["messages"] = {
                         "Welcome #name#!", -- [1]
                         "Welcome!", -- [2]
-                        "Welcome to guild!", -- [3]
+                        "Welcome to the guild!", -- [3]
                     },
                 },
             },
