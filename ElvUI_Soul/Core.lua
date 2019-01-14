@@ -984,6 +984,25 @@ local function SetupChatTweaks()
 	PluginInstallStepComplete:Show()
 end
 
+local function SetupExRT()
+	if(VExRT) then
+		--If it does add SoulUI to the profiles
+		RUI:ExRTSettings(E.db[MyPluginName].layout)
+
+		if (E.db[MyPluginName].layout == "desktop") then
+			VExRT.Profile = "SoulUI_Desktop"
+		else
+			VExRT.Profile = "SoulUI_Laptop"
+		end
+
+		PluginInstallStepComplete.message = "ExRT Profile Applied"
+	else
+		PluginInstallStepComplete.message = "ExRT Profile NotApplied"
+	end
+	
+	PluginInstallStepComplete:Show()
+end
+
 local function SetupBigWigs()
 	if E.db[MyPluginName].layout == "desktop" then
 		if(BigWigs3DB) then
@@ -1359,10 +1378,15 @@ local InstallerData = {
 				PluginInstallFrame.Option3:SetScript("OnClick", function() SetupAskMrRobot() end)
 				PluginInstallFrame.Option3:SetText("AskMrRobot")
 			end
-			if IsAddOnLoaded("ElvUI_ChatTweaks") then --Make sure the User has AskMrRobot installed.
+			if IsAddOnLoaded("ElvUI_ChatTweaks") then --Make sure the User has ElvUI_ChatTweaks installed.
 				PluginInstallFrame.Option4:Show()
 				PluginInstallFrame.Option4:SetScript("OnClick", function() SetupChatTweaks() end)
 				PluginInstallFrame.Option4:SetText("ChatTweaks")
+			end
+			if IsAddOnLoaded("ExRT") then --Make sure the User has ExRT installed.
+				PluginInstallFrame.Option4:Show()
+				PluginInstallFrame.Option4:SetScript("OnClick", function() SetupExRT() end)
+				PluginInstallFrame.Option4:SetText("ExRT")
 			end
 		end,
 		[10] = function()
