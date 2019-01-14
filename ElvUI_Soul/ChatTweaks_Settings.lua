@@ -508,6 +508,7 @@ function RUI:ChatTweaksSettings(layout)
             ["Soulaire - Khadgar"] = "Soulaire - Khadgar",
         },
         ["global"] = {
+            ["welcome"] = false,
             ["modules"] = {
                 ["Multiple Invite Command"] = false,
                 ["Custom Named Chat Filters"] = false,

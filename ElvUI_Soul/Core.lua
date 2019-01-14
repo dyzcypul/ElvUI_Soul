@@ -894,8 +894,10 @@ local function SetupCVars()
 	SetCVar("movieSubtitle", 1)
 	SetCVar("maxFPS", 30)
 	SetCVar("useIPv6", 1)
-	SetCVar("MacUseCommandAsControl", 1)
-	SetCVar("MacUseCommandLeftClickAsRightClick", 0)
+	if IsMacClient() then
+		SetCVar("MacUseCommandAsControl", 1)
+		SetCVar("MacUseCommandLeftClickAsRightClick", 0)
+	end
 	SetCVar("autoLootDefault", 1)
 
 
@@ -907,13 +909,9 @@ local function SetupCVars()
 end
 
 local function SetupDetails()
-	if E.db[MyPluginName].layout == "desktop" then
-		RUI:DetailsSettings(E.db[MyPluginName].layout)
-		_detalhes:ApplyProfile("SoulUI_Desktop", false, false)
-	else
-		RUI:DetailsSettings(E.db[MyPluginName].layout)
-		_detalhes:ApplyProfile("SoulUI_Laptop", false, false)
-	end
+	RUI:DetailsSettings(E.db[MyPluginName].layout)
+	_detalhes:ApplyProfile("SoulUI", false, false)
+
 	PluginInstallStepComplete.message = "Details Profile Applied"
 	PluginInstallStepComplete:Show()
 end
@@ -1202,30 +1200,30 @@ local InstallerData = {
 				PluginInstallFrame.Option1:SetText("Update Layout")
 			end
 		end,
+		-- [5] = function()
+		--     PluginInstallFrame.SubTitle:SetText("Action Bar Layout")
+    --         -- if E.db[MyPluginName].layout == "healer" then
+		-- 	-- 	PluginInstallFrame.Desc1:SetText("Action bar layouts are only avaiable for  DPS and Tank roles.")
+    --         -- else
+    --         if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version or not E.db[MyPluginName].ABlayout then
+		-- 		PluginInstallFrame.Desc1:SetText("These are the action bar layouts that are available. Please click a button below to apply the layout of your choosing.")
+		-- 		PluginInstallFrame.Option1:Show()
+		-- 		PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayoutBar("5x2") end)
+		-- 		PluginInstallFrame.Option1:SetText("5x2 (Default)")
+		-- 		PluginInstallFrame.Option2:Show()
+		-- 		PluginInstallFrame.Option2:SetScript("OnClick", function() SetupLayoutBar("6x2") end)
+		-- 		PluginInstallFrame.Option2:SetText("6x2")
+		-- 		PluginInstallFrame.Option3:Show()
+		-- 		PluginInstallFrame.Option3:SetScript("OnClick", function() SetupLayoutBar("8x2") end)
+		-- 		PluginInstallFrame.Option3:SetText("8x2")
+		-- 	else
+		-- 		PluginInstallFrame.Desc1:SetText("Press \"Update Bar Layout\" to update your ElvUI action bars.")
+		-- 		PluginInstallFrame.Option1:Show()
+		-- 		PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayoutBar(E.db[MyPluginName].ABlayout) end)
+		-- 		PluginInstallFrame.Option1:SetText("Update Bar Layout")
+		-- 	end
+		-- end,
 		[5] = function()
-		    PluginInstallFrame.SubTitle:SetText("Action Bar Layout")
-            -- if E.db[MyPluginName].layout == "healer" then
-			-- 	PluginInstallFrame.Desc1:SetText("Action bar layouts are only avaiable for  DPS and Tank roles.")
-            -- else
-            if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version or not E.db[MyPluginName].ABlayout then
-				PluginInstallFrame.Desc1:SetText("These are the action bar layouts that are available. Please click a button below to apply the layout of your choosing.")
-				PluginInstallFrame.Option1:Show()
-				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayoutBar("5x2") end)
-				PluginInstallFrame.Option1:SetText("5x2 (Default)")
-				PluginInstallFrame.Option2:Show()
-				PluginInstallFrame.Option2:SetScript("OnClick", function() SetupLayoutBar("6x2") end)
-				PluginInstallFrame.Option2:SetText("6x2")
-				PluginInstallFrame.Option3:Show()
-				PluginInstallFrame.Option3:SetScript("OnClick", function() SetupLayoutBar("8x2") end)
-				PluginInstallFrame.Option3:SetText("8x2")
-			else
-				PluginInstallFrame.Desc1:SetText("Press \"Update Bar Layout\" to update your ElvUI action bars.")
-				PluginInstallFrame.Option1:Show()
-				PluginInstallFrame.Option1:SetScript("OnClick", function() SetupLayoutBar(E.db[MyPluginName].ABlayout) end)
-				PluginInstallFrame.Option1:SetText("Update Bar Layout")
-			end
-		end,
-		[6] = function()
 			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version or not E.db[MyPluginName].TargetAuras then
 				PluginInstallFrame.SubTitle:SetText("Target Frame Options")
 				PluginInstallFrame.Desc1:SetText("Here you can select some options for how buffs and debuffs will be displayed on your target frame. \n\nIf you select \"Only Buffs\" or \"Only Debuffs\" then the auras will be displayed above the frame, similar to how player debuffs are displayed.\n\nIf you selece \"Show Both\" then debuffs will be displayed above the frame and buffs below.")
@@ -1265,7 +1263,7 @@ local InstallerData = {
 		-- 		PluginInstallFrame.Option1:SetText("Update Party Frame")
 		-- 	end
 		-- end,
-		[7] = function()
+		[6] = function()
 			PluginInstallFrame.SubTitle:SetText("Weak Auras")
 			if IsAddOnLoaded("WeakAuras") then --Make sure the User has Weak Auras installed.
 				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
@@ -1283,7 +1281,7 @@ local InstallerData = {
 				PluginInstallFrame.Desc2:SetText("Weak Auras is recommended for use with SoulUI")
 			end
 		end,
-		[8] = function()
+		[7] = function()
 			if IsAddOnLoaded("BigWigs") then --Make sure the User has BigWigs installed.
 				PluginInstallFrame.SubTitle:SetText("BigWigs")
 				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
@@ -1318,7 +1316,7 @@ local InstallerData = {
 				PluginInstallFrame.Desc2:SetText("BigWigs is recommended for use with SoulUI")
 			end
 		end,
-		[9] = function()
+		[8] = function()
 			PluginInstallFrame.SubTitle:SetText("Details")
 			if IsAddOnLoaded("Details") then --Make sure the User has Details installed.
 				if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
@@ -1337,7 +1335,7 @@ local InstallerData = {
 				PluginInstallFrame.Desc2:SetText("Details is recommended for use with SoulUI")
 			end
 		end,
-		[10] = function()
+		[9] = function()
 			PluginInstallFrame.SubTitle:SetText("AddOns")
 			
 			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
@@ -1367,7 +1365,7 @@ local InstallerData = {
 				PluginInstallFrame.Option4:SetText("ChatTweaks")
 			end
 		end,
-		[11] = function()
+		[10] = function()
 			if E.db[MyPluginName].install_version == nil or E.db[MyPluginName].install_version == Version then
 				PluginInstallFrame.SubTitle:SetText("Installation Complete")
 				PluginInstallFrame.Desc1:SetText("You have completed the installation process.")
@@ -1390,14 +1388,14 @@ local InstallerData = {
 		[2] = "Profile Setup",
 		[3] = "Setup CVars",
 		[4] = "Layout",
-		[5] = "Action Bar Layouts",
-		[6] = "Target Frame Options",
+		-- [5] = "Action Bar Layouts",
+		[5] = "Target Frame Options",
 		-- [6] = "Party Frame Options",
-		[7] = "Weak Auras",
-		[8] = "Boss Mod Setup",
-		[9] = "Details Setup",
-		[10] = "AddOnSkins Setup",
-		[11] = "Installation Complete",
+		[6] = "Weak Auras",
+		[7] = "Boss Mod Setup",
+		[8] = "Details Setup",
+		[9] = "AddOnSkins Setup",
+		[10] = "Installation Complete",
 	},
 	StepTitlesColor = {1, 1, 1},
 	StepTitlesColorSelected = {0.769, 0.122, 0.231},
